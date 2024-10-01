@@ -1,24 +1,10 @@
+import json
 import os
 from typing import List
 
 import dotenv
 import requests
 from numpy import dot
-
-# places_type_list = [
-#     "art_gallery",
-#     "museum",
-#     "performing_arts_theater",
-#     "church",
-#     "establishment",
-# ]
-places_type_list = []
-primary_type_list = [
-    "point_of_interest",
-    "tourist_attraction",
-    "place_of_worship",
-    "establishment",
-]
 
 dotenv.load_dotenv()
 
@@ -30,7 +16,6 @@ FIELD_MASK = "places.types,places.formattedAddress,places.location,places.rating
 def get_nearby(location: List[float], radius: float, max_count: int):
     print("Getting nearby places...")
     request_data = {
-        "includedTypes": places_type_list,
         "maxResultCount": max_count,
         "languageCode": "pl",
         "locationRestriction": {
@@ -46,8 +31,31 @@ def get_nearby(location: List[float], radius: float, max_count: int):
         "X-Goog-FieldMask": FIELD_MASK,
     }
     response = requests.post(API_URL, json=request_data, headers=headers)
-    with open("response.json", "w") as file:
-        file.write(response.text)
+
+    places = []
+
+    for place in response.json()["places"]:
+        if not "tourist_attraction" in place["types"]:
+            continue
+
+        places.append(
+            {
+                "name": place["displayName"]["text"],
+                "address": place["formattedAddress"],
+                "location": [
+                    place["location"]["latitude"],
+                    place["location"]["longitude"],
+                ],
+                "rating": place["rating"],
+                "userRatingCount": place["userRatingCount"],
+                "summary": place.get("editorialSummary", {}).get("text", None),
+            }
+        )
+
+    return places
 
 
-get_nearby(location=[53.010255, 18.605087], radius=50, max_count=20)
+places = get_nearby(location=[53.010255, 18.605087], radius=50, max_count=20)
+
+with open("places.json", "w") as f:
+    json.dump(places, f, indent=4)
