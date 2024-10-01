@@ -1,0 +1,57 @@
+[
+    {
+        "name": "Pomnik Miko\u0142aja Kopernika w Toruniu",
+        "address": "Rynek Staromiejski, 87-100 Toru\u0144, Polska",
+        "location": [
+            53.010314,
+            18.6049249
+        ],
+        "rating": 4.7,
+        "userRatingCount": 10235,
+        "summary": "Pomnik wzniesiony w\u00a01853\u00a0roku ku czci wybitnego miejscowego astronoma Miko\u0142aja Kopernika."
+    },
+    {
+        "name": "Ratusz Staromiejski - Muzeum Okr\u0119gowe w Toruniu",
+        "address": "Rynek Staromiejski 1, 87-100 Toru\u0144, Polska",
+        "location": [
+            53.0103951,
+            18.604461
+        ],
+        "rating": 4.7,
+        "userRatingCount": 1844,
+        "summary": "Ceglany \u015bredniowieczny ratusz z\u00a0wie\u017c\u0105 z\u00a0tarasem widokowym mieszcz\u0105cy muzeum regionalne."
+    },
+    {
+        "name": "Muzeum Sztuki Dalekiego Wschodu w Kamienicy pod Gwiazd\u0105",
+        "address": "Rynek Staromiejski 35, 87-100 Toru\u0144, Polska",
+        "location": [
+            53.010653999999995,
+            18.6051583
+        ],
+        "rating": 4.5,
+        "userRatingCount": 155,
+        "summary": null
+    },
+    {
+        "name": "Rze\u017aba Osio\u0142ka",
+        "address": "Szeroka 50, 87-100 Toru\u0144, Polska",
+        "location": [
+            53.010196699999995,
+            18.6052042
+        ],
+        "rating": 4.8,
+        "userRatingCount": 404,
+        "summary": null
+    },
+    {
+        "name": "Wie\u017ca Ratusza Staromiejskiego (widokowa)",
+        "address": "Rynek Staromiejski 1, 87-100 Toru\u0144, Polska",
+        "location": [
+            53.010382500000006,
+            18.6047488
+        ],
+        "rating": 4.5,
+        "userRatingCount": 115,
+        "summary": null
+    }
+]

@@ -31,9 +31,12 @@ def geocode(cords):
 
 
 features = get_pois(53.010255, 18.605087, 100)
-print(json.dumps(features, indent=2))
+# print(json.dumps(features, indent=2))
 
-for feature in features:
-    cords = feature["geometry"]["coordinates"]
-    address = geocode(cords)
-    print(feature["properties"]["tags"]["name"] + " location: " + address)
+with open("poi.json", "w") as f:
+    json.dump(features, f, indent=2)
+
+# for feature in features:
+#     cords = feature["geometry"]["coordinates"]
+#     address = geocode(cords)
+#     print(feature["properties"]["tags"]["name"] + " location: " + address)
