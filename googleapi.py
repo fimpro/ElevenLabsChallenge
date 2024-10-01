@@ -5,13 +5,26 @@ import dotenv
 import requests
 from numpy import dot
 
+# places_type_list = [
+#     "art_gallery",
+#     "museum",
+#     "performing_arts_theater",
+#     "church",
+#     "establishment",
+# ]
 places_type_list = []
+primary_type_list = [
+    "point_of_interest",
+    "tourist_attraction",
+    "place_of_worship",
+    "establishment",
+]
 
 dotenv.load_dotenv()
 
 API_URL = "https://places.googleapis.com/v1/places:searchNearby"
 API_KEY = os.getenv("API_KEY")
-FIELD_MASK = "places.types,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.displayName,places.primaryTypeDisplayName,places.shortFormattedAddress,places.editorialSummary"
+FIELD_MASK = "places.types,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.displayName,places.editorialSummary"
 
 
 def get_nearby(location: List[float], radius: float, max_count: int):
