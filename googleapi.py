@@ -11,6 +11,7 @@ dotenv.load_dotenv()
 API_URL = "https://places.googleapis.com/v1/places:searchNearby"
 API_KEY = os.getenv("API_KEY")
 FIELD_MASK = "places.types,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.displayName,places.editorialSummary"
+excluded_types = []
 
 
 def get_nearby(location: List[float], radius: float, max_count: int):
@@ -24,6 +25,7 @@ def get_nearby(location: List[float], radius: float, max_count: int):
                 "radius": radius,
             }
         },
+        "excludedTypes": excluded_types,
     }
     headers = {
         "Content-Type": "application/json",
@@ -32,9 +34,14 @@ def get_nearby(location: List[float], radius: float, max_count: int):
     }
     response = requests.post(API_URL, json=request_data, headers=headers)
 
+    response = response.json()
+
+    with open("response.json", "w") as f:
+        json.dump(response, f, indent=4)
+
     places = []
 
-    for place in response.json()["places"]:
+    for place in response["places"]:
         if not "tourist_attraction" in place["types"]:
             continue
 
