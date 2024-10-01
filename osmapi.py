@@ -1,10 +1,11 @@
 import json
-
 import requests
 from osm2geojson import json2geojson
 
 
-def get_pois(lat, lon, radius):
+def get_pois(location, radius):
+    lat, lon = location
+
     q = f"""[out:json][timeout:300];
 
 (
@@ -30,10 +31,21 @@ def geocode(cords):
     return None
 
 
-features = get_pois(53.010255, 18.605087, 100)
-print(json.dumps(features, indent=2))
+# features = get_pois(location=(54.010255, 18.605087), radius=3000)
+features = get_pois(location=(53.010255, 18.605087), radius=50)
 
-for feature in features:
-    cords = feature["geometry"]["coordinates"]
-    address = geocode(cords)
-    print(feature["properties"]["tags"]["name"] + " location: " + address)
+print(f'{len(features)} objects')
+
+objects = []
+for fet in features:
+    obj = {
+        'location': fet['geometry']['coordinates'],
+    }
+    # print(fet.keys())
+    # print(fet['type'])
+    print(fet['properties'])
+
+# for feature in features:
+#     cords = feature["geometry"]["coordinates"]
+#     address = geocode(cords)
+#     print(feature["properties"]["tags"]["name"] + " location: " + address)
