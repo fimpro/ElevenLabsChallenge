@@ -2,3 +2,8 @@ openai
    langchain
    langchain-community
    python-dotenv
+
+fastapi
+uvicorn
+apscheduler
+geopy
