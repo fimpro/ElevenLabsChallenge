@@ -70,8 +70,5 @@ def generate_audio(text,ID,path,max_time):
         print("error during removing old files: ", e)
     #print(time.time(), "ENDG")
 
-def text_to_speech_file(text: str,path = 'outputs',max_time=600): #returns path to .mp3 file with audio. .mp3 file will
-                                                           # be created a few seconds after this function returns path.
-    ID = find_id(path)
+def text_to_speech_file(text: str, ID: str, path = 'outputs',max_time=600):#creates audiofile with text as speech
     threading.Thread(target=generate_audio,args=(text,ID,path,max_time)).start()
-    return f"{path}\\{ID}.mp3"
