@@ -59,7 +59,7 @@ def get_nearby(location: List[float], radius: float):
     return places
 
 
-places = get_nearby(location=[53.010255, 18.605087], radius=50)
+# places = get_nearby(location=[53.010255, 18.605087], radius=50)
 
-with open("places_google.json", "w") as f:
-    json.dump(places, f, indent=4)
+# with open("places_google.json", "w") as f:
+    # json.dump(places, f, indent=4)
