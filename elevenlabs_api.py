@@ -5,21 +5,6 @@ from elevenlabs import VoiceSettings, play
 from elevenlabs.client import ElevenLabs
 import random
 
-
-def find_id(path): #returns new highest id, from given
-    i=0
-    if(os.path.exists(path)):
-        for filename in os.listdir(path):
-            try:
-                file = filename.removesuffix('.mp3')
-                if int(file)>i:
-                    i=int(file)
-            except:
-                i = random.randint(1,100000)
-    else:
-        os.mkdir(path)
-    return i+1
-
 def remove_old(path,max_time): #romoves old files
     # Get the current time
     current_time = time.time()
@@ -40,7 +25,7 @@ def remove_old(path,max_time): #romoves old files
                 os.remove(file_path)
                 #print(f'Removed: {file_path}')
 
-def generate_audio(text,ID,path,max_time):
+def generate_audio(text,ID,path):
     ELEVENLABS_API_KEY = open('elevenapikey.txt').readline()
     client = ElevenLabs(
         api_key=ELEVENLABS_API_KEY,
@@ -59,16 +44,10 @@ def generate_audio(text,ID,path,max_time):
             use_speaker_boost=True,
         ),
     )
-    save_file_path = f"{path}/{ID}.mp3"
-    with open(save_file_path, "wb") as f:
+    with open(path, "wb") as f:
         for chunk in response:
             if chunk:
                 f.write(chunk)
-    try:
-        remove_old(path,max_time)
-    except Exception as e:
-        print("error during removing old files: ", e)
-    #print(time.time(), "ENDG")
 
-def text_to_speech_file(text: str, ID: str, path = 'outputs',max_time=600):#creates audiofile with text as speech
-    threading.Thread(target=generate_audio,args=(text,ID,path,max_time)).start()
+def text_to_speech_file(text: str, ID: str):#creates audiofile with text as speech
+    threading.Thread(target=generate_audio,args=(text,ID)).start()
