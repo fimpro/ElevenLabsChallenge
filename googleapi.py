@@ -32,9 +32,9 @@ included_types = [
 ]
 
 
-def get_nearby(location: List[float], radius: float, max_count: int):
+def get_nearby(location: List[float], radius: float):
     request_data = {
-        "maxResultCount": max_count,
+        "maxResultCount": 20,
         "languageCode": "pl",
         "locationRestriction": {
             "circle": {
@@ -79,7 +79,7 @@ def get_nearby(location: List[float], radius: float, max_count: int):
     return places
 
 
-places = get_nearby(location=[53.010255, 18.605087], radius=50, max_count=20)
+places = get_nearby(location=[53.010255, 18.605087], radius=50)
 
 with open("places_google.json", "w") as f:
     json.dump(places, f, indent=4)

@@ -1,15 +1,16 @@
 import json
+from typing import List
 
 import requests
 from osm2geojson import json2geojson
 
 
-def get_pois(lat, lon, radius):
+def get_nearby(location: List[float], radius: float):
     q = f"""
         [out:json][timeout:300];
         (
-        nwr(around:{radius}, {lat}, {lon})["tourism"~"attraction|artwork"][name];
-        nwr(around:{radius}, {lat}, {lon})["historic"][name];
+        nwr(around:{radius}, {location[0]}, {location[1]})["tourism"~"attraction|artwork"][name];
+        nwr(around:{radius}, {location[0]}, {location[1]})["historic"][name];
         );
 
         out center;
@@ -74,7 +75,7 @@ def geocode(cords):
     return None
 
 
-features = get_pois(53.010255, 18.605087, 100)
+features = get_nearby([53.010255, 18.605087], 100)
 
 
 with open("places_osm.json", "w") as f:
