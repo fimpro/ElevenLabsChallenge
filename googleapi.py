@@ -1,36 +1,16 @@
 import json
 import os
 from typing import List
-
 import dotenv
 import requests
-from numpy import dot
+
+from tags import INCLUDED_TAGS, EXCLUDED_TAGS
 
 dotenv.load_dotenv()
 
 API_URL = "https://places.googleapis.com/v1/places:searchNearby"
 API_KEY = os.getenv("API_KEY")
 FIELD_MASK = "places.types,places.formattedAddress,places.id,places.location,places.rating,places.userRatingCount,places.displayName,places.editorialSummary"
-excluded_types = []
-included_types = [
-    "art_gallery",
-    "museum",
-    "performing_arts_theater",
-    "aquarium",
-    "cultural_center",
-    "historical_landmark",
-    "marina",
-    "movie_theater",
-    "tourist_attraction",
-    "zoo",
-    "city_hall",
-    "church",
-    "hindu_temple",
-    "mosque",
-    "synagogue",
-    "stadium",
-]
-
 
 def get_nearby(location: List[float], radius: float):
     request_data = {
@@ -42,8 +22,8 @@ def get_nearby(location: List[float], radius: float):
                 "radius": radius,
             }
         },
-        "includedTypes": included_types,
-        "excludedTypes": excluded_types,
+        "includedTypes": INCLUDED_TAGS,
+        "excludedTypes": EXCLUDED_TAGS,
     }
     headers = {
         "Content-Type": "application/json",
