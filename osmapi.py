@@ -58,7 +58,7 @@ def get_nearby(location: List[float], radius: float):
                 "address": geocode(location),
                 "location": location,
                 "rating": None,
-                "userRatingCount": None,
+                "rating_count": None,
                 "summary": summary,
             }
         )
