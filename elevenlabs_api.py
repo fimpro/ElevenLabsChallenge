@@ -25,7 +25,7 @@ def remove_old(path,max_time): #romoves old files
                 os.remove(file_path)
                 #print(f'Removed: {file_path}')
 
-def generate_audio(text,ID,path):
+def generate_audio(text, path):
     ELEVENLABS_API_KEY = open('elevenapikey.txt').readline()
     client = ElevenLabs(
         api_key=ELEVENLABS_API_KEY,
@@ -49,5 +49,5 @@ def generate_audio(text,ID,path):
             if chunk:
                 f.write(chunk)
 
-def text_to_speech_file(text: str, ID: str):#creates audiofile with text as speech
-    threading.Thread(target=generate_audio,args=(text,ID)).start()
+def text_to_speech_file(text: str, path: str):#creates audiofile with text as speech
+    threading.Thread(target=generate_audio,args=(text, path)).start()
