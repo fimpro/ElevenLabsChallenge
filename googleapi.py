@@ -71,7 +71,7 @@ def get_nearby(location: List[float], radius: float):
                     place["location"]["longitude"],
                 ],
                 "rating": place["rating"],
-                "userRatingCount": place["userRatingCount"],
+                "rating_count": place["userRatingCount"],
                 "summary": place.get("editorialSummary", {}).get("text", None),
             }
         )
