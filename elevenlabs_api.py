@@ -25,22 +25,42 @@ def remove_old(path,max_time): #romoves old files
                 os.remove(file_path)
                 #print(f'Removed: {file_path}')
 
-def generate_audio(text, path):
+def generate_audio(text, path,emotions,voice):
     ELEVENLABS_API_KEY = open('elevenapikey.txt').readline()
     client = ElevenLabs(
         api_key=ELEVENLABS_API_KEY,
     )
 
+    if(emotions=="energetic"):
+        stability = 0.7
+        similarity_boost = 0.9
+        style = 0.4
+    elif(emotions=="bored"):
+        stability = 0.0
+        similarity_boost = 0.0
+        style = 0.0
+    elif(emotions=="dramatic"):
+        stability = 0.4
+        similarity_boost = 0.6
+        style = 0.8
+    if(voice=="Anna"):
+        voice_id = "Pid5DJleNF2sxsuF6YKD"
+    elif(voice=="Charlotte"):
+        voice_id = "XB0fDUnXU5powFXDhCwa"
+    elif(voice=="Eric"):
+        voice_id = "cjVigY5qzO86Huf0OWal"
+    elif(voice=="Fin"):
+        voice_id= "D38z5RcWu1voky8WS1ja"
     response = client.text_to_speech.convert( #maybe tune params
-        voice_id="asDeXBMC8hUkhqqL7agO",  #imported
+        voice_id= voice_id,  #imported
         output_format="mp3_22050_32",
         text=text,
         language_code='pl',
         model_id="eleven_turbo_v2_5",  # use the turbo model for low latency
         voice_settings=VoiceSettings(
-            stability=0.2,
-            similarity_boost=0.5,
-            style=0.4,
+            stability=stability,
+            similarity_boost=similarity_boost,
+            style=style,
             use_speaker_boost=True,
         ),
     )
@@ -49,5 +69,5 @@ def generate_audio(text, path):
             if chunk:
                 f.write(chunk)
 
-def text_to_speech_file(text: str, path: str):#creates audiofile with text as speech
-    threading.Thread(target=generate_audio,args=(text, path)).start()
+def text_to_speech_file(text: str, path: str,emotions="energetic",voice="Eric"):#creates audiofile with text as speech
+    threading.Thread(target=generate_audio,args=(text, path,emotions,voice)).start()
