@@ -1,0 +1,306 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "node",
+                "id": 3556755015,
+                "tags": {
+                    "artist_name": "Karol Furyk; Ma\u0142gorzata Wi\u0119c\u0142awska",
+                    "artwork_type": "statue",
+                    "name": "Osio\u0142",
+                    "name:en": "The Spanish Donken",
+                    "name:pl": "Osio\u0142",
+                    "start_date": "2007",
+                    "tourism": "artwork"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.6052693,
+                    53.0101762
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "node",
+                "id": 4081945387,
+                "tags": {
+                    "addr:city": "Toru\u0144",
+                    "addr:housenumber": "35",
+                    "addr:street": "Szeroka",
+                    "email": "biuro@domlegend.pl",
+                    "name": "Dom Legend Toru\u0144skich",
+                    "phone": "+48 56 621 07 14",
+                    "tourism": "attraction",
+                    "website": "https://domlegend.pl/"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.6061229,
+                    53.0101301
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "node",
+                "id": 7373486155,
+                "tags": {
+                    "addr:city": "Toru\u0144",
+                    "addr:housenumber": "8",
+                    "addr:postcode": "87-100",
+                    "addr:street": "Rynek Staromiejski",
+                    "name": "Blaszany Kot",
+                    "note": "Wed\u0142ug legendy Kot przytopi\u0142 si\u0119 do cynkowanego dachu wypatruj\u0105c m\u0142odego ch\u0142opada, kt\u00f3rego powo\u0142ano na wojn\u0119.",
+                    "operator": "Kamienica pod Blaszanym Kotem",
+                    "tourism": "attraction"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.6039703,
+                    53.0099436
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "way",
+                "id": 100130788,
+                "tags": {
+                    "addr:city": "Toru\u0144",
+                    "addr:housenumber": "7",
+                    "addr:postcode": "87-100",
+                    "addr:street": "Rynek Staromiejski",
+                    "building": "yes",
+                    "height": "18",
+                    "historic": "yes",
+                    "name": "Dom Harcerza",
+                    "roof:colour": "#7c797a",
+                    "roof:height": "5",
+                    "roof:orientation": "across",
+                    "roof:shape": "gabled",
+                    "source:addr": "EMUiA (emuia.gugik.gov.pl)"
+                },
+                "nodes": [
+                    2665734413,
+                    2665733561,
+                    11931147839,
+                    11931147843,
+                    11931147865,
+                    11931147855,
+                    11931147867,
+                    2665733687,
+                    2665733746,
+                    2665733859,
+                    2665734493,
+                    2665734413
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.6041544,
+                    53.0099031
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "way",
+                "id": 100130825,
+                "tags": {
+                    "addr:city": "Toru\u0144",
+                    "addr:housenumber": "8",
+                    "addr:postcode": "87-100",
+                    "addr:street": "Rynek Staromiejski",
+                    "building": "yes",
+                    "building:colour": "#a89f88",
+                    "height": "17",
+                    "historic": "yes",
+                    "name": "Kamienica pod Blaszanym Kotem",
+                    "roof:colour": "#291e1a",
+                    "roof:height": "1.5",
+                    "roof:orientation": "across",
+                    "roof:shape": "gabled",
+                    "source:addr": "EMUiA (emuia.gugik.gov.pl)"
+                },
+                "nodes": [
+                    2665734413,
+                    2665734356,
+                    2665733028,
+                    2665733561,
+                    2665734413
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.6039896,
+                    53.0098895
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "way",
+                "id": 117188741,
+                "tags": {
+                    "addr:city": "Toru\u0144",
+                    "addr:city:simc": "0982724",
+                    "addr:housenumber": "6",
+                    "addr:postcode": "87-100",
+                    "addr:street": "Miko\u0142aja Kopernika",
+                    "addr:street:sym_ul": "09282",
+                    "building": "presbytery",
+                    "email": "parafia@katedrajanow.pl",
+                    "historic": "yes",
+                    "name": "Plebania",
+                    "phone": "+48 56 657 14 80",
+                    "source:addr": "EMUiA (emuia.gugik.gov.pl)",
+                    "website": "katedratorun.pl"
+                },
+                "nodes": [
+                    2665733592,
+                    2665733472,
+                    2665733402,
+                    2665732966,
+                    2665733096,
+                    2665733525,
+                    2665733535,
+                    2665733592
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.6061424,
+                    53.0097437
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "way",
+                "id": 244758365,
+                "tags": {
+                    "building": "monument",
+                    "colour": "#666666",
+                    "height": "3",
+                    "historic": "memorial",
+                    "memorial": "statue",
+                    "name": "Miko\u0142aj Kopernik",
+                    "name:be": "\u041c\u0456\u043a\u0430\u043b\u0430\u0439 \u041a\u0430\u043f\u0435\u0440\u043d\u0456\u043a",
+                    "name:de": "Kopernikusdenkmal",
+                    "name:en": "Nicholas Copernicus",
+                    "name:la": "Nicholas Copernicus",
+                    "name:pl": "Pomnik Kopernika",
+                    "name:ru": "\u041d\u0438\u043a\u043e\u043b\u0430\u0439 \u041a\u043e\u043f\u0435\u0440\u043d\u0438\u043a"
+                },
+                "nodes": [
+                    2520330165,
+                    2520330166,
+                    2520330164,
+                    2520330163,
+                    11931154806,
+                    11931154795,
+                    2520330165
+                ]
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.6049494,
+                    53.0103048
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "relation",
+                "id": 1431888,
+                "tags": {
+                    "addr:city": "Toru\u0144",
+                    "addr:housenumber": "6",
+                    "addr:postcode": "87-100",
+                    "addr:street": "Rynek Staromiejski",
+                    "building": "yes",
+                    "building:colour": "784C35",
+                    "height": "18",
+                    "historic": "yes",
+                    "name": "Dw\u00f3r Artusa",
+                    "name:be": "\u041f\u0430\u0434\u0432\u043e\u0440\u0430\u043a \u0410\u0440\u0442\u0443\u0441\u0430",
+                    "name:de": "Artushof",
+                    "name:pl": "Dw\u00f3r Artusa",
+                    "roof:colour": "666666",
+                    "roof:shape": "flat",
+                    "source:addr": "EMUiA (emuia.gugik.gov.pl)",
+                    "type": "multipolygon"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.6044764,
+                    53.0098398
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "type": "relation",
+                "id": 1431890,
+                "tags": {
+                    "addr:city": "Toru\u0144",
+                    "addr:housenumber": "1",
+                    "addr:postcode": "87-100",
+                    "addr:street": "Rynek Staromiejski",
+                    "building": "yes",
+                    "building:colour": "9A230E",
+                    "height": "11",
+                    "historic": "yes",
+                    "layer": "2",
+                    "name": "Ratusz Staromiejski",
+                    "name:be": "\u0420\u0430\u0442\u0443\u0448\u0430",
+                    "name:cs": "Starom\u011bstsk\u00e1 radnice",
+                    "name:de": "Altst\u00e4dter Rathaus",
+                    "name:en": "Old Town Hall",
+                    "name:es": "Antiguo Ayuntamiento",
+                    "name:fi": "Raatihuone",
+                    "name:fr": "H\u00f4tel de ville",
+                    "name:nl": "Oudestadsraadhuis",
+                    "name:pl": "Ratusz Staromiejski",
+                    "name:pt": "C\u00e2mara Municipal da Cidade Velha",
+                    "name:uk": "\u0420\u0430\u0442\u0443\u0448\u0430",
+                    "name:zh": "\u6258\u4f26\u8001\u57ce\u5e02",
+                    "roof:colour": "red",
+                    "roof:shape": "flat",
+                    "tourism": "attraction",
+                    "type": "multipolygon"
+                }
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    18.6043687,
+                    53.0105229
+                ]
+            }
+        }
+    ]
+}

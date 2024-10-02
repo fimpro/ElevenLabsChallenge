@@ -1,0 +1,147 @@
+{
+    "places": [
+        {
+            "id": "ChIJ8WwPlR01A0cR6NtIy_CTMC8",
+            "types": [
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Rynek Staromiejski, 87-100 Toru\u0144, Polska",
+            "location": {
+                "latitude": 53.010314,
+                "longitude": 18.6049249
+            },
+            "rating": 4.7,
+            "userRatingCount": 10235,
+            "displayName": {
+                "text": "Pomnik Miko\u0142aja Kopernika w Toruniu",
+                "languageCode": "pl"
+            },
+            "editorialSummary": {
+                "text": "Pomnik wzniesiony w\u00a01853\u00a0roku ku czci wybitnego miejscowego astronoma Miko\u0142aja Kopernika.",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ1Z76lh01A0cRnp6b3uoiS08",
+            "types": [
+                "museum",
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Rynek Staromiejski 1, 87-100 Toru\u0144, Polska",
+            "location": {
+                "latitude": 53.0103951,
+                "longitude": 18.604461
+            },
+            "rating": 4.7,
+            "userRatingCount": 1844,
+            "displayName": {
+                "text": "Ratusz Staromiejski - Muzeum Okr\u0119gowe w Toruniu",
+                "languageCode": "pl"
+            },
+            "editorialSummary": {
+                "text": "Ceglany \u015bredniowieczny ratusz z\u00a0wie\u017c\u0105 z\u00a0tarasem widokowym mieszcz\u0105cy muzeum regionalne.",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJUzB5u2k1A0cR8FzAJJa23MQ",
+            "types": [
+                "museum",
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Rynek Staromiejski 35, 87-100 Toru\u0144, Polska",
+            "location": {
+                "latitude": 53.010653999999995,
+                "longitude": 18.6051583
+            },
+            "rating": 4.5,
+            "userRatingCount": 155,
+            "displayName": {
+                "text": "Muzeum Sztuki Dalekiego Wschodu w Kamienicy pod Gwiazd\u0105",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJbXkv6h01A0cRVKa2k7CUNtw",
+            "types": [
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Szeroka 50, 87-100 Toru\u0144, Polska",
+            "location": {
+                "latitude": 53.010196699999995,
+                "longitude": 18.6052042
+            },
+            "rating": 4.8,
+            "userRatingCount": 404,
+            "displayName": {
+                "text": "Rze\u017aba Osio\u0142ka",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ3S589Tk1A0cRBaKcJAkxbNg",
+            "types": [
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Rynek Staromiejski 1, 87-100 Toru\u0144, Polska",
+            "location": {
+                "latitude": 53.010382500000006,
+                "longitude": 18.6047488
+            },
+            "rating": 4.5,
+            "userRatingCount": 115,
+            "displayName": {
+                "text": "Wie\u017ca Ratusza Staromiejskiego (widokowa)",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJkQOsOBM1A0cRhXecpmRwBgk",
+            "types": [
+                "cultural_center",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Rynek Staromiejski 36/38, 87-100 Toru\u0144, Polska",
+            "location": {
+                "latitude": 53.0106035,
+                "longitude": 18.605312899999998
+            },
+            "rating": 4.5,
+            "userRatingCount": 2,
+            "displayName": {
+                "text": "Europejskie Centrum Filmowe CAMERIMAGE",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ_d55lh01A0cRKTixzD-Y2KQ",
+            "types": [
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "87-100 Toru\u0144, Polska",
+            "location": {
+                "latitude": 53.0104383,
+                "longitude": 18.6044813
+            },
+            "rating": 4.7,
+            "userRatingCount": 10,
+            "displayName": {
+                "text": "Ceramiczna Figurka toru\u0144skich artyst\u00f3w",
+                "languageCode": "pl"
+            }
+        }
+    ]
+}

@@ -10,12 +10,29 @@ dotenv.load_dotenv()
 
 API_URL = "https://places.googleapis.com/v1/places:searchNearby"
 API_KEY = os.getenv("API_KEY")
-FIELD_MASK = "places.types,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.displayName,places.editorialSummary"
+FIELD_MASK = "places.types,places.formattedAddress,places.id,places.location,places.rating,places.userRatingCount,places.displayName,places.editorialSummary"
 excluded_types = []
+included_types = [
+    "art_gallery",
+    "museum",
+    "performing_arts_theater",
+    "aquarium",
+    "cultural_center",
+    "historical_landmark",
+    "marina",
+    "movie_theater",
+    "tourist_attraction",
+    "zoo",
+    "city_hall",
+    "church",
+    "hindu_temple",
+    "mosque",
+    "synagogue",
+    "stadium",
+]
 
 
 def get_nearby(location: List[float], radius: float, max_count: int):
-    print("Getting nearby places...")
     request_data = {
         "maxResultCount": max_count,
         "languageCode": "pl",
@@ -25,6 +42,7 @@ def get_nearby(location: List[float], radius: float, max_count: int):
                 "radius": radius,
             }
         },
+        "includedTypes": included_types,
         "excludedTypes": excluded_types,
     }
     headers = {
@@ -36,17 +54,16 @@ def get_nearby(location: List[float], radius: float, max_count: int):
 
     response = response.json()
 
-    with open("response.json", "w") as f:
+    with open("response_google.json", "w") as f:
         json.dump(response, f, indent=4)
 
     places = []
 
     for place in response["places"]:
-        if not "tourist_attraction" in place["types"]:
-            continue
-
         places.append(
             {
+                "id": place["id"],
+                "tags": place["types"],
                 "name": place["displayName"]["text"],
                 "address": place["formattedAddress"],
                 "location": [
@@ -64,5 +81,5 @@ def get_nearby(location: List[float], radius: float, max_count: int):
 
 places = get_nearby(location=[53.010255, 18.605087], radius=50, max_count=20)
 
-with open("places.json", "w") as f:
+with open("places_google.json", "w") as f:
     json.dump(places, f, indent=4)

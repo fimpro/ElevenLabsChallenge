@@ -1,0 +1,144 @@
+[
+  {
+    "id": 3556755015,
+    "tags": [
+      "artwork"
+    ],
+    "name": "Osio\u0142",
+    "address": "Osio\u0142, Rynek Staromiejski, Stare Miasto, Toru\u0144, wojew\u00f3dztwo kujawsko-pomorskie, 87-114, Polska",
+    "location": [
+      18.6052693,
+      53.0101762
+    ],
+    "rating": null,
+    "userRatingCount": null,
+    "summary": null
+  },
+  {
+    "id": 4081945387,
+    "tags": [
+      "attraction"
+    ],
+    "name": "Dom Legend Toru\u0144skich",
+    "address": "Dom Legend Toru\u0144skich, 35, Szeroka, Przedmie\u015bcie \u015awi\u0119tej Katarzyny, Stare Miasto, Toru\u0144, wojew\u00f3dztwo kujawsko-pomorskie, 87-113, Polska",
+    "location": [
+      18.6061229,
+      53.0101301
+    ],
+    "rating": null,
+    "userRatingCount": null,
+    "summary": null
+  },
+  {
+    "id": 7373486155,
+    "tags": [
+      "attraction"
+    ],
+    "name": "Blaszany Kot",
+    "address": "Blaszany Kot, 8, Rynek Staromiejski, Stare Miasto, Toru\u0144, wojew\u00f3dztwo kujawsko-pomorskie, 87-100, Polska",
+    "location": [
+      18.6039703,
+      53.0099436
+    ],
+    "rating": null,
+    "userRatingCount": null,
+    "summary": "Wed\u0142ug legendy Kot przytopi\u0142 si\u0119 do cynkowanego dachu wypatruj\u0105c m\u0142odego ch\u0142opada, kt\u00f3rego powo\u0142ano na wojn\u0119."
+  },
+  {
+    "id": 100130788,
+    "tags": [
+      "building",
+      "historic"
+    ],
+    "name": "Dom Harcerza",
+    "address": "Rynek Staromiejski, Stare Miasto, Toru\u0144, wojew\u00f3dztwo kujawsko-pomorskie, 87-114, Polska",
+    "location": [
+      18.6041544,
+      53.0099031
+    ],
+    "rating": null,
+    "userRatingCount": null,
+    "summary": null
+  },
+  {
+    "id": 100130825,
+    "tags": [
+      "building",
+      "historic"
+    ],
+    "name": "Kamienica pod Blaszanym Kotem",
+    "address": "Pod Blaszanym Kotem, Rynek Staromiejski, Stare Miasto, Toru\u0144, wojew\u00f3dztwo kujawsko-pomorskie, 87-114, Polska",
+    "location": [
+      18.6039896,
+      53.0098895
+    ],
+    "rating": null,
+    "userRatingCount": null,
+    "summary": null
+  },
+  {
+    "id": 117188741,
+    "tags": [
+      "presbytery",
+      "historic"
+    ],
+    "name": "Plebania",
+    "address": "Kancelaria parafialna, Miko\u0142aja Kopernika, Przedmie\u015bcie \u015awi\u0119tej Katarzyny, Stare Miasto, Toru\u0144, wojew\u00f3dztwo kujawsko-pomorskie, 87-113, Polska",
+    "location": [
+      18.6061424,
+      53.0097437
+    ],
+    "rating": null,
+    "userRatingCount": null,
+    "summary": null
+  },
+  {
+    "id": 244758365,
+    "tags": [
+      "monument",
+      "historic"
+    ],
+    "name": "Miko\u0142aj Kopernik",
+    "address": "Miko\u0142aj Kopernik, Rynek Staromiejski, Stare Miasto, Toru\u0144, wojew\u00f3dztwo kujawsko-pomorskie, 87-114, Polska",
+    "location": [
+      18.6049494,
+      53.0103048
+    ],
+    "rating": null,
+    "userRatingCount": null,
+    "summary": null
+  },
+  {
+    "id": 1431888,
+    "tags": [
+      "building",
+      "historic"
+    ],
+    "name": "Dw\u00f3r Artusa",
+    "address": "Artus, 6, Rynek Staromiejski, Stare Miasto, Toru\u0144, wojew\u00f3dztwo kujawsko-pomorskie, 87-100, Polska",
+    "location": [
+      18.6044764,
+      53.0098398
+    ],
+    "rating": null,
+    "userRatingCount": null,
+    "summary": null
+  },
+  {
+    "id": 1431890,
+    "tags": [
+      "building",
+      "attraction",
+      "historic"
+    ],
+    "name": "Ratusz Staromiejski",
+    "address": "Rynek Staromiejski, Stare Miasto, Toru\u0144, wojew\u00f3dztwo kujawsko-pomorskie, 87-113, Polska",
+    "location": [
+      18.6043687,
+      53.0105229
+    ],
+    "rating": null,
+    "userRatingCount": null,
+    "summary": null
+  }
+]
