@@ -13,6 +13,7 @@ import 'package:sightseeing_app/pages/map/top_panel.dart';
 import 'package:sightseeing_app/services/api.dart';
 import 'package:sightseeing_app/services/audio.dart';
 import 'package:sightseeing_app/state/audio.dart';
+import 'package:sightseeing_app/state/config.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../state/poi.dart';
@@ -52,6 +53,11 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
           lat: position.latitude,
           lng: position.longitude,
           prevent: apiController.hasNewAudio)));
+
+      if(response == null) {
+        print('relogging in');
+        await tryApi(() => apiController.login(context.read<ConfigCubit>().state));
+      }
     });
 
     _playerStateStream = audioPlayer.playerStateStream.listen((event) {
