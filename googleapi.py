@@ -9,7 +9,9 @@ from tags import INCLUDED_TAGS, EXCLUDED_TAGS
 dotenv.load_dotenv()
 
 API_URL = "https://places.googleapis.com/v1/places:searchNearby"
-API_KEY = os.getenv("API_KEY")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+if GOOGLE_API_KEY is None:
+    print("Google api key is none")
 FIELD_MASK = "places.types,places.formattedAddress,places.id,places.location,places.rating,places.userRatingCount,places.displayName,places.editorialSummary"
 
 def get_nearby(location: List[float], radius: float):
@@ -27,7 +29,7 @@ def get_nearby(location: List[float], radius: float):
     }
     headers = {
         "Content-Type": "application/json",
-        "X-Goog-Api-Key": API_KEY,
+        "X-Goog-Api-Key": GOOGLE_API_KEY,
         "X-Goog-FieldMask": FIELD_MASK,
     }
     response = requests.post(API_URL, json=request_data, headers=headers)
@@ -40,6 +42,7 @@ def get_nearby(location: List[float], radius: float):
     places = []
 
     for place in response["places"]:
+        has_rating = "rating" in place and "rating_count" in place
         places.append(
             {
                 "id": place["id"],
@@ -50,8 +53,8 @@ def get_nearby(location: List[float], radius: float):
                     place["location"]["latitude"],
                     place["location"]["longitude"],
                 ],
-                "rating": place["rating"],
-                "rating_count": place["userRatingCount"],
+                "rating": place["rating"] if has_rating else None,
+                "rating_count": place["userRatingCount"] if has_rating else None,
                 "summary": place.get("editorialSummary", {}).get("text", None),
             }
         )
@@ -62,4 +65,4 @@ def get_nearby(location: List[float], radius: float):
 # places = get_nearby(location=[53.010255, 18.605087], radius=50)
 
 # with open("places_google.json", "w") as f:
-    # json.dump(places, f, indent=4)
+#     json.dump(places, f, indent=4)

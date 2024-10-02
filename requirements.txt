@@ -1,9 +1,12 @@
 openai
    langchain
    langchain-community
+   langchain-core
+   langchain-openai
    python-dotenv
-
 fastapi
 uvicorn
 apscheduler
 geopy
+uuid
+elevenlabs

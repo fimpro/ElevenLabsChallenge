@@ -14,11 +14,7 @@ def ask_question(question):
     load_dotenv()
     
     # Get API keys
-    ydc_api_key = os.getenv("YDC_API_KEY")
     openai_api_key = os.getenv("OPENAI_API_KEY")
-    
-    
-    
    
     # Initialize YouRetriever
     yr = YouRetriever()
