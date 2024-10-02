@@ -7,10 +7,13 @@ typedef ButtonGroupSelectBuilder<T> = Widget Function(T item, BuildContext conte
 class ButtonGroupSelect<T> extends StatefulWidget {
   final List<T> items;
   final ButtonGroupSelectBuilder<T> builder;
-  final int selectedIndex;
+  final int? selectedIndex;
+  final List<int>? selectedIndexes;
   final void Function(int index, T item)? onSelected;
+  final void Function(List<int>)? onSelectedMultiple;
+  final bool radio;
 
-  const ButtonGroupSelect({super.key, required this.selectedIndex, required this.items, required this.builder, this.onSelected});
+  const ButtonGroupSelect({super.key, this.selectedIndex, this.selectedIndexes, required this.items, required this.builder, this.onSelected, this.onSelectedMultiple, this.radio = true});
 
   @override
   State<ButtonGroupSelect<T>> createState() => _ButtonGroupSelectState();
@@ -23,21 +26,41 @@ class _ButtonGroupSelectState<T> extends State<ButtonGroupSelect<T>> {
   void initState() {
     super.initState();
 
-    _buttonController.selectIndex(widget.selectedIndex);
+    if(widget.selectedIndex != null) {
+      _buttonController.selectIndex(widget.selectedIndex!);
+    }
+
+    if(widget.selectedIndexes != null) {
+      _buttonController.selectIndexes(widget.selectedIndexes!);
+    }
   }
 
   @override
   void didUpdateWidget(covariant ButtonGroupSelect<T> oldWidget) {
     super.didUpdateWidget(oldWidget);
 
-    if (oldWidget.selectedIndex != widget.selectedIndex) {
-      _buttonController.selectIndex(widget.selectedIndex);
+    if (oldWidget.selectedIndex != widget.selectedIndex && widget.selectedIndex != null) {
+      _buttonController.selectIndex(widget.selectedIndex!);
+    }
+
+    if(oldWidget.selectedIndexes != widget.selectedIndexes && widget.selectedIndexes != null) {
+      _buttonController.selectIndexes(widget.selectedIndexes!);
     }
   }
 
   void select(int index) {
-    _buttonController.selectIndex(index);
-    widget.onSelected?.call(index, widget.items[index]);
+    if(widget.radio) {
+      _buttonController.selectIndex(index);
+      widget.onSelected?.call(index, widget.items[index]);
+    } else {
+      if(_buttonController.selectedIndexes.contains(index)) {
+        _buttonController.unselectIndex(index);
+      } else {
+        _buttonController.selectIndex(index);
+      }
+
+      widget.onSelectedMultiple?.call(_buttonController.selectedIndexes.toList());
+    }
   }
 
   @override
@@ -45,7 +68,7 @@ class _ButtonGroupSelectState<T> extends State<ButtonGroupSelect<T>> {
     return Column(children: [
       GroupButton(
         controller: _buttonController,
-        isRadio: true,
+        isRadio: widget.radio,
         enableDeselect: false,
         buttons: widget.items,
         options: const GroupButtonOptions(

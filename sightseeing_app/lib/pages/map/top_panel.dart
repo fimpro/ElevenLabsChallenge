@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sightseeing_app/components/my_card.dart';
 import 'package:sightseeing_app/state/config.dart';
 
+import '../../models/config.dart';
+
 class TopPanel extends StatelessWidget {
   const TopPanel({super.key});
 

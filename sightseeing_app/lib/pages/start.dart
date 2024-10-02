@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:group_button/group_button.dart';
 import 'package:sightseeing_app/components/button_group_select.dart';
+import 'package:sightseeing_app/services/api.dart';
 import 'package:sightseeing_app/state/config.dart';
+
+import '../models/config.dart';
+import '../services/location.dart';
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
@@ -12,7 +17,31 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  final GroupButtonController _voiceController = GroupButtonController();
+  Future<void> _checkLocation() async {
+    try {
+      await checkLocationPermission();
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Location permission disabled",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+  }
+
+  Future<void> _startApp() async {
+    await _checkLocation();
+
+    if(!mounted) return;
+
+    var config = context.read<ConfigCubit>();
+
+    if(!mounted) return;
+
+    await tryApi(() => apiController.login(config.state), doThrow: true);
+
+    Navigator.of(context).pushNamed('/map');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +68,7 @@ class _StartScreenState extends State<StartScreen> {
                   children: [
                     Text("Your guide's voice",
                         style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 5),
                     ButtonGroupSelect<String>(
                       items: voices,
                       builder: (item, context) => Text(item),
@@ -48,10 +77,10 @@ class _StartScreenState extends State<StartScreen> {
                         context.read<ConfigCubit>().setVoice(item);
                       },
                     ),
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 25),
                     Text("Your guide's mood",
                         style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 5),
                     ButtonGroupSelect<String>(
                         items: moods,
                         builder: (item, context) => Text(item),
@@ -59,10 +88,22 @@ class _StartScreenState extends State<StartScreen> {
                         onSelected: (index, item) {
                           context.read<ConfigCubit>().setMood(item);
                         }),
+                    const SizedBox(height: 25),
+                    Text("Your preferences",
+                        style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: 5),
+                    ButtonGroupSelect<String>(
+                        items: preferences,
+                        radio: false,
+                        builder: (item, context) => Text(item),
+                        selectedIndexes: config.preferences.map((x) => preferences.indexOf(x)).toList(),
+                        onSelectedMultiple: (indexes) {
+                          context.read<ConfigCubit>().setPreferences(indexes.map((x) => preferences[x]).toList());
+                        }),
                     const SizedBox(height: 50),
                     ElevatedButton(
                         onPressed: () {
-                          Navigator.of(context).pushNamed('/map');
+                          _startApp();
                         },
                         style: ElevatedButton.styleFrom(
                             fixedSize: const Size(130, 50),

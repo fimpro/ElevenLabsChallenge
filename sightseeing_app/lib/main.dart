@@ -5,6 +5,7 @@ import 'package:sightseeing_app/pages/start.dart';
 import 'package:sightseeing_app/services/api.dart';
 import 'package:sightseeing_app/services/location.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:sightseeing_app/state/poi.dart';
 
@@ -14,23 +15,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  void initState() {
-    checkLocation();
-    tryApi(() => apiController.login());
-  }
-
-  Future<void> checkLocation() async {
-    try {
-      await checkLocationPermission();
-    } catch (e) {
-      Fluttertoast.showToast(
-        msg: "Location permission disabled",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.CENTER,
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +30,10 @@ class MyApp extends StatelessWidget {
           routes: {
             '/': (context) => const StartScreen(),
             '/map': (context) => BlocProvider(
-                create: (_) => POICubit(), child: const MapScreen()),
+                  create: (_) => AudioCubit(),
+                  child: BlocProvider(
+                      create: (_) => POICubit(), child: const MapScreen()),
+                ),
           }),
     );
   }

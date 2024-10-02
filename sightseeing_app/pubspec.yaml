@@ -47,6 +47,7 @@ dependencies:
   group_button: ^5.3.4
   flutter_bloc: ^8.1.1
   just_audio: ^0.9.40
+  http: ^1.2.2
 
 
 dev_dependencies:

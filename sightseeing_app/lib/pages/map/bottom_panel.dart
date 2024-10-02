@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:sightseeing_app/models/poi.dart';
 import 'package:sightseeing_app/services/api.dart';
 import 'package:sightseeing_app/services/audio.dart';
 import 'package:sightseeing_app/state/poi.dart';
@@ -14,7 +18,7 @@ class BottomPanelBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<POICubit, POIResponse>(
+    return BlocBuilder<POICubit, POI>(
       builder: (context, state) => Container(
         color: Theme.of(context).colorScheme.surface,
         child: Column(
@@ -36,10 +40,24 @@ class BottomPanelBody extends StatelessWidget {
   }
 }
 
-class BottomPanelCollapsed extends StatelessWidget {
+class BottomPanelCollapsed extends StatefulWidget {
   final bool isPanelOpen;
 
   const BottomPanelCollapsed({super.key, this.isPanelOpen = false});
+
+  @override
+  State<BottomPanelCollapsed> createState() => _BottomPanelCollapsedState();
+}
+
+class _BottomPanelCollapsedState extends State<BottomPanelCollapsed> {
+  late final StreamSubscription<PlayerState> _playerStateStream;
+  bool _isPlaying = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +65,7 @@ class BottomPanelCollapsed extends StatelessWidget {
         elevation: 0,
         padding: EdgeInsets.zero,
         height: height,
-        child: BlocBuilder<POICubit, POIResponse>(
+        child: BlocBuilder<POICubit, POI>(
           builder: (context, state) => Column(
             children: [
               Align(
@@ -105,7 +123,7 @@ class BottomPanelCollapsed extends StatelessWidget {
                                 audioPlayer.play();
                               }
                             },
-                            icon: Icon(audioPlayer.playing
+                            icon: Icon(_isPlaying
                                 ? Icons.pause
                                 : Icons.play_arrow)),
                         IconButton(
@@ -113,7 +131,7 @@ class BottomPanelCollapsed extends StatelessWidget {
                               audioPlayer.stop();
                               context
                                   .read<POICubit>()
-                                  .setPOI(POIResponse.empty());
+                                  .setPOI(POI.empty());
                             },
                             icon: const Icon(Icons.close))
                       ]

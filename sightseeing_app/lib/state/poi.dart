@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sightseeing_app/services/api.dart';
+import '../models/poi.dart';
 
-class POICubit extends Cubit<POIResponse> {
-  POICubit() : super(POIResponse.empty());
+class POICubit extends Cubit<POI> {
+  POICubit() : super(POI.empty());
 
-  void setPOI(POIResponse poi) => emit(poi);
+  void setPOI(POI poi) => emit(poi);
 }

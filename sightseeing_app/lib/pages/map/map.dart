@@ -2,18 +2,20 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_compass/flutter_compass.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:sightseeing_app/pages/map/bottom_panel.dart';
 import 'package:sightseeing_app/pages/map/top_panel.dart';
 import 'package:sightseeing_app/services/api.dart';
 import 'package:sightseeing_app/services/audio.dart';
-import 'package:sightseeing_app/state/poi.dart';
+import 'package:sightseeing_app/state/audio.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../state/poi.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -30,6 +32,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   late final StreamController<double?> _alignPositionStreamController;
   late final StreamController<double?> _alignDirectionStreamController;
   late final StreamSubscription<Position> _positionStream;
+  late final StreamSubscription<PlayerState> _playerStateStream;
 
   @override
   void initState() {
@@ -45,10 +48,31 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                 accuracy: LocationAccuracy.bestForNavigation,
                 distanceFilter: 50))
         .listen((position) async {
-      var response = await tryApi(() => apiController.getNewPOIs(position.latitude, position.longitude));
-      if (response != null && mounted) {
-        context.read<POICubit>().setPOI(response);
-        audioPlayer.setUrl(response.audioUrl);
+      var response = await tryApi(() => apiController.update(UpdateRequest(
+          lat: position.latitude,
+          lng: position.longitude,
+          prevent: apiController.hasNewAudio)));
+    });
+
+    _playerStateStream = audioPlayer.playerStateStream.listen((event) {
+      if(!mounted) return;
+
+      if(event.processingState == ProcessingState.completed) {
+        apiController.hasNewAudio = false;
+      }
+
+      context.read<AudioCubit>().setState(event);
+    });
+
+    apiController.start(2000, (data) {
+      if (!mounted) return;
+
+      if (data.info != null) {
+        context.read<POICubit>().setPOI(data.info!);
+      }
+
+      if (data.audioReady) {
+        audioPlayer.setUrl(apiController.lastAudioUrl());
         audioPlayer.play();
       }
     });
@@ -59,6 +83,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   @override
   void dispose() {
     _alignPositionStreamController.close();
+    _positionStream.cancel();
+    _playerStateStream.cancel();
+    apiController.stop();
     super.dispose();
   }
 
@@ -81,16 +108,15 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
               mapController: _animatedController.mapController,
               options: MapOptions(
                 initialCenter: const LatLng(51.509364, -0.128928),
-                // Center the map over London
                 initialZoom: 9.2,
                 onPositionChanged: (camera, hasGesture) {
                   if (!hasGesture) return;
 
                   setState(() {
-                    if (_alignPositionOnUpdate != AlignOnUpdate.never)  {
+                    if (_alignPositionOnUpdate != AlignOnUpdate.never) {
                       _alignPositionOnUpdate = AlignOnUpdate.never;
                     }
-                    
+
                     if (_alignDirectionOnUpdate != AlignOnUpdate.never) {
                       _alignDirectionOnUpdate = AlignOnUpdate.never;
                     }
@@ -99,11 +125,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
               ),
               children: [
                 TileLayer(
-                  // Display map tiles from any source
                   urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  // OSMF's Tile Server
                   userAgentPackageName: 'com.example.app',
-                  // And many more recommended properties!
                 ),
                 CurrentLocationLayer(
                   alignPositionStream: _alignPositionStreamController.stream,
@@ -118,7 +141,6 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                       onTap: () => launchUrl(Uri.parse(
                           'https://openstreetmap.org/copyright')), // (external)
                     ),
-                    // Also add images...
                   ],
                 ),
               ],
@@ -130,7 +152,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                   Align(
                     alignment: Alignment.bottomRight,
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 140, right: 10),
+                      padding: const EdgeInsets.only(bottom: 140, right: 10),
                       child: FloatingActionButton(
                           onPressed: () {
                             myLocation();
