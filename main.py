@@ -9,6 +9,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from googleapi import get_nearby
 from geopy.distance import geodesic
 from internet_llm import ask_question
+from selector_llm import select_location
 from elevenlabs_api import remove_old, text_to_speech_file
 import uuid
 import threading
@@ -146,16 +147,26 @@ def generate_audio(user, places, id):
     You should pick the place that offers some cool information that user might want to hear about.
     Note that we will get those locations every 50 meters, so if there is nothing interesting right now, there is no problem with simply choosing no location at all, so definitely keep that in mind.
     Also, the locations might not be formatted perfectly (and they might for example repeat) or they might even be in a different language than English so be ready for that.
-    I provided the ratings in scale 1-5 provided by Google services, but do not rely on them too much.
+    I provided the ratings in scale 1-5 provided by Google services, but do not rely on them too much. Remember to also include the number of the location you pick in the final response.
     With that in mind, choose the best location from these or choose that none of them are really worth seeing:""" 
 
         for idx, desc in enumerate(descs):
             prompt += f"\n\nLocation {idx+1}: {desc}"
 
-        # TODO: tutaj trzeba odpytać llm-a i potem mu wysłać drugą wiadomość:
-        prompt = "Now, for automatic record, write only just the number of the place you have chosen or word 'none'."
+        detailed_response = select_location(prompt)
 
-        chosen_id = 0  # TODO: odczytać miejsce z drugiej odpowiedzi (i odjąć 1 od numeru!)
+        # TODO: tutaj trzeba odpytać llm-a i potem mu wysłać drugą wiadomość:
+        prompt = f"""Here is a short description:
+        {detailed_response}
+          Now, for automatic record, write ONLY and ONLY the number of the place that was chosen or word 'none'."""
+
+        str_chosen_id = select_location(prompt)
+        str_chosen_id= str_chosen_id.strip().lower()
+        if str_chosen_id == 'none':
+        # No suitable location was found
+            return None
+        
+        chosen_id = int(str_chosen_id)-1  # TODO: odczytać miejsce z drugiej odpowiedzi (i odjąć 1 od numeru!)
 
     infos[id]['location'] = places[chosen_id]['location']
     infos[id]['name'] = places[chosen_id]['name']
