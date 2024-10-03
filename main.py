@@ -124,10 +124,10 @@ async def check_id(req: InfoRequest):
             }
         }
     
-@app.post("/audio")
-async def download_audio(req: InfoRequest):
-    if req.id in infos:
-        return responses.FileResponse(path=f'outputs/{req.id}.mp3', filename=f'{req.id}.mp3', media_type='audio/mpeg')
+@app.get("/audio/{id}.mp3")
+async def download_audio(id: str):
+    if id in infos:
+        return responses.FileResponse(path=f'outputs/{id}.mp3', filename=f'{id}.mp3', media_type='audio/mpeg')
 
 def generate_audio(user, places, id):
     if len(places) == 1:

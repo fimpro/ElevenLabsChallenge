@@ -4,6 +4,8 @@ import threading
 from elevenlabs import VoiceSettings, play
 from elevenlabs.client import ElevenLabs
 import random
+import subprocess
+import tempfile
 
 def remove_old(path,max_time): #romoves old files
     # Get the current time
@@ -64,10 +66,20 @@ def generate_audio(text, path,emotions,voice):
             use_speaker_boost=True,
         ),
     )
-    with open(path, "wb") as f:
+
+    # temp path
+    temp_path = tempfile.mktemp(suffix=".mp3")
+
+    with open(temp_path, "wb") as f:
         for chunk in response:
             if chunk:
                 f.write(chunk)
+
+    # run ffmpeg -i generated_file.mp3 -acodec libmp3lame -ar 44100 -b:a 128k output.mp3
+
+    subprocess.run(["ffmpeg", "-i", temp_path, "-acodec", "libmp3lame", "-ar", "44100", "-b:a", "128k", path], check=True)
+    print(f're-encoded {path}')
+    
 
 def text_to_speech_file(text: str, path: str,emotions="energetic",voice="Eric"):#creates audiofile with text as speech
     threading.Thread(target=generate_audio,args=(text, path,emotions,voice)).start()
