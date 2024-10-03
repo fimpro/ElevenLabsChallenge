@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI, HTTPException, Depends, responses
+from fastapi import FastAPI, HTTPException, Depends, responses, Header
 from pydantic import BaseModel
 import secrets
 import time
@@ -12,6 +12,7 @@ from internet_llm import ask_question
 from elevenlabs_api import remove_old, text_to_speech_file
 import uuid
 import threading
+from typing import Annotated
 
 
 
@@ -178,14 +179,15 @@ Only provide the description, so don't for example write 'Sure, here is the desc
     )
 
 class UpdateRequest(BaseModel):
-    token: str
     prevent: bool
     lat: float
     lon: float
+
 @app.post("/update")
-async def update_user(req: UpdateRequest):
-    if req.token in users:
-        user = users[req.token]
+async def update_user(req: UpdateRequest, authorization: Annotated[str | None, Header()] = None):
+    token = authorization.split(' ')[1]
+    if token in users:
+        user = users[token]
         user.update([req.lat, req.lon])
         if user.do_api_request() and req.prevent == 0:
             places = user.get_nearby()
