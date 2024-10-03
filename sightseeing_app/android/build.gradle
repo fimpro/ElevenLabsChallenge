@@ -28,7 +28,18 @@ allprojects {
             }
         }
     }
-    // This code is where all the magic happens and fixes the error.
+
+    subprojects {
+        afterEvaluate { project ->
+            if (project.plugins.hasPlugin("com.android.application") ||
+                    project.plugins.hasPlugin("com.android.library")) {
+                project.android {
+                    compileSdkVersion 34
+                    buildToolsVersion "34.0.0"
+                }
+            }
+        }
+    }
 }
 
 rootProject.buildDir = '../build'
@@ -41,4 +52,10 @@ subprojects {
 
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
+}
+
+configurations.all {
+    resolutionStrategy {
+        force 'androidx.core:core-ktx:1.6.0'
+    }
 }

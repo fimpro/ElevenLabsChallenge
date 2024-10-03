@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:group_button/group_button.dart';
 import 'package:sightseeing_app/components/button_group_select.dart';
 import 'package:sightseeing_app/services/api.dart';
 import 'package:sightseeing_app/state/config.dart';
