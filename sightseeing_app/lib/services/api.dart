@@ -98,6 +98,8 @@ class ApiController {
     }
 
     token = data.token;
+    lastAudioId = null;
+    hasNewAudio = false;
   }
 
   Future<UpdateResponse> updateLocation(UpdateRequest request) async {
@@ -160,7 +162,7 @@ class ApiController {
   }
 
   String lastAudioUrl() {
-    return "$baseUrl/audio/$lastAudioId";
+    return "$baseUrl/audio/$lastAudioId.mp3";
   }
 }
 

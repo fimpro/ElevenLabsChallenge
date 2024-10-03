@@ -1,429 +1,348 @@
 {
     "places": [
         {
-            "id": "ChIJZboe5HXCD0cRM9LIzvwBNcI",
-            "types": [
-                "tourist_attraction",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "Szewska 10, 50-122 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.109631799999995,
-                "longitude": 17.0346662
-            },
-            "rating": 4.7,
-            "userRatingCount": 9009,
-            "displayName": {
-                "text": "Punkt widokowy na Mostku Pokutnic na Katedrze \u015aw. Marii Magdaleny",
-                "languageCode": "pl"
-            },
-            "editorialSummary": {
-                "text": "Punkt widokowy na zniszczonym podczas II\u00a0wojny \u015bwiatowej i\u00a0odbudowanym w\u00a02001\u00a0r. mo\u015bcie \u0142\u0105cz\u0105cym wie\u017ce ko\u015bcielne z\u00a0XV\u00a0w.",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJhbh0rHDCD0cRi59maSR8Qy0",
-            "types": [
-                "park",
-                "tourist_attraction",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "Nowa, 52-007 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.104927599999996,
-                "longitude": 17.039078099999998
-            },
-            "rating": 4.4,
-            "userRatingCount": 4126,
-            "displayName": {
-                "text": "Wzg\u00f3rze Partyzant\u00f3w",
-                "languageCode": "pl"
-            },
-            "editorialSummary": {
-                "text": "Nadrzeczny park z\u00a0miejscami piknikowymi nad wod\u0105 oraz ruinami starych miejskich fortyfikacji.",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJAQAAndjpD0cRuKt9kcYEEDI",
-            "types": [
-                "tourist_attraction",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "plac Nowy Targ 25-26, 50-143 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.111261899999995,
-                "longitude": 17.0383176
-            },
-            "rating": 4.4,
-            "userRatingCount": 1910,
-            "displayName": {
-                "text": "Plac Nowy Targ",
-                "languageCode": "pl"
-            },
-            "editorialSummary": {
-                "text": "Du\u017cy plac z\u00a0kawiarniami i\u00a0le\u017cakami b\u0119d\u0105cy popularnym miejscem spotka\u0144 oraz organizacji targ\u00f3w i\u00a0festiwali.",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJazJy8XfCD0cRvCTZFwTfdO4",
-            "types": [
-                "museum",
-                "tourist_attraction",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "Bernardy\u0144ska 5, 50-156 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.1095231,
-                "longitude": 17.0421574
-            },
-            "rating": 4.4,
-            "userRatingCount": 1331,
-            "displayName": {
-                "text": "Muzeum Architektury we Wroc\u0142awiu",
-                "languageCode": "pl"
-            },
-            "editorialSummary": {
-                "text": "Dawny \u015bredniowieczny klasztor, w\u00a0kt\u00f3rym mieszcz\u0105 si\u0119 archiwa i\u00a0jedyne w\u00a0Polsce muzeum historii architektury.",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJl6FmQXjDD0cR69gZ_nhXm1w",
-            "types": [
-                "church",
-                "place_of_worship",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "plac Dominika\u0144ski 2, 50-159 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.1094114,
-                "longitude": 17.039382
-            },
-            "rating": 4.7,
-            "userRatingCount": 1268,
-            "displayName": {
-                "text": "Dominikanie we Wroc\u0142awiu - Ko\u015bci\u00f3\u0142 i Klasztor pw. \u015awi\u0119tego Wojciecha",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJRaJejt_pD0cRkhmSF3ZDeM4",
-            "types": [
-                "tourist_attraction",
-                "amusement_park",
-                "amusement_center",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "Bernardy\u0144ska 4, 50-156 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.110481,
-                "longitude": 17.0416644
-            },
-            "rating": 4.7,
-            "userRatingCount": 1292,
-            "displayName": {
-                "text": "Let Me Out Escape Room Wroc\u0142aw",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJIcWdse_DD0cRNH-x3VsJOrA",
-            "types": [
-                "church",
-                "place_of_worship",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "Szewska 10, 50-529 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.10953190000001,
-                "longitude": 17.0346483
-            },
-            "rating": 4.8,
-            "userRatingCount": 179,
-            "displayName": {
-                "text": "Katedra \u015bw. Marii Magdaleny",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJv7U81JrDD0cRaW50gChnzUQ",
-            "types": [
-                "cafe",
-                "bar",
-                "art_gallery",
-                "food",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "\u0141aciarska 4, 50-104 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.1082816,
-                "longitude": 17.0352063
-            },
-            "rating": 4.9,
-            "userRatingCount": 215,
-            "displayName": {
-                "text": "Sztuka na Miejscu",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJWc0XRHjCD0cR86tadTREys8",
+            "id": "ChIJ00svx4DCD0cRWRQck-i2I18",
             "types": [
                 "tourist_attraction",
                 "museum",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Zygmunta Krasi\u0144skiego 1, 50-954 Wroc\u0142aw, Polska",
+            "formattedAddress": "Na Grobli 17, 50-421 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 51.1083053,
-                "longitude": 17.044484699999998
+                "latitude": 51.1042536,
+                "longitude": 17.056648499999998
             },
-            "rating": 4.6,
-            "userRatingCount": 624,
+            "rating": 4.4,
+            "userRatingCount": 8005,
             "displayName": {
-                "text": "Muzeum Poczty i Telekomunikacji we Wroc\u0142awiu",
+                "text": "Hydropolis",
+                "languageCode": "pl"
+            },
+            "editorialSummary": {
+                "text": "Utworzone w\u00a0podziemnym zbiorniku wodnym interaktywne muzeum po\u015bwi\u0119cone wodzie i\u00a0\u015brodowisku oraz sklep z\u00a0pami\u0105tkami.",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJN6GwQADDD0cRRd91md71Duo",
-            "types": [
-                "historical_landmark",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "ks. Piotra Skargi 18a, 50-082 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.104849099999996,
-                "longitude": 17.0385071
-            },
-            "rating": 4.9,
-            "userRatingCount": 118,
-            "displayName": {
-                "text": "Bastion Sakwowy",
-                "languageCode": "en"
-            }
-        },
-        {
-            "id": "ChIJOT9os8mMEysRlo7lxjUkYQg",
-            "types": [
-                "coffee_shop",
-                "cafe",
-                "bar",
-                "furniture_store",
-                "home_improvement_store",
-                "home_goods_store",
-                "art_gallery",
-                "general_contractor",
-                "store",
-                "food",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "Wita Stwosza 38, 50-529 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.110092599999994,
-                "longitude": 17.036066299999998
-            },
-            "rating": 4.6,
-            "userRatingCount": 103,
-            "displayName": {
-                "text": "BRONSON Concept Store - kawiarnia",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJZfFA9cDDD0cRwptJSDaf_Rk",
+            "id": "ChIJVzXqjofCD0cRZ6zmeZQKlRE",
             "types": [
                 "tourist_attraction",
+                "museum",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Wita Stwosza 12/2A, 50-148 Wroc\u0142aw, Polska",
+            "formattedAddress": "Genera\u0142a Romualda Traugutta 111/113, 50-419 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 51.109822099999995,
-                "longitude": 17.0359567
+                "latitude": 51.0998503,
+                "longitude": 17.053012199999998
             },
-            "rating": 5,
-            "userRatingCount": 148,
+            "rating": 4.3,
+            "userRatingCount": 1067,
             "displayName": {
-                "text": "Niewidzialny Dom we Wroc\u0142awiu | Invisible House in Wroclaw",
+                "text": "Muzeum Etnograficzne - Oddzia\u0142 Muzeum Narodowego",
+                "languageCode": "pl"
+            },
+            "editorialSummary": {
+                "text": "Wystawy w\u00a0pa\u0142acu z\u00a0XVIII\u00a0wieku po\u015bwi\u0119cone kulturze ludowej i\u00a0historii Dolnego \u015al\u0105ska.",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJZUb3u3fCD0cRcanLkugGPC0",
+            "id": "ChIJOwZLI37CD0cRIkRKW632XA0",
             "types": [
-                "tourist_attraction",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "plac Dominika\u0144ski, 50-159 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.107219,
-                "longitude": 17.040496
-            },
-            "rating": 4.1,
-            "userRatingCount": 133,
-            "displayName": {
-                "text": "Brama O\u0142awska",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJ_ZZKuZfDD0cRAwqMC4HzvI0",
-            "types": [
-                "secondary_school",
                 "university",
-                "school",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Wita Stwosza 15A/pok\u00f3j 4B, 53-661 Wroc\u0142aw, Polska",
+            "formattedAddress": "Na Grobli 13/15, 50-421 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 51.109375899999996,
-                "longitude": 17.0363832
-            },
-            "rating": 4.3,
-            "userRatingCount": 60,
-            "displayName": {
-                "text": "Szko\u0142a Policealna, Liceum dla Doros\u0142ych Plus Edukacja Centrum Kszta\u0142cenia Wroc\u0142aw",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJ8SJNuHfCD0cR6SMZ3TAH-JM",
-            "types": [
-                "cultural_center",
-                "historical_landmark",
-                "place_of_worship",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "plac Dominika\u0144ski 2, 50-159 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.1091768,
-                "longitude": 17.040369899999998
-            },
-            "rating": 4.7,
-            "userRatingCount": 87,
-            "displayName": {
-                "text": "Dominikanie we Wroc\u0142awiu - Stary Refektarz",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJNywejXbCD0cRUDQH_tv7VhA",
-            "types": [
-                "church",
-                "place_of_worship",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "O\u0142awska 19, 50-123 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.1082229,
-                "longitude": 17.0358373
-            },
-            "rating": 4.3,
-            "userRatingCount": 21,
-            "displayName": {
-                "text": "Parafia \u015bw. Marii Magdaleny Ko\u015bcio\u0142a Polskokatolickiego",
-                "languageCode": "pl"
-            }
-        },
-        {
-            "id": "ChIJ3eH-4HbCD0cRhJxFXJ6mfC8",
-            "types": [
-                "tourist_attraction",
-                "church",
-                "place_of_worship",
-                "point_of_interest",
-                "establishment"
-            ],
-            "formattedAddress": "plac \u015awi\u0119tego Krzysztofa 1, 50-056 Wroc\u0142aw, Polska",
-            "location": {
-                "latitude": 51.1073123,
-                "longitude": 17.0370042
+                "latitude": 51.1048536,
+                "longitude": 17.0535225
             },
             "rating": 4.5,
-            "userRatingCount": 106,
+            "userRatingCount": 11,
             "displayName": {
-                "text": "Ko\u015bci\u00f3\u0142 Ewangelicko-Augsburski \u015bw. Krzysztofa",
+                "text": "Geocentrum",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJ89M5e9PDD0cRCe42l9b6g6o",
+            "id": "ChIJkQUBFn7CD0cR96Z5d6IrBaM",
+            "types": [
+                "university",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Na Grobli 15, 50-421 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1045774,
+                "longitude": 17.0543831
+            },
+            "rating": 4.2,
+            "userRatingCount": 44,
+            "displayName": {
+                "text": "Wydzia\u0142 Geoin\u017cynierii, G\u00f3rnictwa i Geologii",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJE6hajIDCD0cRLm9N9DVnP6E",
+            "types": [
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Na Grobli 14, 52-443 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.104562699999995,
+                "longitude": 17.057821099999998
+            },
+            "rating": 4.8,
+            "userRatingCount": 73,
+            "displayName": {
+                "text": "MPWiK - Wie\u017ca Ci\u015bnie\u0144",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJpzy7sWLDD0cRDiesTVBEPQM",
+            "types": [
+                "church",
+                "place_of_worship",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Waleriana \u0141ukasi\u0144skiego 20a, 50-436 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.101472,
+                "longitude": 17.051126999999997
+            },
+            "rating": 5,
+            "userRatingCount": 12,
+            "displayName": {
+                "text": "II Zb\u00f3r Ko\u015bcio\u0142a Chrze\u015bcijan Baptyst\u00f3w we Wroc\u0142awiu \"Dom Modlitwy\"",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJG4OwwX3CD0cRU_rb6KUOupk",
+            "types": [
+                "library",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Genera\u0142a Romualda Traugutta 82, 50-418 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1024745,
+                "longitude": 17.0518964
+            },
+            "rating": 4.4,
+            "userRatingCount": 24,
+            "displayName": {
+                "text": "Miejska Biblioteka Publiczna filia nr 45",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJEwVr6Y7DD0cR1IVpXdO7Hpw",
+            "types": [
+                "cultural_center",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Genera\u0142a Romualda Traugutta 68L/P, 50-418 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.103383199999996,
+                "longitude": 17.050434799999998
+            },
+            "rating": 4.8,
+            "userRatingCount": 24,
+            "displayName": {
+                "text": "Projektownia",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJL5K1nNfDD0cRgorBBtEDH4M",
+            "types": [
+                "university",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Na Grobli 12, 50-421 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1050522,
+                "longitude": 17.0550299
+            },
+            "displayName": {
+                "text": "Dzia\u0142 Wsp\u00f3\u0142pracy Mi\u0119dzynarodowej - Politechnika Wroc\u0142awska",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJJxMKJ7bDD0cRLOkfz2Hrt0o",
+            "types": [
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Szybka, 50-421 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.104758399999994,
+                "longitude": 17.0555876
+            },
+            "rating": 4,
+            "userRatingCount": 4,
+            "displayName": {
+                "text": "Tory w\u0105skotor\u00f3wki",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJAQAAAGvCD0cRuEji_Y3HToE",
+            "types": [
+                "art_gallery",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Genera\u0142a Romualda Traugutta 78, 50-418 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1027852,
+                "longitude": 17.0513527
+            },
+            "rating": 4.9,
+            "userRatingCount": 30,
+            "displayName": {
+                "text": "Galeria Sztuki DNA",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJPUG-i5PDD0cRj9PnUVAV34s",
+            "types": [
+                "church",
+                "place_of_worship",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Waleriana \u0141ukasi\u0144skiego 20a, 50-436 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1014963,
+                "longitude": 17.0511986
+            },
+            "rating": 5,
+            "userRatingCount": 6,
+            "displayName": {
+                "text": "\u0426\u0435\u0440\u043a\u0432\u0430 \u0425\u0412\u0404 \"\u0414\u0436\u0435\u0440\u0435\u043b\u043e \u0416\u0438\u0442\u0442\u044f\" \u0412\u0440\u043e\u0446\u043b\u0430\u0432",
+                "languageCode": "ru"
+            }
+        },
+        {
+            "id": "ChIJU8CVyPrDD0cRuO3hutvL2TE",
+            "types": [
+                "university",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Na Grobli 15, 50-421 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1044559,
+                "longitude": 17.054350200000002
+            },
+            "displayName": {
+                "text": "Wydzia\u0142 Budownictwa L\u0105dowego i Wodnego Politechniki Wroc\u0142awskiej - budynek L1",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJYyPBjJXDD0cRnGqw563qmBc",
+            "types": [
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Genera\u0142a Romualda Traugutta 70, 50-529 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1032188,
+                "longitude": 17.0507293
+            },
+            "rating": 5,
+            "userRatingCount": 1,
+            "displayName": {
+                "text": "Mural KOSMOSTUMOST\u00d3W",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ47tSuLDDD0cRZLicmdMdylk",
             "types": [
                 "historical_landmark",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Stare Miasto, 50-529 Wroc\u0142aw, Polska",
+            "formattedAddress": "Genera\u0142a Romualda Traugutta, 50-438 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 51.108784799999995,
-                "longitude": 17.0422257
+                "latitude": 51.1000216,
+                "longitude": 17.0552049
             },
-            "rating": 4.8,
-            "userRatingCount": 5,
+            "rating": 5,
+            "userRatingCount": 1,
             "displayName": {
-                "text": "Basteja Bernardy\u0144ska",
+                "text": "Budynek po dawnym szpitalu ewangelickim",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJ1dMM33XCD0cRTLb9WCGgCg8",
+            "id": "ChIJuffVUj3DD0cRaDYIDhXBhlU",
             "types": [
                 "tourist_attraction",
-                "park",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Wita Stwosza, 52-443 Wroc\u0142aw, Polska",
+            "formattedAddress": "Genera\u0142a Romualda Traugutta 99, 50-420 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 51.1099852,
-                "longitude": 17.0349154
+                "latitude": 51.1009825,
+                "longitude": 17.052872699999998
             },
-            "rating": 4,
-            "userRatingCount": 124,
+            "rating": 5,
+            "userRatingCount": 1,
             "displayName": {
-                "text": "Fontanna Pi\u0142karska",
+                "text": "Sklep mi\u0119sny z zabytkowym wystrojem - p\u0142ytki Villeroy&Boch",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJEzdWaHbCD0cRzrIG-PSP2Ps",
+            "id": "ChIJx6gswhHDD0cRCP7dygPvOrY",
             "types": [
-                "finance",
-                "wholesaler",
-                "art_gallery",
-                "jewelry_store",
-                "store",
+                "library",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Krawiecka 1, 50-148 Wroc\u0142aw, Polska",
+            "formattedAddress": "ul. Na Grobli 15 bud. L-1, 50-421 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 51.1080987,
-                "longitude": 17.0375193
+                "latitude": 51.1044559,
+                "longitude": 17.054350200000002
             },
-            "rating": 4,
-            "userRatingCount": 49,
             "displayName": {
-                "text": "Goldenmark - z\u0142oto, diamenty, bi\u017cuteria, z\u0142ote monety, sztuka",
+                "text": "Biblioteka G\u00f3rnictwa Politechniki Wroc\u0142awskiej",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ_d1dldbDD0cREQTMs6bji6U",
+            "types": [
+                "art_gallery",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "plac Zgody 11, 50-432 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.0998879,
+                "longitude": 17.0523482
+            },
+            "displayName": {
+                "text": "BJ-Artinea",
                 "languageCode": "pl"
             }
         }

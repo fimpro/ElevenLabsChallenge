@@ -16,6 +16,7 @@ import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
 import '../../state/poi.dart';
 
 class MapScreen extends StatefulWidget {
@@ -44,6 +45,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     _alignPositionStreamController = StreamController<double?>();
     _alignDirectionStreamController = StreamController<double?>();
 
+    audioPlayer.stop();
+
     _positionStream = Geolocator.getPositionStream(
             locationSettings: const LocationSettings(
                 accuracy: LocationAccuracy.bestForNavigation,
@@ -57,21 +60,34 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
 
       if (event.processingState == ProcessingState.completed) {
         apiController.closeCurrentPOI();
+        context.read<AudioCubit>().setStartedPlaying(false);
       }
 
-      context.read<AudioCubit>().setState(event);
+      context.read<AudioCubit>().setPlayerState(event);
     });
 
-    apiController.start(2000, (data) {
+    apiController.start(2000, (data) async {
       if (!mounted) return;
 
       if (data.info != null) {
         context.read<POICubit>().setPOI(data.info!);
       }
 
-      if (data.audioReady) {
-        audioPlayer.setUrl(apiController.lastAudioUrl());
+      var audioState = context.read<AudioCubit>();
+
+      print('audioready: ${data.audioReady}, startedPlaying: ${audioState.state.startedPlaying}');
+      if (data.audioReady && !audioState.state.startedPlaying) {
+        var audioUrl = apiController.lastAudioUrl();
+
+        // final tempDir = await getTemporaryDirectory();
+        // final filePath = '${tempDir.path}/${apiController.lastAudioId}.mp3';
+        // await Dio().download(audioUrl, filePath);
+
+        print('playing $audioUrl');
+        audioPlayer.setUrl(audioUrl, preload: true);
         audioPlayer.play();
+
+        audioState.setStartedPlaying(true);
       }
     });
 

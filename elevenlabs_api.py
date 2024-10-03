@@ -76,8 +76,9 @@ def generate_audio(text, path,emotions,voice):
                 f.write(chunk)
 
     # run ffmpeg -i generated_file.mp3 -acodec libmp3lame -ar 44100 -b:a 128k output.mp3
+    # "-ar", "44100", "-b:a", "128k",
 
-    subprocess.run(["ffmpeg", "-i", temp_path, "-acodec", "libmp3lame", "-ar", "44100", "-b:a", "128k", path], check=True)
+    subprocess.run(["ffmpeg", "-i", temp_path, "-acodec", "libmp3lame",  path], check=True)
     print(f're-encoded {path}')
     
 

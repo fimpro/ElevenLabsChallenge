@@ -16,47 +16,52 @@ import 'bottom_panel_collapsed.dart';
 const double height = 100;
 
 class BottomPanelBody extends StatelessWidget {
-  const BottomPanelBody({super.key});
+  final ScrollController? scrollController;
+
+  const BottomPanelBody({super.key, this.scrollController});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<POICubit, POI>(
       builder: (context, state) => Container(
         color: Theme.of(context).colorScheme.surface,
-        child: Column(
-          children: [
-            const ScrollableIndicator(),
-            Padding(
-              padding: const EdgeInsets.all(25.0).copyWith(top: 14, right: 8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          state.isEmpty
-                              ? 'Looking for nearby attractions...'
-                              : state.name ?? 'None',
-                          style: Theme.of(context).textTheme.titleLarge,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          child: Column(
+            children: [
+              const ScrollableIndicator(),
+              Padding(
+                padding: const EdgeInsets.all(25.0).copyWith(top: 14, right: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            state.isEmpty
+                                ? 'Looking for nearby attractions...'
+                                : state.name ?? 'None',
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
                         ),
-                      ),
-                      if (!state.isEmpty) ...[
-                        const AudioIcon(),
-                        const CloseIcon(),
+                        if (!state.isEmpty) ...[
+                          const AudioIcon(),
+                          const CloseIcon(),
+                        ],
                       ],
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  if (!state.isEmpty) ...[
-                    Text(state.description ?? 'No description')
-                  ] else
-                    const Text('Keep walking!')
-                ],
+                    ),
+                    const SizedBox(height: 10),
+                    if (!state.isEmpty) ...[
+                      Text(state.description ?? 'No description')
+                    ] else
+                      const Text('Keep walking!')
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -87,10 +92,10 @@ class AudioIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AudioCubit, PlayerState>(
+    return BlocBuilder<AudioCubit, AudioState>(
       builder: (context, audioState) => IconButton(
           onPressed: () {
-            if (audioState.processingState != ProcessingState.ready) {
+            if (audioState.playerState.processingState != ProcessingState.ready) {
               Fluttertoast.showToast(msg: 'Audio is loading...');
               return;
             }
@@ -101,8 +106,8 @@ class AudioIcon extends StatelessWidget {
               audioPlayer.play();
             }
           },
-          icon: audioState.processingState == ProcessingState.ready
-              ? Icon(audioState.playing ? Icons.pause : Icons.play_arrow)
+          icon: audioState.playerState.processingState == ProcessingState.ready
+              ? Icon(audioState.playerState.playing ? Icons.pause : Icons.play_arrow)
               : const SizedBox(
                   width: 16,
                   height: 16,
@@ -122,6 +127,7 @@ class CloseIcon extends StatelessWidget {
         onPressed: () {
           audioPlayer.stop();
           context.read<POICubit>().setPOI(POI.empty());
+          context.read<AudioCubit>().setStartedPlaying(false);
           apiController.closeCurrentPOI();
         },
         icon: const Icon(Icons.close));
@@ -130,8 +136,9 @@ class CloseIcon extends StatelessWidget {
 
 class BottomPanelWrapper extends StatelessWidget {
   final Widget body;
+  final ScrollController scrollController = ScrollController();
 
-  const BottomPanelWrapper({super.key, required this.body});
+  BottomPanelWrapper({super.key, required this.body});
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +151,7 @@ class BottomPanelWrapper extends StatelessWidget {
             color: Color.fromRGBO(0, 0, 0, 0.3),
           )
         ],
-        panelBuilder: () => const BottomPanelBody(),
+        panelBuilder: () => BottomPanelBody(scrollController: scrollController),
         collapsed: const BottomPanelCollapsed(),
         color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(25),
