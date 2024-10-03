@@ -81,7 +81,7 @@ class ExistsResponse {
 }
 
 class ApiController {
-  final String baseUrl;
+  String baseUrl;
 
   String? token;
   Timer? _interval;

@@ -66,6 +66,12 @@ class _StartScreenState extends State<StartScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Column(
                   children: [
+                    TextFormField(
+                      decoration: const InputDecoration(label: Text("Api URL"), border: OutlineInputBorder()),
+                      initialValue: apiController.baseUrl,
+                      onChanged: (value) => apiController.baseUrl = value,
+                    ),
+                    SizedBox(height: 25),
                     Text("Your guide's voice",
                         style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 5),
