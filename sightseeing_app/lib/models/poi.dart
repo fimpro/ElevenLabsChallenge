@@ -1,17 +1,17 @@
 
 class POI {
-  final String name;
-  final String description;
-  final String audioUrl;
-  final List<double> location;
+  final String? name;
+  final String? description;
+  final String? audioUrl;
+  final List<double?> location;
 
   POI({required this.name, required this.description, required this.audioUrl, required this.location});
 
   factory POI.empty() => POI(name: "", description: "", audioUrl: "", location: [0, 0]);
 
-  bool get isEmpty => name.isEmpty;
-  double get latitude => location[0];
-  double get longitude => location[1];
+  bool get isEmpty => name?.isEmpty ?? true;
+  double get latitude => location[0]!;
+  double get longitude => location[1]!;
 
   factory POI.fromJson(Map<String, dynamic> json) {
     return POI(

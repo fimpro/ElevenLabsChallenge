@@ -35,7 +35,7 @@ class TopPanel extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 4),
-                        Text('${config.voice} • ${config.mood}',
+                        Text('${config.voice} • ${config.emotions}',
                             style: Theme.of(context).textTheme.bodySmall),
                       ],
                     ),

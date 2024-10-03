@@ -1,145 +1,429 @@
 {
     "places": [
         {
-            "id": "ChIJ8WwPlR01A0cR6NtIy_CTMC8",
+            "id": "ChIJZboe5HXCD0cRM9LIzvwBNcI",
             "types": [
                 "tourist_attraction",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Rynek Staromiejski, 87-100 Toru\u0144, Polska",
+            "formattedAddress": "Szewska 10, 50-122 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 53.010314,
-                "longitude": 18.6049249
+                "latitude": 51.109631799999995,
+                "longitude": 17.0346662
             },
             "rating": 4.7,
-            "userRatingCount": 10235,
+            "userRatingCount": 9009,
             "displayName": {
-                "text": "Pomnik Miko\u0142aja Kopernika w Toruniu",
+                "text": "Punkt widokowy na Mostku Pokutnic na Katedrze \u015aw. Marii Magdaleny",
                 "languageCode": "pl"
             },
             "editorialSummary": {
-                "text": "Pomnik wzniesiony w\u00a01853\u00a0roku ku czci wybitnego miejscowego astronoma Miko\u0142aja Kopernika.",
+                "text": "Punkt widokowy na zniszczonym podczas II\u00a0wojny \u015bwiatowej i\u00a0odbudowanym w\u00a02001\u00a0r. mo\u015bcie \u0142\u0105cz\u0105cym wie\u017ce ko\u015bcielne z\u00a0XV\u00a0w.",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJ1Z76lh01A0cRnp6b3uoiS08",
+            "id": "ChIJhbh0rHDCD0cRi59maSR8Qy0",
+            "types": [
+                "park",
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Nowa, 52-007 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.104927599999996,
+                "longitude": 17.039078099999998
+            },
+            "rating": 4.4,
+            "userRatingCount": 4126,
+            "displayName": {
+                "text": "Wzg\u00f3rze Partyzant\u00f3w",
+                "languageCode": "pl"
+            },
+            "editorialSummary": {
+                "text": "Nadrzeczny park z\u00a0miejscami piknikowymi nad wod\u0105 oraz ruinami starych miejskich fortyfikacji.",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJAQAAndjpD0cRuKt9kcYEEDI",
+            "types": [
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "plac Nowy Targ 25-26, 50-143 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.111261899999995,
+                "longitude": 17.0383176
+            },
+            "rating": 4.4,
+            "userRatingCount": 1910,
+            "displayName": {
+                "text": "Plac Nowy Targ",
+                "languageCode": "pl"
+            },
+            "editorialSummary": {
+                "text": "Du\u017cy plac z\u00a0kawiarniami i\u00a0le\u017cakami b\u0119d\u0105cy popularnym miejscem spotka\u0144 oraz organizacji targ\u00f3w i\u00a0festiwali.",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJazJy8XfCD0cRvCTZFwTfdO4",
             "types": [
                 "museum",
                 "tourist_attraction",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Rynek Staromiejski 1, 87-100 Toru\u0144, Polska",
+            "formattedAddress": "Bernardy\u0144ska 5, 50-156 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 53.0103951,
-                "longitude": 18.604461
+                "latitude": 51.1095231,
+                "longitude": 17.0421574
             },
-            "rating": 4.7,
-            "userRatingCount": 1844,
+            "rating": 4.4,
+            "userRatingCount": 1331,
             "displayName": {
-                "text": "Ratusz Staromiejski - Muzeum Okr\u0119gowe w Toruniu",
+                "text": "Muzeum Architektury we Wroc\u0142awiu",
                 "languageCode": "pl"
             },
             "editorialSummary": {
-                "text": "Ceglany \u015bredniowieczny ratusz z\u00a0wie\u017c\u0105 z\u00a0tarasem widokowym mieszcz\u0105cy muzeum regionalne.",
+                "text": "Dawny \u015bredniowieczny klasztor, w\u00a0kt\u00f3rym mieszcz\u0105 si\u0119 archiwa i\u00a0jedyne w\u00a0Polsce muzeum historii architektury.",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJUzB5u2k1A0cR8FzAJJa23MQ",
+            "id": "ChIJl6FmQXjDD0cR69gZ_nhXm1w",
             "types": [
-                "museum",
-                "tourist_attraction",
+                "church",
+                "place_of_worship",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Rynek Staromiejski 35, 87-100 Toru\u0144, Polska",
+            "formattedAddress": "plac Dominika\u0144ski 2, 50-159 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 53.010653999999995,
-                "longitude": 18.6051583
+                "latitude": 51.1094114,
+                "longitude": 17.039382
             },
-            "rating": 4.5,
-            "userRatingCount": 155,
+            "rating": 4.7,
+            "userRatingCount": 1268,
             "displayName": {
-                "text": "Muzeum Sztuki Dalekiego Wschodu w Kamienicy pod Gwiazd\u0105",
+                "text": "Dominikanie we Wroc\u0142awiu - Ko\u015bci\u00f3\u0142 i Klasztor pw. \u015awi\u0119tego Wojciecha",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJbXkv6h01A0cRVKa2k7CUNtw",
+            "id": "ChIJRaJejt_pD0cRkhmSF3ZDeM4",
             "types": [
                 "tourist_attraction",
+                "amusement_park",
+                "amusement_center",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Szeroka 50, 87-100 Toru\u0144, Polska",
+            "formattedAddress": "Bernardy\u0144ska 4, 50-156 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 53.010196699999995,
-                "longitude": 18.6052042
+                "latitude": 51.110481,
+                "longitude": 17.0416644
+            },
+            "rating": 4.7,
+            "userRatingCount": 1292,
+            "displayName": {
+                "text": "Let Me Out Escape Room Wroc\u0142aw",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJIcWdse_DD0cRNH-x3VsJOrA",
+            "types": [
+                "church",
+                "place_of_worship",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Szewska 10, 50-529 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.10953190000001,
+                "longitude": 17.0346483
             },
             "rating": 4.8,
-            "userRatingCount": 404,
+            "userRatingCount": 179,
             "displayName": {
-                "text": "Rze\u017aba Osio\u0142ka",
+                "text": "Katedra \u015bw. Marii Magdaleny",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJ3S589Tk1A0cRBaKcJAkxbNg",
+            "id": "ChIJv7U81JrDD0cRaW50gChnzUQ",
+            "types": [
+                "cafe",
+                "bar",
+                "art_gallery",
+                "food",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "\u0141aciarska 4, 50-104 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1082816,
+                "longitude": 17.0352063
+            },
+            "rating": 4.9,
+            "userRatingCount": 215,
+            "displayName": {
+                "text": "Sztuka na Miejscu",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJWc0XRHjCD0cR86tadTREys8",
+            "types": [
+                "tourist_attraction",
+                "museum",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Zygmunta Krasi\u0144skiego 1, 50-954 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1083053,
+                "longitude": 17.044484699999998
+            },
+            "rating": 4.6,
+            "userRatingCount": 624,
+            "displayName": {
+                "text": "Muzeum Poczty i Telekomunikacji we Wroc\u0142awiu",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJN6GwQADDD0cRRd91md71Duo",
+            "types": [
+                "historical_landmark",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "ks. Piotra Skargi 18a, 50-082 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.104849099999996,
+                "longitude": 17.0385071
+            },
+            "rating": 4.9,
+            "userRatingCount": 118,
+            "displayName": {
+                "text": "Bastion Sakwowy",
+                "languageCode": "en"
+            }
+        },
+        {
+            "id": "ChIJOT9os8mMEysRlo7lxjUkYQg",
+            "types": [
+                "coffee_shop",
+                "cafe",
+                "bar",
+                "furniture_store",
+                "home_improvement_store",
+                "home_goods_store",
+                "art_gallery",
+                "general_contractor",
+                "store",
+                "food",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Wita Stwosza 38, 50-529 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.110092599999994,
+                "longitude": 17.036066299999998
+            },
+            "rating": 4.6,
+            "userRatingCount": 103,
+            "displayName": {
+                "text": "BRONSON Concept Store - kawiarnia",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJZfFA9cDDD0cRwptJSDaf_Rk",
             "types": [
                 "tourist_attraction",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Rynek Staromiejski 1, 87-100 Toru\u0144, Polska",
+            "formattedAddress": "Wita Stwosza 12/2A, 50-148 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 53.010382500000006,
-                "longitude": 18.6047488
+                "latitude": 51.109822099999995,
+                "longitude": 17.0359567
             },
-            "rating": 4.5,
-            "userRatingCount": 115,
+            "rating": 5,
+            "userRatingCount": 148,
             "displayName": {
-                "text": "Wie\u017ca Ratusza Staromiejskiego (widokowa)",
+                "text": "Niewidzialny Dom we Wroc\u0142awiu | Invisible House in Wroclaw",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJkQOsOBM1A0cRhXecpmRwBgk",
+            "id": "ChIJZUb3u3fCD0cRcanLkugGPC0",
+            "types": [
+                "tourist_attraction",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "plac Dominika\u0144ski, 50-159 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.107219,
+                "longitude": 17.040496
+            },
+            "rating": 4.1,
+            "userRatingCount": 133,
+            "displayName": {
+                "text": "Brama O\u0142awska",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ_ZZKuZfDD0cRAwqMC4HzvI0",
+            "types": [
+                "secondary_school",
+                "university",
+                "school",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Wita Stwosza 15A/pok\u00f3j 4B, 53-661 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.109375899999996,
+                "longitude": 17.0363832
+            },
+            "rating": 4.3,
+            "userRatingCount": 60,
+            "displayName": {
+                "text": "Szko\u0142a Policealna, Liceum dla Doros\u0142ych Plus Edukacja Centrum Kszta\u0142cenia Wroc\u0142aw",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ8SJNuHfCD0cR6SMZ3TAH-JM",
             "types": [
                 "cultural_center",
+                "historical_landmark",
+                "place_of_worship",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "Rynek Staromiejski 36/38, 87-100 Toru\u0144, Polska",
+            "formattedAddress": "plac Dominika\u0144ski 2, 50-159 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 53.0106035,
-                "longitude": 18.605312899999998
+                "latitude": 51.1091768,
+                "longitude": 17.040369899999998
             },
-            "rating": 4.5,
-            "userRatingCount": 2,
+            "rating": 4.7,
+            "userRatingCount": 87,
             "displayName": {
-                "text": "Europejskie Centrum Filmowe CAMERIMAGE",
+                "text": "Dominikanie we Wroc\u0142awiu - Stary Refektarz",
                 "languageCode": "pl"
             }
         },
         {
-            "id": "ChIJ_d55lh01A0cRKTixzD-Y2KQ",
+            "id": "ChIJNywejXbCD0cRUDQH_tv7VhA",
             "types": [
-                "tourist_attraction",
+                "church",
+                "place_of_worship",
                 "point_of_interest",
                 "establishment"
             ],
-            "formattedAddress": "87-100 Toru\u0144, Polska",
+            "formattedAddress": "O\u0142awska 19, 50-123 Wroc\u0142aw, Polska",
             "location": {
-                "latitude": 53.0104383,
-                "longitude": 18.6044813
+                "latitude": 51.1082229,
+                "longitude": 17.0358373
             },
-            "rating": 4.7,
-            "userRatingCount": 10,
+            "rating": 4.3,
+            "userRatingCount": 21,
             "displayName": {
-                "text": "Ceramiczna Figurka toru\u0144skich artyst\u00f3w",
+                "text": "Parafia \u015bw. Marii Magdaleny Ko\u015bcio\u0142a Polskokatolickiego",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ3eH-4HbCD0cRhJxFXJ6mfC8",
+            "types": [
+                "tourist_attraction",
+                "church",
+                "place_of_worship",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "plac \u015awi\u0119tego Krzysztofa 1, 50-056 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1073123,
+                "longitude": 17.0370042
+            },
+            "rating": 4.5,
+            "userRatingCount": 106,
+            "displayName": {
+                "text": "Ko\u015bci\u00f3\u0142 Ewangelicko-Augsburski \u015bw. Krzysztofa",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ89M5e9PDD0cRCe42l9b6g6o",
+            "types": [
+                "historical_landmark",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Stare Miasto, 50-529 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.108784799999995,
+                "longitude": 17.0422257
+            },
+            "rating": 4.8,
+            "userRatingCount": 5,
+            "displayName": {
+                "text": "Basteja Bernardy\u0144ska",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJ1dMM33XCD0cRTLb9WCGgCg8",
+            "types": [
+                "tourist_attraction",
+                "park",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Wita Stwosza, 52-443 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1099852,
+                "longitude": 17.0349154
+            },
+            "rating": 4,
+            "userRatingCount": 124,
+            "displayName": {
+                "text": "Fontanna Pi\u0142karska",
+                "languageCode": "pl"
+            }
+        },
+        {
+            "id": "ChIJEzdWaHbCD0cRzrIG-PSP2Ps",
+            "types": [
+                "finance",
+                "wholesaler",
+                "art_gallery",
+                "jewelry_store",
+                "store",
+                "point_of_interest",
+                "establishment"
+            ],
+            "formattedAddress": "Krawiecka 1, 50-148 Wroc\u0142aw, Polska",
+            "location": {
+                "latitude": 51.1080987,
+                "longitude": 17.0375193
+            },
+            "rating": 4,
+            "userRatingCount": 49,
+            "displayName": {
+                "text": "Goldenmark - z\u0142oto, diamenty, bi\u017cuteria, z\u0142ote monety, sztuka",
                 "languageCode": "pl"
             }
         }

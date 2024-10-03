@@ -38,7 +38,7 @@ class _StartScreenState extends State<StartScreen> {
 
     if(!mounted) return;
 
-    await tryApi(() => apiController.login(config.state), doThrow: true);
+    await tryApi(() => apiController.createToken(config.state), doThrow: true);
 
     Navigator.of(context).pushNamed('/map');
   }
@@ -84,7 +84,7 @@ class _StartScreenState extends State<StartScreen> {
                     ButtonGroupSelect<String>(
                         items: moods,
                         builder: (item, context) => Text(item),
-                        selectedIndex: moods.indexOf(config.mood),
+                        selectedIndex: moods.indexOf(config.emotions),
                         onSelected: (index, item) {
                           context.read<ConfigCubit>().setMood(item);
                         }),

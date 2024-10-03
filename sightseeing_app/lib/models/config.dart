@@ -1,14 +1,14 @@
 class ConfigState {
   final String voice;
-  final String mood;
+  final String emotions;
   final List<String> preferences;
 
-  ConfigState({required this.voice, required this.mood, this.preferences = const []});
+  ConfigState({required this.voice, required this.emotions, this.preferences = const []});
 
-  ConfigState copyWith({String? voice, String? mood, List<String>? preferences}) {
+  ConfigState copyWith({String? voice, String? emotions, List<String>? preferences}) {
     return ConfigState(
       voice: voice ?? this.voice,
-      mood: mood ?? this.mood,
+      emotions: emotions ?? this.emotions,
       preferences: preferences ?? this.preferences,
     );
   }
@@ -16,7 +16,7 @@ class ConfigState {
   Map<String, dynamic> toJson() {
     return {
       'voice': voice,
-      'mood': mood,
+      'emotions': emotions,
       'preferences': preferences,
     };
   }

@@ -24,25 +24,24 @@ class CreateTokenResponse {
 
 class UpdateRequest {
   final double lat;
-  final double lng;
+  final double lon;
   final bool prevent;
 
-  UpdateRequest({required this.lat, required this.lng, required this.prevent});
+  UpdateRequest({required this.lat, required this.lon, required this.prevent});
 
   Map<String, dynamic> toJson() {
     return {
       'lat': lat,
-      'lng': lng,
+      'lon': lon,
       'prevent': prevent,
     };
   }
 }
 
-
 class UpdateResponse {
   final bool ok;
   final bool newFile;
-  final int? id;
+  final String? id;
 
   UpdateResponse({required this.ok, required this.newFile, this.id});
 
@@ -50,8 +49,20 @@ class UpdateResponse {
     return UpdateResponse(
       ok: json['ok'] as bool,
       newFile: json['new_file'] as bool,
-      id: json['id'] as int?,
+      id: json['id'] as String?,
     );
+  }
+}
+
+class ExistsRequest {
+  final String? id;
+
+  ExistsRequest(this.id);
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+    };
   }
 }
 
@@ -63,7 +74,7 @@ class ExistsResponse {
 
   factory ExistsResponse.fromJson(Map<String, dynamic> json) {
     return ExistsResponse(
-      audioReady: json['audio_ready'],
+      audioReady: json['audio_ready'] ?? false,
       info: json.containsKey('info') ? POI.fromJson(json['info']) : null,
     );
   }
@@ -74,17 +85,13 @@ class ApiController {
 
   String? token;
   Timer? _interval;
-  int? lastAudioId;
+  String? lastAudioId;
   bool hasNewAudio = false;
 
   ApiController(this.baseUrl);
 
-  Future<void> login(ConfigState config) async {
-    var body = jsonEncode(config.toJson());
-    var response = await http.post(Uri.parse("$baseUrl/create_token"),
-        body: body, headers: {"Content-Type": "application/json"});
-    var json = jsonDecode(response.body);
-    var data = CreateTokenResponse.fromJson(json);
+  Future<void> createToken(ConfigState config) async {
+    var data = await post("/create_token", config.toJson(), CreateTokenResponse.fromJson);
 
     if (!data.ok) {
       throw Exception("Failed to create token");
@@ -93,16 +100,8 @@ class ApiController {
     token = data.token;
   }
 
-  Future<UpdateResponse> update(UpdateRequest request) async {
-    var body = jsonEncode(request.toJson());
-    var response = await http.post(Uri.parse("$baseUrl/update"),
-        body: body,
-        headers: {
-          "Authorization": "Bearer $token",
-          "Content-Type": "application/json"
-        });
-    var json = jsonDecode(response.body);
-    var data = UpdateResponse.fromJson(json);
+  Future<UpdateResponse> updateLocation(UpdateRequest request) async {
+    var data = await post("/update", request.toJson(), UpdateResponse.fromJson);
 
     if (!data.ok) {
       throw Exception("Failed to update");
@@ -111,32 +110,43 @@ class ApiController {
     if (data.newFile) {
       lastAudioId = data.id;
       hasNewAudio = true;
+      print('id $lastAudioId');
     }
 
     return data;
   }
 
-  Future<ExistsResponse> pollExists() async {
-    var response = await http.get(Uri.parse("$baseUrl/info"), headers: {
-      "Authorization": "Bearer $token",
-      "Content-Type": "application/json"
-    });
-
-    var json = jsonDecode(response.body);
-    var data = ExistsResponse.fromJson(json);
+  Future<ExistsResponse> fetchInfo() async {
+    var request = ExistsRequest(lastAudioId);
+    var data = await post("/info", request.toJson(), ExistsResponse.fromJson);
 
     return data;
   }
 
-  void start(double intervalMs, void Function(ExistsResponse data) onResponse) {
-    _interval = Timer.periodic(
-        Duration(milliseconds: round(intervalMs / 1000) as int),
-        (timer) async {
-          if (token == null) return;
+  Future<T> post<T>(String path, Map<String, dynamic> body, T Function(Map<String, dynamic>) fromJson) async {
+    print('post $path: $body');
+    var response = await http.post(Uri.parse("$baseUrl$path"),
+        body: jsonEncode(body),
+        headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json"
+        },
+    );
+    print('$path response: ${response.body}');
+    var json = jsonDecode(utf8.decode(response.bodyBytes));
+    var data = fromJson(json);
 
-          var response = await pollExists();
-          onResponse(response);
-        });
+    return data;
+  }
+
+  void start(int intervalMs, void Function(ExistsResponse data) onResponse) {
+    _interval =
+        Timer.periodic(Duration(milliseconds: intervalMs), (timer) async {
+      if (token == null || lastAudioId == null) return;
+
+      var response = await fetchInfo();
+      onResponse(response);
+    });
   }
 
   void stop() {
@@ -144,12 +154,17 @@ class ApiController {
     _interval?.cancel();
   }
 
+  void closeCurrentPOI() {
+    lastAudioId = null;
+    hasNewAudio = false;
+  }
+
   String lastAudioUrl() {
     return "$baseUrl/audio/$lastAudioId";
   }
 }
 
-var apiController = ApiController("http://localhost:5000");
+var apiController = ApiController("http://10.0.2.2:8000");
 
 Future<T?> tryApi<T>(Future<T> Function() apiCall,
     {bool doThrow = false}) async {

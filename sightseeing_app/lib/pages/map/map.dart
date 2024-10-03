@@ -49,22 +49,14 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                 accuracy: LocationAccuracy.bestForNavigation,
                 distanceFilter: 50))
         .listen((position) async {
-      var response = await tryApi(() => apiController.update(UpdateRequest(
-          lat: position.latitude,
-          lng: position.longitude,
-          prevent: apiController.hasNewAudio)));
-
-      if(response == null) {
-        print('relogging in');
-        await tryApi(() => apiController.login(context.read<ConfigCubit>().state));
-      }
+      await postUpdate(position);
     });
 
     _playerStateStream = audioPlayer.playerStateStream.listen((event) {
-      if(!mounted) return;
+      if (!mounted) return;
 
-      if(event.processingState == ProcessingState.completed) {
-        apiController.hasNewAudio = false;
+      if (event.processingState == ProcessingState.completed) {
+        apiController.closeCurrentPOI();
       }
 
       context.read<AudioCubit>().setState(event);
@@ -84,6 +76,19 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     });
 
     myLocation();
+  }
+
+  Future<void> postUpdate(Position position) async {
+    var response = await tryApi(() => apiController.updateLocation(UpdateRequest(
+        lat: position.latitude,
+        lon: position.longitude,
+        prevent: apiController.hasNewAudio)));
+
+    if (response == null) {
+      print('relogging in');
+      await tryApi(
+          () => apiController.createToken(context.read<ConfigCubit>().state));
+    }
   }
 
   @override

@@ -13,9 +13,9 @@ final preferences = ["Architecture", "History", "Art"];
 
 
 class ConfigCubit extends Cubit<ConfigState> {
-  ConfigCubit() : super(ConfigState(voice: voices[0], mood: moods[0]));
+  ConfigCubit() : super(ConfigState(voice: voices[0], emotions: moods[0]));
 
   void setVoice(String voice) => emit(state.copyWith(voice: voice));
-  void setMood(String mood) => emit(state.copyWith(mood: mood));
+  void setMood(String mood) => emit(state.copyWith(emotions: mood));
   void setPreferences(List<String> preferences) => emit(state.copyWith(preferences: preferences));
 }
