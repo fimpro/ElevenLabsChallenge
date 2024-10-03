@@ -74,7 +74,8 @@ def cleanup_users():
     except Exception as e:
         print("error during removing old files: ", e)
     
-    for token in users.keys():
+    tokens = list(users.keys())
+    for token in tokens:
         if users[token].time_since_last_update() > MAX_TIME:
             del users[token]
 scheduler = BackgroundScheduler()
