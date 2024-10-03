@@ -3,15 +3,17 @@ from dotenv import load_dotenv
 from openai import OpenAI
 
 # Load environment variables
-load_dotenv()
 
-# Get the API key from the environment
-openai_api_key = os.getenv("OPENAI_API_KEY")
-
-# Initialize the OpenAI client with the API key
-client = OpenAI(api_key=openai_api_key)
 
 def select_location(locations, user_preferences):
+
+    load_dotenv()
+
+    # Get the API key from the environment
+    openai_api_key = os.getenv("OPENAI_API_KEY")
+
+    # Initialize the OpenAI client with the API key
+    client = OpenAI(api_key=openai_api_key)
     """
     Select the most suitable location based on the list of locations and user preferences.
     """
