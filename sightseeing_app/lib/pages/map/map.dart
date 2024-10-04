@@ -17,6 +17,7 @@ import 'package:sightseeing_app/state/config.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
+import '../../models/poi.dart';
 import '../../state/poi.dart';
 
 class MapScreen extends StatefulWidget {
@@ -70,6 +71,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
       if (!mounted) return;
 
       if (data.info != null) {
+        print('setting data');
         context.read<POICubit>().setPOI(data.info!);
       }
 
@@ -107,6 +109,15 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     }
   }
 
+  Future<void> myLocation() async {
+    setState(() {
+      _alignPositionOnUpdate = AlignOnUpdate.always;
+      _alignDirectionOnUpdate = AlignOnUpdate.always;
+    });
+
+    _alignPositionStreamController.add(17);
+  }
+
   @override
   void dispose() {
     _alignPositionStreamController.close();
@@ -116,61 +127,68 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  Future<void> myLocation() async {
-    setState(() {
-      _alignPositionOnUpdate = AlignOnUpdate.always;
-      _alignDirectionOnUpdate = AlignOnUpdate.always;
-    });
-
-    _alignPositionStreamController.add(18);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BottomPanelWrapper(
         body: Stack(
           children: [
-            FlutterMap(
-              mapController: _animatedController.mapController,
-              options: MapOptions(
-                initialCenter: const LatLng(51.509364, -0.128928),
-                initialZoom: 9.2,
-                onPositionChanged: (camera, hasGesture) {
-                  if (!hasGesture) return;
+            BlocBuilder<POICubit, POI>(
+              builder: (context, poi) {
+                print('poi: ${poi.name} ${poi.hasLocation} ${poi.location}');
+                return FlutterMap(
+                mapController: _animatedController.mapController,
+                options: MapOptions(
+                  initialCenter: const LatLng(51.509364, -0.128928),
+                  initialZoom: 9.2,
+                  onPositionChanged: (camera, hasGesture) {
+                    if (!hasGesture) return;
 
-                  setState(() {
-                    if (_alignPositionOnUpdate != AlignOnUpdate.never) {
-                      _alignPositionOnUpdate = AlignOnUpdate.never;
-                    }
+                    setState(() {
+                      if (_alignPositionOnUpdate != AlignOnUpdate.never) {
+                        _alignPositionOnUpdate = AlignOnUpdate.never;
+                      }
 
-                    if (_alignDirectionOnUpdate != AlignOnUpdate.never) {
-                      _alignDirectionOnUpdate = AlignOnUpdate.never;
-                    }
-                  });
-                },
-              ),
-              children: [
-                TileLayer(
-                  urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                  userAgentPackageName: 'com.example.app',
+                      if (_alignDirectionOnUpdate != AlignOnUpdate.never) {
+                        _alignDirectionOnUpdate = AlignOnUpdate.never;
+                      }
+                    });
+                  },
                 ),
-                CurrentLocationLayer(
-                  alignPositionStream: _alignPositionStreamController.stream,
-                  alignPositionOnUpdate: _alignPositionOnUpdate,
-                  alignDirectionStream: _alignDirectionStreamController.stream,
-                  alignDirectionOnUpdate: _alignDirectionOnUpdate,
-                ),
-                RichAttributionWidget(
-                  attributions: [
-                    TextSourceAttribution(
-                      'OpenStreetMap contributors',
-                      onTap: () => launchUrl(Uri.parse(
-                          'https://openstreetmap.org/copyright')), // (external)
-                    ),
-                  ],
-                ),
-              ],
+                children: [
+                  TileLayer(
+                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName: 'com.example.app',
+                  ),
+                  CurrentLocationLayer(
+                    alignPositionStream: _alignPositionStreamController.stream,
+                    alignPositionOnUpdate: _alignPositionOnUpdate,
+                    alignDirectionStream: _alignDirectionStreamController.stream,
+                    alignDirectionOnUpdate: _alignDirectionOnUpdate,
+                  ),
+                  MarkerLayer(
+                    markers: [
+                      if(!poi.isEmpty && poi.hasLocation) Marker(
+                        point: LatLng(poi.latitude, poi.longitude),
+                        width: 100,
+                        height: 100,
+                        child: const Center(child: Icon(Icons.location_pin, color: Colors.red, size: 40)),
+                        rotate: true
+                      ),
+                    ],
+                  ),
+                  RichAttributionWidget(
+                    attributions: [
+                      TextSourceAttribution(
+                        'OpenStreetMap contributors',
+                        onTap: () => launchUrl(Uri.parse(
+                            'https://openstreetmap.org/copyright')), // (external)
+                      ),
+                    ],
+                  ),
+                ],
+              );
+              },
             ),
             SafeArea(
               child: Stack(

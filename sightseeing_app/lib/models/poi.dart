@@ -10,6 +10,7 @@ class POI {
   factory POI.empty() => POI(name: "", description: "", audioUrl: "", location: [0, 0]);
 
   bool get isEmpty => name?.isEmpty ?? true;
+  bool get hasLocation => location.length == 2 && location[0] != null && location[1] != null;
   double get latitude => location[0]!;
   double get longitude => location[1]!;
 
@@ -18,7 +19,7 @@ class POI {
       name: json['name'],
       description: json['description'],
       audioUrl: json['audioUrl'],
-      location: [json['latitude'], json['longitude']]
+      location: (json['location'] as List<dynamic>).cast(),
     );
   }
 
