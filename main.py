@@ -14,9 +14,7 @@ import uuid
 import threading
 from typing import Annotated
 
-
-
-SEARCH_RADIUS = 400  # search in nearby 40 meters
+SEARCH_RADIUS = 40  # search in nearby 40 meters
 MAX_FILETIME = 24 * 3600  # how long an audio file can stay in the 'outputs' folder
 MIN_DISTANCE = 30  # minimum distance the user has to go to create the next google API request
 MIN_TIME = 8  # minimum time (8 seconds) between google API requests, in case the user moves too fast
@@ -29,6 +27,8 @@ class User:
         self.prev_request_location = None  # the location of previous API request
         self.prev_request_time = None  # the time of previous API request
         self.initiated = False
+        self.emotions = emotions
+        self.voice = voice
         self.location_history = []
         self.visited_places = []
         self.preferences = preferences
@@ -176,7 +176,9 @@ Only provide the description, so don't for example write 'Sure, here is the desc
 
     text_to_speech_file(
         text=final_result,
-        path=f'outputs/{id}.mp3'
+        path=f'outputs/{id}.mp3',
+        emotions=user.emotions,
+        voice=user.voice
     )
 
 class UpdateRequest(BaseModel):
