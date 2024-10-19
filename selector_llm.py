@@ -1,31 +1,40 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+import time
 
-# Load environment variables
+load_dotenv()
+openai_api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI(api_key=openai_api_key)
 
-
-def select_location(prompt):
-
-    load_dotenv()
-
-    # Get the API key from the environment
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-
-    # Initialize the OpenAI client with the API key
-    client = OpenAI(api_key=openai_api_key)
-    
-    # Make the API call
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",  # Changed from "gpt-4o" to "gpt-3.5-turbo"
-        messages=[
-            {"role": "system", "content": "You are a helpful travel guide assistant that selects the most suitable location based on given information and user preferences."},
-            {"role": "user", "content": prompt}
+class SelectorLLM:
+    def __init__(self, model="4o-latest", log=False):
+        self.messages = [
+            {
+                "role": "system", 
+                "content": "You are a helpful travel guide assistant that selects the most suitable location based on given information and user preferences."
+            }
         ]
-    )
+        self.model = model
+        self.log = log
+        if self.log:
+            print("\n*** Selector LLM conversation ***")
 
-    # Extract the selected location from the response
-    selection = response.choices[0].message.content.strip()
+    def message(self, msg):
+        start_t = time.time()
+        if self.log:
+            print(f"-USER- {msg}")
+        
+        self.messages.append({"role": "user", "content": msg})
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=self.messages
+        )
+        content = response.choices[0].message.content
+        self.messages.append({"role": "assistant", "content": content})
 
-    return selection
+        if self.log:
+            print(f"-ASSISTANT ({time.time() - start_t:.2f}s)- {content}")
 
+        return content
+    

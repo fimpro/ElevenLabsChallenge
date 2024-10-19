@@ -41,6 +41,9 @@ def get_nearby(location: List[float], radius: float):
 
     places = []
 
+    if not "places" in response:
+        return []
+    
     for place in response["places"]:
         has_rating = "rating" in place and "rating_count" in place
         places.append(

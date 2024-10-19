@@ -28,31 +28,33 @@ def remove_old(path,max_time): #romoves old files
                 #print(f'Removed: {file_path}')
 
 def generate_audio(text, path,emotions,voice):
-    ELEVENLABS_API_KEY = open('elevenapikey.txt').readline()
+    ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
     client = ElevenLabs(
         api_key=ELEVENLABS_API_KEY,
     )
 
-    if(emotions=="energetic"):
-        stability = 0.7
-        similarity_boost = 0.9
-        style = 0.4
-    elif(emotions=="bored"):
+    if emotions=="bored":
         stability = 0.0
         similarity_boost = 0.0
         style = 0.0
-    elif(emotions=="dramatic"):
+    elif emotions=="dramatic":
         stability = 0.4
         similarity_boost = 0.6
         style = 0.8
-    if(voice=="Anna"):
-        voice_id = "Pid5DJleNF2sxsuF6YKD"
-    elif(voice=="Charlotte"):
+    else:
+        stability = 0.7
+        similarity_boost = 0.9
+        style = 0.4
+    
+    if voice=="charlotte":
         voice_id = "XB0fDUnXU5powFXDhCwa"
-    elif(voice=="Eric"):
+    elif voice=="eric":
         voice_id = "cjVigY5qzO86Huf0OWal"
-    elif(voice=="Fin"):
+    elif voice=="fin":
         voice_id= "D38z5RcWu1voky8WS1ja"
+    else:
+        voice_id = "Pid5DJleNF2sxsuF6YKD"
+    
     response = client.text_to_speech.convert( #maybe tune params
         voice_id= voice_id,  #imported
         output_format="mp3_22050_32",
@@ -66,14 +68,18 @@ def generate_audio(text, path,emotions,voice):
             use_speaker_boost=True,
         ),
     )
+    print("Generated audio!")
 
     # temp path
-    temp_path = tempfile.mktemp(suffix=".mp3")
+    temp_path = tempfile.mktemp(suffix=".mp3", dir="outputs")
 
     with open(temp_path, "wb") as f:
         for chunk in response:
             if chunk:
                 f.write(chunk)
+
+    print(f"downloaded audio to temporary directory: {temp_path}")
+    print(f"ffmpeg -i {temp_path} -acodec libmp3lame {path}")
 
     # run ffmpeg -i generated_file.mp3 -acodec libmp3lame -ar 44100 -b:a 128k output.mp3
     # "-ar", "44100", "-b:a", "128k",
