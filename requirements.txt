@@ -4,7 +4,7 @@ openai
    langchain-core
    langchain-openai
    python-dotenv
-fastapi
+fastapi[standard]
 uvicorn
 apscheduler
 geopy
