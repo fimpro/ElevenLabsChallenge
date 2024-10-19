@@ -3,3 +3,4 @@
 __pycache__
 outputs/**
 elevenapikey.txt
+test_llm.py
