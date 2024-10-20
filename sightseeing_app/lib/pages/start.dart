@@ -71,6 +71,19 @@ class _StartScreenState extends State<StartScreen> {
                       onChanged: (value) => apiController.baseUrl = value,
                     ),
                     SizedBox(height: 25),
+                    Text("Language",
+                        style: Theme.of(context).textTheme.titleMedium),
+                    const SizedBox(height: 5),
+                    ButtonGroupSelect<String>(
+                      items: languages,
+                      builder: (item, context) => Text(item),
+                      selectedIndex: languages.indexOf(config.language),
+                      onSelected: (index, item) {
+                        context.read<ConfigCubit>().setLanguage(item);
+                      },
+                    ),
+
+                    SizedBox(height: 25),
                     Text("Your guide's voice",
                         style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 5),
