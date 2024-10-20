@@ -7,6 +7,7 @@ import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:sightseeing_app/state/poi.dart';
 import 'package:sightseeing_app/state/location.dart';
+import 'package:sightseeing_app/pages/demo.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
                   BlocProvider(create: (_) => AudioCubit()),
                   BlocProvider(create: (_) => POICubit()),
                   BlocProvider(create: (_) => LocationCubit()),
-                ], child: const MapScreen()),
+                ], child: kIsWeb ? const Demo() : const MapScreen()),
           }),
     );
   }
