@@ -1,6 +1,11 @@
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 Future<void> checkLocationPermission() async {
+  if (kIsWeb) {
+    return;
+  }
+
   var permission = await Geolocator.checkPermission();
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
@@ -13,26 +18,4 @@ Future<void> checkLocationPermission() async {
     return Future.error(
         'Location permissions are permanently denied, we cannot request permissions.');
   }
-}
-
-Future<Position> getPosition() async {
-  var serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    return Future.error('Location services are disabled.');
-  }
-
-  await checkLocationPermission();
-
-  return await Geolocator.getCurrentPosition();
-}
-
-Future<Position> getLastKnownPosition() async {
-  var serviceEnabled = await Geolocator.isLocationServiceEnabled();
-  if (!serviceEnabled) {
-    return Future.error('Location services are disabled.');
-  }
-
-  await checkLocationPermission();
-
-  return await Geolocator.getLastKnownPosition() ?? await Geolocator.getCurrentPosition();
 }

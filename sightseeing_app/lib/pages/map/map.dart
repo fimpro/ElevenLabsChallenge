@@ -15,8 +15,7 @@ import 'package:sightseeing_app/services/audio.dart';
 import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-
+import 'package:sightseeing_app/state/location.dart';
 import '../../models/poi.dart';
 import '../../state/poi.dart';
 
@@ -34,7 +33,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   late AlignOnUpdate _alignDirectionOnUpdate;
   late final StreamController<double?> _alignPositionStreamController;
   late final StreamController<double?> _alignDirectionStreamController;
-  late final StreamSubscription<Position> _positionStream;
+  late final StreamSubscription<LocationMarkerPosition> _positionStream;
   late final StreamSubscription<PlayerState> _playerStateStream;
 
   @override
@@ -47,12 +46,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     _alignDirectionStreamController = StreamController<double?>();
 
     audioPlayer.stop();
-
-    _positionStream = Geolocator.getPositionStream(
-            locationSettings: const LocationSettings(
-                accuracy: LocationAccuracy.bestForNavigation,
-                distanceFilter: 50))
-        .listen((position) async {
+    _positionStream =
+        context.read<LocationCubit>().stream.listen((position) async {
       await postUpdate(position);
     });
 
@@ -77,7 +72,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
 
       var audioState = context.read<AudioCubit>();
 
-      print('audioready: ${data.audioReady}, startedPlaying: ${audioState.state.startedPlaying}');
+      print(
+          'audioready: ${data.audioReady}, startedPlaying: ${audioState.state.startedPlaying}');
       if (data.audioReady && !audioState.state.startedPlaying) {
         var audioUrl = apiController.lastAudioUrl();
 
@@ -96,11 +92,12 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     myLocation();
   }
 
-  Future<void> postUpdate(Position position) async {
-    var response = await tryApi(() => apiController.updateLocation(UpdateRequest(
-        lat: position.latitude,
-        lon: position.longitude,
-        prevent: apiController.hasNewAudio)));
+  Future<void> postUpdate(LocationMarkerPosition position) async {
+    var response = await tryApi(() => apiController.updateLocation(
+        UpdateRequest(
+            lat: position.latitude,
+            lon: position.longitude,
+            prevent: apiController.hasNewAudio)));
 
     if (response == null) {
       print('relogging in');
@@ -137,57 +134,63 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
               builder: (context, poi) {
                 print('poi: ${poi.name} ${poi.hasLocation} ${poi.location}');
                 return FlutterMap(
-                mapController: _animatedController.mapController,
-                options: MapOptions(
-                  initialCenter: const LatLng(51.509364, -0.128928),
-                  initialZoom: 9.2,
-                  onPositionChanged: (camera, hasGesture) {
-                    if (!hasGesture) return;
+                  mapController: _animatedController.mapController,
+                  options: MapOptions(
+                    initialCenter: const LatLng(51.509364, -0.128928),
+                    initialZoom: 9.2,
+                    onPositionChanged: (camera, hasGesture) {
+                      if (!hasGesture) return;
 
-                    setState(() {
-                      if (_alignPositionOnUpdate != AlignOnUpdate.never) {
-                        _alignPositionOnUpdate = AlignOnUpdate.never;
-                      }
+                      setState(() {
+                        if (_alignPositionOnUpdate != AlignOnUpdate.never) {
+                          _alignPositionOnUpdate = AlignOnUpdate.never;
+                        }
 
-                      if (_alignDirectionOnUpdate != AlignOnUpdate.never) {
-                        _alignDirectionOnUpdate = AlignOnUpdate.never;
-                      }
-                    });
-                  },
-                ),
-                children: [
-                  TileLayer(
-                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    userAgentPackageName: 'com.example.app',
+                        if (_alignDirectionOnUpdate != AlignOnUpdate.never) {
+                          _alignDirectionOnUpdate = AlignOnUpdate.never;
+                        }
+                      });
+                    },
                   ),
-                  CurrentLocationLayer(
-                    alignPositionStream: _alignPositionStreamController.stream,
-                    alignPositionOnUpdate: _alignPositionOnUpdate,
-                    alignDirectionStream: _alignDirectionStreamController.stream,
-                    alignDirectionOnUpdate: _alignDirectionOnUpdate,
-                  ),
-                  MarkerLayer(
-                    markers: [
-                      if(!poi.isEmpty && poi.hasLocation) Marker(
-                        point: LatLng(poi.latitude, poi.longitude),
-                        width: 100,
-                        height: 100,
-                        child: const Center(child: Icon(Icons.location_pin, color: Colors.red, size: 40)),
-                        rotate: true
-                      ),
-                    ],
-                  ),
-                  RichAttributionWidget(
-                    attributions: [
-                      TextSourceAttribution(
-                        'OpenStreetMap contributors',
-                        onTap: () => launchUrl(Uri.parse(
-                            'https://openstreetmap.org/copyright')), // (external)
-                      ),
-                    ],
-                  ),
-                ],
-              );
+                  children: [
+                    TileLayer(
+                      urlTemplate:
+                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      userAgentPackageName: 'com.example.app',
+                    ),
+                    CurrentLocationLayer(
+                      alignPositionStream:
+                          _alignPositionStreamController.stream,
+                      alignPositionOnUpdate: _alignPositionOnUpdate,
+                      alignDirectionStream:
+                          _alignDirectionStreamController.stream,
+                      alignDirectionOnUpdate: _alignDirectionOnUpdate,
+                      positionStream: context.read<LocationCubit>().stream,
+                    ),
+                    MarkerLayer(
+                      markers: [
+                        if (!poi.isEmpty && poi.hasLocation)
+                          Marker(
+                              point: LatLng(poi.latitude, poi.longitude),
+                              width: 100,
+                              height: 100,
+                              child: const Center(
+                                  child: Icon(Icons.location_pin,
+                                      color: Colors.red, size: 40)),
+                              rotate: true),
+                      ],
+                    ),
+                    RichAttributionWidget(
+                      attributions: [
+                        TextSourceAttribution(
+                          'OpenStreetMap contributors',
+                          onTap: () => launchUrl(Uri.parse(
+                              'https://openstreetmap.org/copyright')), // (external)
+                        ),
+                      ],
+                    ),
+                  ],
+                );
               },
             ),
             SafeArea(
