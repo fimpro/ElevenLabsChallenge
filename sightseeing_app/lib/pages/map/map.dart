@@ -35,7 +35,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   late AlignOnUpdate _alignDirectionOnUpdate;
   late final StreamController<double?> _alignPositionStreamController;
   late final StreamController<double?> _alignDirectionStreamController;
-  late final StreamSubscription<LocationMarkerPosition> _positionStream;
+  late final StreamSubscription<LocationMarkerPosition>
+      _positionStreamSubscription;
+  late final StreamController<LocationMarkerPosition>
+      _mapPositionStreamController;
   late final StreamSubscription<PlayerState> _playerStateStream;
 
   @override
@@ -46,11 +49,13 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     _alignDirectionOnUpdate = AlignOnUpdate.always;
     _alignPositionStreamController = StreamController<double?>();
     _alignDirectionStreamController = StreamController<double?>();
+    _mapPositionStreamController = StreamController<LocationMarkerPosition>();
 
     audioPlayer.stop();
 
-    _positionStream =
+    _positionStreamSubscription =
         context.read<LocationCubit>().stream.listen((position) async {
+      _mapPositionStreamController.add(position);
       await postUpdate(position);
     });
 
@@ -115,13 +120,16 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
       _alignDirectionOnUpdate = AlignOnUpdate.always;
     });
 
+    _mapPositionStreamController.add(context.read<LocationCubit>().state);
+
     _alignPositionStreamController.add(17);
   }
 
   @override
   void dispose() {
     _alignPositionStreamController.close();
-    _positionStream.cancel();
+    _mapPositionStreamController.close();
+    _positionStreamSubscription.cancel();
     _playerStateStream.cancel();
     apiController.stop();
     super.dispose();
@@ -179,7 +187,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                       alignDirectionStream:
                           _alignDirectionStreamController.stream,
                       alignDirectionOnUpdate: _alignDirectionOnUpdate,
-                      positionStream: context.read<LocationCubit>().stream,
+                      positionStream: _mapPositionStreamController.stream,
                     ),
                     MarkerLayer(
                       markers: [
