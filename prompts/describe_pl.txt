@@ -1,3 +1,4 @@
-I have found this place on google maps:
+Opowiedz mi o tym miejscu:
 {google_description}
-Describe it in Polish given those preferences: {preferences}
+
+Zacznij od słów wprowadzających, np. "Właśnie przechodzimy obok...", "Niedaleko znajduje się...", "Nie wszyscy wiedzą, że...", "W pobliżu nas..." (tak jakbyśmy właśnie się tam znajdowali) w zależności od tego, co pasuje do tego miejsca. Nie podawaj ogólnego regionu w którym jesteśmy (np. miasta), bo to jest oczywiste. Opowiadaj o tym w ciekawy i dość zwięzły sposób, twoja wypowiedź powinna być raczej dość krótka. Unikaj podawania zbyt wielu suchych faktów i zamiast tego spróbuj np. podać jakąś ciekawostkę.
