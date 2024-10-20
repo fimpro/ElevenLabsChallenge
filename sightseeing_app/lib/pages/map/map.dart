@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
+import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:just_audio/just_audio.dart';
@@ -154,9 +155,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                   ),
                   children: [
                     TileLayer(
+                      tileProvider: CancellableNetworkTileProvider(),
                       urlTemplate:
-                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                      userAgentPackageName: 'com.example.app',
+                          'https://api.maptiler.com/maps/bright-v2/{z}/{x}/{y}.png?key=fl9YfQ3ia2xgpDnqSFEp',
+                      userAgentPackageName: 'com.sightseeingapp.app',
                     ),
                     CurrentLocationLayer(
                       alignPositionStream:
@@ -180,14 +182,26 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                               rotate: true),
                       ],
                     ),
-                    RichAttributionWidget(
-                      attributions: [
-                        TextSourceAttribution(
-                          'OpenStreetMap contributors',
-                          onTap: () => launchUrl(Uri.parse(
-                              'https://openstreetmap.org/copyright')), // (external)
+                    SizedBox.expand(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 118.0, left: 5),
+                        child: RichAttributionWidget(
+                          alignment: AttributionAlignment.bottomLeft,
+                          attributions: [
+                            TextSourceAttribution(
+                              'OpenStreetMap contributors',
+                              onTap: () => launchUrl(Uri.parse(
+                                  'https://openstreetmap.org/copyright')),
+                            ),
+                            TextSourceAttribution(
+                              'MapTiler',
+                              onTap: () => launchUrl(Uri.parse(
+                                  'https://www.maptiler.com/copyright/')),
+                            ),
+                          ],
+                          showFlutterMapAttribution: false,
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 );
