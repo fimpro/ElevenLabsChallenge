@@ -3,7 +3,6 @@ import time
 import tempfile
 import datetime
 from dotenv import load_dotenv
-from langchain_community.chat_models import ChatOpenAI
 from openai import OpenAI
 
 load_dotenv()
@@ -11,7 +10,7 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 perplexity_api_key = os.getenv("PERPLEXITY_API_KEY")
 
 class LLM:
-    def __init__(self, model="chatgpt-4o-latest", print_log=False):
+    def __init__(self, model="chatgpt-4o-latest", internet_model="llama-3.1-sonar-large-128k-online", print_log=False):
         self.messages = [
             {
                 "role": "system", 
@@ -19,6 +18,7 @@ class LLM:
             }
         ]
         self.model = model
+        self.internet_model = internet_model
         self.print_log = print_log
         self.full_log = ''
         self.log_file = tempfile.mktemp(suffix='.log', dir='logs')
@@ -40,7 +40,7 @@ class LLM:
         self.messages.append({"role": "user", "content": msg})
         if use_internet:
             response = self.perplexity_client.chat.completions.create(
-                model="llama-3.1-sonar-large-128k-online",
+                model=self.internet_model,
                 messages=self.messages,
             )
         else:

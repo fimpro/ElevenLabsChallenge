@@ -161,7 +161,7 @@ def choose_place(preferences, descs):
 def describe_place(preferences, language, place_id, google_description):
     print(f"describing place (id={place_id})...")
 
-    chat = LLM("chatgpt-4o-latest", print_log=PRINT_OUTPUTS)
+    chat = LLM(internet_model="llama-3.1-sonar-large-128k-online", print_log=PRINT_OUTPUTS)
     return chat.message_from_file(
         'prompts/describe_pl.txt' if language == 'polish' else 'prompts/describe_en.txt', 
         use_internet=True,
