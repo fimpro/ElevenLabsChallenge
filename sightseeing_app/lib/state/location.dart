@@ -14,9 +14,7 @@ class LocationCubit extends Cubit<LocationMarkerPosition> {
   StreamSubscription<Position>? _positionSubscription;
 
   LocationCubit() : super(defaultLocation) {
-    if (kIsWeb) {
-      emit(defaultLocation);
-    } else {
+    if (!kIsWeb) {
       _positionSubscription = Geolocator.getPositionStream(
         locationSettings: const LocationSettings(
           accuracy: LocationAccuracy.bestForNavigation,

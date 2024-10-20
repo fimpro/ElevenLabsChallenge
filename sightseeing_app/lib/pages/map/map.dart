@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -47,6 +48,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     _alignDirectionStreamController = StreamController<double?>();
 
     audioPlayer.stop();
+
     _positionStream =
         context.read<LocationCubit>().stream.listen((position) async {
       await postUpdate(position);
@@ -137,8 +139,18 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                 return FlutterMap(
                   mapController: _animatedController.mapController,
                   options: MapOptions(
-                    initialCenter: const LatLng(51.509364, -0.128928),
+                    initialCenter: LatLng(
+                        defaultLocation.latitude, defaultLocation.longitude),
                     initialZoom: 9.2,
+                    onTap: (tapPosition, point) {
+                      if (!kIsWeb) return;
+                      setState(() {
+                        context.read<LocationCubit>().setLocation(
+                              point.latitude,
+                              point.longitude,
+                            );
+                      });
+                    },
                     onPositionChanged: (camera, hasGesture) {
                       if (!hasGesture) return;
 
