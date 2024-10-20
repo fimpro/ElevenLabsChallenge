@@ -17,14 +17,9 @@ import 'package:sightseeing_app/services/audio.dart';
 import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:sightseeing_app/state/location.dart';
 import '../../models/poi.dart';
 import '../../state/poi.dart';
-
-const defaultLocation = LocationMarkerPosition(
-  latitude: 51.509364,
-  longitude: -0.128928,
-  accuracy: 1.0,
-);
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -40,12 +35,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   late AlignOnUpdate _alignDirectionOnUpdate;
   late final StreamController<double?> _alignPositionStreamController;
   late final StreamController<double?> _alignDirectionStreamController;
-  late final StreamSubscription<Position> _geolocatorSubscription;
-  late final StreamController<LocationMarkerPosition> _positionStreamController;
-  late final StreamController<LocationMarkerPosition>
-      _mapPositionStreamController;
-  late final StreamSubscription<LocationMarkerPosition>
-      _positionStreamSubscription;
+  late final StreamSubscription<LocationMarkerPosition> _positionStream;
   late final StreamSubscription<PlayerState> _playerStateStream;
 
   @override
@@ -56,30 +46,11 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     _alignDirectionOnUpdate = AlignOnUpdate.always;
     _alignPositionStreamController = StreamController<double?>();
     _alignDirectionStreamController = StreamController<double?>();
-    _positionStreamController = StreamController<LocationMarkerPosition>();
-    _mapPositionStreamController = StreamController<LocationMarkerPosition>();
 
     audioPlayer.stop();
 
-    if (!kIsWeb) {
-      _geolocatorSubscription = Geolocator.getPositionStream(
-        locationSettings: const LocationSettings(
-          accuracy: LocationAccuracy.bestForNavigation,
-          distanceFilter: 50,
-        ),
-      ).listen((Position position) {
-        final location = LocationMarkerPosition(
-          latitude: position.latitude,
-          longitude: position.longitude,
-          accuracy: position.accuracy,
-        );
-        _positionStreamController.add(location);
-      });
-    }
-
-    _positionStreamSubscription =
-        _positionStreamController.stream.listen((position) async {
-      _mapPositionStreamController.add(position);
+    _positionStream =
+        context.read<LocationCubit>().stream.listen((position) async {
       await postUpdate(position);
     });
 
@@ -144,18 +115,13 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
       _alignDirectionOnUpdate = AlignOnUpdate.always;
     });
 
-    if (kIsWeb) {
-      _positionStreamController.add(defaultLocation);
-    }
-
     _alignPositionStreamController.add(17);
   }
 
   @override
   void dispose() {
     _alignPositionStreamController.close();
-    _geolocatorSubscription.cancel();
-    _positionStreamSubscription.cancel();
+    _positionStream.cancel();
     _playerStateStream.cancel();
     apiController.stop();
     super.dispose();
@@ -179,11 +145,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                     onTap: (tapPosition, point) {
                       if (!kIsWeb) return;
                       setState(() {
-                        _positionStreamController.add(LocationMarkerPosition(
-                          latitude: point.latitude,
-                          longitude: point.longitude,
-                          accuracy: 1.0,
-                        ));
+                        context.read<LocationCubit>().setLocation(
+                              point.latitude,
+                              point.longitude,
+                            );
                       });
                     },
                     onPositionChanged: (camera, hasGesture) {
@@ -214,7 +179,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                       alignDirectionStream:
                           _alignDirectionStreamController.stream,
                       alignDirectionOnUpdate: _alignDirectionOnUpdate,
-                      positionStream: _mapPositionStreamController.stream,
+                      positionStream: context.read<LocationCubit>().stream,
                     ),
                     MarkerLayer(
                       markers: [
