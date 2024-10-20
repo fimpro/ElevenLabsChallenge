@@ -13,15 +13,14 @@ from pydantic import BaseModel
 
 from elevenlabs_api import remove_old, text_to_speech_file
 from googleapi import get_nearby
-from internet_llm import ask_question
-from selector_llm import SelectorLLM
+from llm import LLM
 
-SEARCH_RADIUS = 40  # search in nearby 40 meters
+SEARCH_RADIUS = 4000  # search in nearby 40 meters
 MAX_FILETIME = 24 * 3600  # how long an audio file can stay in the 'outputs' folder
 MIN_DISTANCE = 30  # minimum distance the user has to go to create the next google API request
 MIN_TIME = 8  # minimum time (8 seconds) between google API requests, in case the user moves too fast
 MAX_TIME = 30 * 60  # if a user does not answer for 30 minutes, it gets removed
-PRINT_OUTPUTS = False  # writes some cool stuff on console when set to True
+PRINT_OUTPUTS = True  # writes some cool stuff on console when set to True
 
 
 class User:
@@ -97,6 +96,8 @@ app.add_middleware(
 
 if not os.path.exists("outputs"):
     os.makedirs("outputs")
+if not os.path.exists("logs"):
+    os.makedirs("logs")
 
 
 def cleanup_users():
@@ -129,12 +130,87 @@ Summary: {'not provided' if place['summary'] is None else place['summary']}"""
         )
     return descriptions
 
+# ask the LLM what is the best place given preferences and descriptions
+def choose_place(preferences, descs):
+    if len(descs) < 2:
+        return 0
+
+    locations_formatted = ""
+    for idx, desc in enumerate(descs):
+        locations_formatted += f"\n\nLocation {idx+1}: {desc}"
+
+    chat = LLM("chatgpt-4o-latest", print_log=PRINT_OUTPUTS)
+    chat.message_from_file(
+        'prompts/choose_place_1.txt', 
+        preferences=preferences, 
+        locations_formatted=locations_formatted
+    )
+    str_chosen_id = chat.message_from_file('prompts/choose_place_2.txt')
+    if "none" in str_chosen_id.lower():
+        return 0
+    try:
+        str_chosen_id = "".join([char for char in str_chosen_id if char.isdigit()])
+        return int(str_chosen_id) - 1
+    except Exception as e:
+        print("ERROR: there was an error while decoding llm's answer (forcing chosen_id=0):")
+        print(e)
+        return 0
+
+# describe a place (given preferences for better relevance)
+def describe_place(preferences, place_id):
+    print(f"describing place (id={place_id})...")
+    
+    # chat = LLM("chatgpt-4o-latest", print_log=PRINT_OUTPUTS)
+    # return chat.message_from_file(
+    #     'prompts/describe.txt', 
+    #     preferences=preferences
+    # )
+    return "to jest przykładowy tekst"
+
+print(describe_place("art, history", "ChIJUxlNRG7DD0cRFJFhKbs1aVg"))
+
+# given user and places, pick one place, generate description for it and start generating audio
+def generate_content_and_audio(user, places, id):
+    descs = places_to_descriptions(places)
+    chosen_id = choose_place(user.preferences, descs)
+
+    if PRINT_OUTPUTS:
+        print(f"chosen id: {chosen_id}")
+    if chosen_id < 0 or chosen_id >= len(places):
+        print(
+            f"WARNING: chosen id was {chosen_id}, but there are only {len(places)} places (forced chosen_id=0)"
+        )
+        chosen_id = 0
+
+    user.visited_places.append(places[chosen_id]["id"])
+    infos[id]["location"] = places[chosen_id]["location"]
+    infos[id]["name"] = places[chosen_id]["name"]
+
+    description = describe_place(user.preferences, places[chosen_id]["id"])
+    infos[id]["description"] = description
+
+    print("Generating audio file...")
+    text_to_speech_file(
+        text=description,
+        path=f"outputs/{id}.mp3",
+        emotions=user.emotions,
+        voice=user.voice,
+    )
+
 
 class CreateTokenRequest(BaseModel):
     preferences: List[str]
     emotions: str
     voice: str
     language: str
+
+class InfoRequest(BaseModel):
+    id: str
+
+class UpdateRequest(BaseModel):
+    prevent: bool
+    lat: float
+    lon: float
 
 
 @app.post("/create_token")
@@ -147,11 +223,6 @@ async def create_token(req: CreateTokenRequest):
         req.language.lower()
     )
     return {"token": token, "ok": True}
-
-
-class InfoRequest(BaseModel):
-    id: str
-
 
 @app.post("/info")
 async def check_id(req: InfoRequest):
@@ -167,7 +238,6 @@ async def check_id(req: InfoRequest):
             "info": {"location": [None, None], "name": None, "description": None},
         }
 
-
 @app.get("/audio/{id}.mp3")
 async def download_audio(id: str):
     if id in infos:
@@ -178,83 +248,6 @@ async def download_audio(id: str):
 @app.get("/ping")
 async def ping():
     return "pong"
-
-
-# Ask the LLM what is the best place
-def choose_place(preferences, descs):
-    if len(descs) < 2:
-        return 0
-
-    prompt = f"""Hi!
-I am making an app that is supposed to automatically tell the user (a tourist in a city) some cool stuff about the things near them. Could you help me with that?
-This means finding some nice monuments, cultural places, tourist attractions, or any places with deeper history.
-The user has provided the following preferences: {preferences}.
-Try to pick the place that fits the user's preferences the best. But, if there is a really popular place worth seeing, but not aligning exactly with the preferences, then still pick it: the user still wants to see everything, just likes the things mentioned in preferences A BIT more.
-You should pick the place that offers some cool information that user might want to hear about.
-Note that we will get those locations every 50 meters, so if there is nothing interesting right now, there is no problem with simply choosing no location at all, so definitely keep that in mind.
-Also, the locations might not be formatted perfectly (and they might for example repeat) or they might even be in a different language than English so be ready for that.
-I provided the ratings in scale 1-5 provided by Google services, but do not rely on them too much. Remember to also include the number of the location you pick in the final response.
-With that in mind, choose the best location from these or choose that none of them are really worth seeing:"""
-
-    for idx, desc in enumerate(descs):
-        prompt += f"\n\nLocation {idx+1}: {desc}"
-
-    chat = SelectorLLM("4o-latest", log=PRINT_OUTPUTS)
-    chat.message(prompt)
-    str_chosen_id = chat.message(
-        "Now, for automatic record, write ONLY the number of the place that you have chosen or word 'none'."
-    )
-    if "none" in str_chosen_id.lower():
-        return 0
-    str_chosen_id = "".join([char for char in str_chosen_id if char.isdigit()])
-
-    return int(str_chosen_id) - 1
-
-
-def generate_audio(user, places, id):
-    descs = places_to_descriptions(places)
-    chosen_id = choose_place(user.preferences, descs)
-
-    if PRINT_OUTPUTS:
-        print(f"chosen id: {chosen_id}")
-    if chosen_id < 0 or chosen_id >= len(places):
-        print(
-            f"WARNING: chosen id was {chosen_id}, but there are only {len(places)} places (forced chosen_id=0)"
-        )
-        chosen_id = 0
-
-    infos[id]["location"] = places[chosen_id]["location"]
-    infos[id]["name"] = places[chosen_id]["name"]
-
-    place = descs[chosen_id]
-    prompt = f"""I have found this place on google maps:
-{place}
-
-Tell something nice about this place to a tourist who has never seen it before. Tell it in an enjoyable way: include some fun facts and useful information, while not providing too much boring information like dates which no one will ever remember.
-Only provide the description, so don't for example write 'Sure, here is the description: ...'. Instead, write it immediately. Also, make sure to write it in English, even if the place has some parts written in a different language."""
-
-    if PRINT_OUTPUTS:
-        print("Generating description...")
-    final_result = ask_question(prompt)
-    if PRINT_OUTPUTS:
-        print(f"Description: {final_result}")
-    user.visited_places.append(places[chosen_id]["id"])
-    infos[id]["description"] = final_result
-
-    print("Generating audio file...")
-    text_to_speech_file(
-        text=final_result,
-        path=f"outputs/{id}.mp3",
-        emotions=user.emotions,
-        voice=user.voice,
-    )
-
-
-class UpdateRequest(BaseModel):
-    prevent: bool
-    lat: float
-    lon: float
-
 
 @app.post("/update")
 async def update_user(
@@ -288,7 +281,7 @@ async def update_user(
 
             id = str(uuid.uuid4())
             infos[id] = {"location": [None, None], "name": None, "description": None}
-            threading.Thread(target=generate_audio, args=(user, places, id)).start()
+            threading.Thread(target=generate_content_and_audio, args=(user, places, id)).start()
             return {"ok": True, "new_file": True, "id": id}
 
         return {"ok": True, "new_file": False}

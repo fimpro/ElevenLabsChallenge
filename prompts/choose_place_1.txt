@@ -1,0 +1,10 @@
+Hi!
+I am making an app that is supposed to automatically tell the user (a tourist in a city) some cool stuff about the things near them. Could you help me with that?
+This means finding some nice monuments, cultural places, tourist attractions, or any places with deeper history.
+The user has provided the following preferences: {preferences}.
+Try to pick the place that fits the user's preferences the best. But, if there is a really popular place worth seeing, but not aligning exactly with the preferences, then still pick it: the user still wants to see everything, just likes the things mentioned in preferences A BIT more.
+You should pick the place that offers some cool information that user might want to hear about.
+Note that we will get those locations every 50 meters, so if there is nothing interesting right now, there is no problem with simply choosing no location at all, so definitely keep that in mind.
+Also, the locations might not be formatted perfectly (and they might for example repeat) or they might even be in a different language than English so be ready for that.
+I provided the ratings in scale 1-5 provided by Google services, but do not rely on them too much. Remember to also include the number of the location you pick in the final response.
+With that in mind, choose the best location from these or choose that none of them are really worth seeing:{locations_formatted}
