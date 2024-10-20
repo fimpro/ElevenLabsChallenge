@@ -15,12 +15,12 @@ from elevenlabs_api import remove_old, text_to_speech_file
 from googleapi import get_nearby
 from llm import LLM
 
-SEARCH_RADIUS = 4000  # search in nearby 40 meters
+SEARCH_RADIUS = 40  # search in nearby 40 meters
 MAX_FILETIME = 24 * 3600  # how long an audio file can stay in the 'outputs' folder
 MIN_DISTANCE = 30  # minimum distance the user has to go to create the next google API request
 MIN_TIME = 8  # minimum time (8 seconds) between google API requests, in case the user moves too fast
 MAX_TIME = 30 * 60  # if a user does not answer for 30 minutes, it gets removed
-PRINT_OUTPUTS = True  # writes some cool stuff on console when set to True
+PRINT_OUTPUTS = False  # writes some cool stuff on console when set to True
 
 
 class User:
@@ -244,7 +244,7 @@ async def download_audio(id: str):
         return responses.FileResponse(
             path=f"outputs/{id}.mp3", filename=f"{id}.mp3", media_type="audio/mpeg"
         )
-    
+
 @app.get("/ping")
 async def ping():
     return "pong"
