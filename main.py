@@ -125,6 +125,7 @@ def places_to_descriptions(places):
             f"""{place['name']}
 Address: {place['address']}
 Rating: {'not provided' if place['rating'] is None else f'{place["rating"]:.1f} ({place["userRatingCount"]} reviews)'}
+Type: {'not provided' if place['primary_tag'] is None else place['primary_tag']}
 Tags: {'there are no provided' if len(place['tags']) == 0 else ', '.join(place['tags'])}
 Summary: {'not provided' if place['summary'] is None else place['summary']}"""
         )
@@ -157,17 +158,16 @@ def choose_place(preferences, descs):
         return 0
 
 # describe a place (given preferences for better relevance)
-def describe_place(preferences, place_id):
+def describe_place(preferences, language, place_id, google_description):
     print(f"describing place (id={place_id})...")
-    
-    # chat = LLM("chatgpt-4o-latest", print_log=PRINT_OUTPUTS)
-    # return chat.message_from_file(
-    #     'prompts/describe.txt', 
-    #     preferences=preferences
-    # )
-    return "to jest przykładowy tekst"
 
-print(describe_place("art, history", "ChIJUxlNRG7DD0cRFJFhKbs1aVg"))
+    chat = LLM("chatgpt-4o-latest", print_log=PRINT_OUTPUTS)
+    return chat.message_from_file(
+        'prompts/describe_pl.txt' if language == 'polish' else 'prompts/describe_en.txt', 
+        use_internet=True,
+        preferences=preferences,
+        google_description=google_description
+    )
 
 # given user and places, pick one place, generate description for it and start generating audio
 def generate_content_and_audio(user, places, id):
@@ -186,7 +186,7 @@ def generate_content_and_audio(user, places, id):
     infos[id]["location"] = places[chosen_id]["location"]
     infos[id]["name"] = places[chosen_id]["name"]
 
-    description = describe_place(user.preferences, places[chosen_id]["id"])
+    description = describe_place(user.preferences, user.language, places[chosen_id]["id"], descs[chosen_id])
     infos[id]["description"] = description
 
     print("Generating audio file...")

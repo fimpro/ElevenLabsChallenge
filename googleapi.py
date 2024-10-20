@@ -12,7 +12,17 @@ API_URL = "https://places.googleapis.com/v1/places:searchNearby"
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 if GOOGLE_API_KEY is None:
     print("Google api key is none")
-FIELD_MASK = "places.types,places.formattedAddress,places.id,places.location,places.rating,places.userRatingCount,places.displayName,places.editorialSummary"
+fields = [
+    'id',
+    'types',
+    'formattedAddress',
+    'location',
+    'rating',
+    'userRatingCount',
+    'displayName',
+    'primaryTypeDisplayName',
+    'editorialSummary',
+]
 
 def get_nearby(location: List[float], radius: float):
     request_data = {
@@ -30,7 +40,7 @@ def get_nearby(location: List[float], radius: float):
     headers = {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": GOOGLE_API_KEY,
-        "X-Goog-FieldMask": FIELD_MASK,
+        "X-Goog-FieldMask": ','.join([f'places.{field}' for field in fields]),
     }
     response = requests.post(API_URL, json=request_data, headers=headers)
 
@@ -50,6 +60,7 @@ def get_nearby(location: List[float], radius: float):
             {
                 "id": place["id"],
                 "tags": place["types"],
+                "primary_tag": place["primaryTypeDisplayName"]["text"] if "primaryTypeDisplayName" in place else None,
                 "name": place["displayName"]["text"],
                 "address": place["formattedAddress"],
                 "location": [

@@ -1,0 +1,3 @@
+I have found this place on google maps:
+{google_description}
+Describe it in English given those preferences: {preferences}

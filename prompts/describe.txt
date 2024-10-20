@@ -1,5 +1,0 @@
-I have found this place on google maps:
-{google_description}
-
-Tell something nice about this place to a tourist who has never seen it before. Tell it in an enjoyable way: include some fun facts and useful information, while not providing too much boring information like dates which no one will ever remember.
-Only provide the description, so don't for example write 'Sure, here is the description: ...'. Instead, write it immediately. Also, make sure to write it in English, even if the place has some parts written in a different language.
