@@ -3,15 +3,12 @@ import time
 import tempfile
 import datetime
 from dotenv import load_dotenv
-from langchain_community.retrievers import YouRetriever
-from langchain.chains import RetrievalQA
 from langchain_community.chat_models import ChatOpenAI
 from openai import OpenAI
 
 load_dotenv()
 openai_api_key = os.getenv("OPENAI_API_KEY")
-client = OpenAI(api_key=openai_api_key)
-yr = YouRetriever()
+perplexity_api_key = os.getenv("PERPLEXITY_API_KEY")
 
 class LLM:
     def __init__(self, model="chatgpt-4o-latest", print_log=False):
@@ -26,6 +23,8 @@ class LLM:
         self.full_log = ''
         self.log_file = tempfile.mktemp(suffix='.log', dir='logs')
         self.log(f'*** LLM conversation {datetime.datetime.now()} ***')
+        self.openai_client = OpenAI(api_key=openai_api_key)
+        self.perplexity_client = OpenAI(api_key=perplexity_api_key, base_url="https://api.perplexity.ai")
 
     def log(self, txt):
         self.full_log += txt + '\n'
@@ -40,17 +39,16 @@ class LLM:
         
         self.messages.append({"role": "user", "content": msg})
         if use_internet:
-            content = RetrievalQA.from_chain_type(
-                llm=ChatOpenAI(model=self.model, api_key=openai_api_key),
-                chain_type="stuff",
-                retriever=yr
-            ).run(msg)
+            response = self.perplexity_client.chat.completions.create(
+                model="llama-3.1-sonar-large-128k-online",
+                messages=self.messages,
+            )
         else:
-            response = client.chat.completions.create(
+            response = self.openai_client.chat.completions.create(
                 model=self.model,
                 messages=self.messages
             )
-            content = response.choices[0].message.content
+        content = response.choices[0].message.content
         self.messages.append({"role": "assistant", "content": content})
 
         self.log(f"-ASSISTANT ({time.time() - start_t:.2f}s)- {content}")
