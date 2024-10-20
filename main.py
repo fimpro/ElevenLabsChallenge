@@ -18,39 +18,36 @@ from selector_llm import SelectorLLM
 
 SEARCH_RADIUS = 40  # search in nearby 40 meters
 MAX_FILETIME = 24 * 3600  # how long an audio file can stay in the 'outputs' folder
-MIN_DISTANCE = (
-    30  # minimum distance the user has to go to create the next google API request
-)
+MIN_DISTANCE = 30  # minimum distance the user has to go to create the next google API request
 MIN_TIME = 8  # minimum time (8 seconds) between google API requests, in case the user moves too fast
 MAX_TIME = 30 * 60  # if a user does not answer for 30 minutes, it gets removed
 PRINT_OUTPUTS = False  # writes some cool stuff on console when set to True
 
 
 class User:
-    def __init__(self, preferences, emotions, voice):
+    def __init__(self, preferences, emotions, voice, language):
+        self.initiated = False
         self.prev_update = time.time()
-        self.curr_location = None
         self.prev_request_location = None  # the location of previous API request
         self.prev_request_time = None  # the time of previous API request
-        self.initiated = False
+        self.curr_location = None
+
         self.emotions = emotions
         self.voice = voice
-        self.location_history = []
-        self.visited_places = []
+        self.language = language
         self.preferences = preferences
 
+        self.location_history = []
+        self.visited_places = []
+
         if PRINT_OUTPUTS:
-            print(
-                f"Created a new user (emotions: {emotions}, voice: {voice}, preferences: {preferences})"
-            )
+            print(f"Created a new user (emotions: {emotions}, voice: {voice}, preferences: {preferences})")
 
     def update(self, location):
         self.location_history.append((location, time.time()))
         self.prev_update = time.time()
         self.curr_location = location
 
-    # TODO: maybe averaging over previous 2-3 entries from location_history?
-    # TODO: or linearly extrapolating from them to predict future location to decrease latency?
     def get_request_location(self):
         return self.curr_location
 
@@ -119,7 +116,6 @@ scheduler.add_job(cleanup_users, "interval", seconds=30)
 scheduler.start()
 
 
-# TODO: uzupełnić summary w przypadku None (o ile nie ma ich za dużo)?
 # converts places from google API to formatted version for llm
 def places_to_descriptions(places):
     descriptions = []
@@ -138,6 +134,7 @@ class CreateTokenRequest(BaseModel):
     preferences: List[str]
     emotions: str
     voice: str
+    language: str
 
 
 @app.post("/create_token")
@@ -147,6 +144,7 @@ async def create_token(req: CreateTokenRequest):
         ", ".join(req.preferences) if len(req.preferences) > 0 else "none",
         req.emotions.lower(),
         req.voice.lower(),
+        req.language.lower()
     )
     return {"token": token, "ok": True}
 
@@ -176,6 +174,10 @@ async def download_audio(id: str):
         return responses.FileResponse(
             path=f"outputs/{id}.mp3", filename=f"{id}.mp3", media_type="audio/mpeg"
         )
+    
+@app.get("/ping")
+async def ping():
+    return "pong"
 
 
 # Ask the LLM what is the best place
@@ -203,7 +205,7 @@ With that in mind, choose the best location from these or choose that none of th
         "Now, for automatic record, write ONLY the number of the place that you have chosen or word 'none'."
     )
     if "none" in str_chosen_id.lower():
-        return 0  # TODO (maybe cancel audio generation?)
+        return 0
     str_chosen_id = "".join([char for char in str_chosen_id if char.isdigit()])
 
     return int(str_chosen_id) - 1
