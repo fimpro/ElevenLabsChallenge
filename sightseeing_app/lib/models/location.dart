@@ -5,7 +5,4 @@ class CustomLocation {
   CustomLocation({required this.latitude, required this.longitude});
 }
 
-var defaultLocation = CustomLocation(
-  latitude: 51.509364,
-  longitude: -0.128928,
-);
+var defaultLocation = CustomLocation(latitude: 51.50337, longitude: -0.14899);
