@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:event/event.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,9 +8,12 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
 import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:sightseeing_app/models/location.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sightseeing_app/models/demo_player.dart';
 import 'package:sightseeing_app/pages/map/bottom_panel.dart';
 import 'package:sightseeing_app/pages/map/top_panel.dart';
 import 'package:sightseeing_app/services/api.dart';
@@ -19,6 +23,7 @@ import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:sightseeing_app/state/location.dart';
+import 'package:sightseeing_app/state/player.dart';
 import '../../models/poi.dart';
 import '../../state/poi.dart';
 
@@ -36,12 +41,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
   late AlignOnUpdate _alignDirectionOnUpdate;
   late final StreamController<double?> _alignPositionStreamController;
   late final StreamController<double?> _alignDirectionStreamController;
-  late final StreamSubscription<LocationMarkerPosition>
-      _positionStreamSubscription;
+  late final StreamSubscription<CustomLocation> _positionStreamSubscription;
   late final StreamController<LocationMarkerPosition>
       _mapPositionStreamController;
   late final StreamSubscription<PlayerState> _playerStateStream;
-
   @override
   void initState() {
     super.initState();
@@ -52,18 +55,34 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     _alignDirectionStreamController = StreamController<double?>();
     _mapPositionStreamController = StreamController<LocationMarkerPosition>();
 
-    webDemoUI?.setControlsVisible(true);
     audioPlayer.stop();
 
-    Geolocator.getCurrentPosition().then((position) {
-      postUpdate(LocationMarkerPosition(latitude: position.latitude, longitude: position.longitude, accuracy: 1.0));
-      _animatedController.animateTo(dest: LatLng(position.latitude, position.longitude), zoom: 17);
+    final playerCubit = context.read<PlayerCubit>();
+    final locationCubit = context.read<LocationCubit>();
+
+    webDemoUI?.setControlsVisible(true);
+
+    playerCubit.stream.listen((playerState) {
+      if (!mounted) return;
+      print('player state: ${playerState.step}');
+      final step = playerState.step;
+      final location = demoPath[step];
+      locationCubit.setLocation(location.latitude, location.longitude);
+    });
+
+    locationCubit.stream.listen((position) {
+      postUpdate(CustomLocation(
+        latitude: position.latitude,
+        longitude: position.longitude,
+      ));
+      _animatedController.animateTo(
+          dest: LatLng(position.latitude, position.longitude), zoom: 17);
     }).onError((err, stackTrace) {});
 
-    _positionStreamSubscription =
-        context.read<LocationCubit>().stream.listen((position) async {
-      _mapPositionStreamController.add(position);
-      await postUpdate(position);
+    _positionStreamSubscription = locationCubit.stream.listen((loc) async {
+      _mapPositionStreamController.add(LocationMarkerPosition(
+          latitude: loc.latitude, longitude: loc.longitude, accuracy: 0.0));
+      await postUpdate(loc);
     });
 
     _playerStateStream = audioPlayer.playerStateStream.listen((event) {
@@ -107,11 +126,11 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     myLocation();
   }
 
-  Future<void> postUpdate(LocationMarkerPosition position) async {
+  Future<void> postUpdate(CustomLocation loc) async {
     var response = await tryApi(() => apiController.updateLocation(
         UpdateRequest(
-            lat: position.latitude,
-            lon: position.longitude,
+            lat: loc.latitude,
+            lon: loc.longitude,
             prevent: apiController.hasNewAudio)));
 
     if (response == null) {
@@ -127,7 +146,11 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
       _alignDirectionOnUpdate = AlignOnUpdate.always;
     });
 
-    _mapPositionStreamController.add(context.read<LocationCubit>().state);
+    CustomLocation location = context.read<LocationCubit>().state;
+    _mapPositionStreamController.add(LocationMarkerPosition(
+        latitude: location.latitude,
+        longitude: location.longitude,
+        accuracy: 0.0));
 
     _alignPositionStreamController.add(17);
   }

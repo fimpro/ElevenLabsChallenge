@@ -7,7 +7,6 @@ import 'package:event/event.dart' as event;
 class WebDemoUI {
   late JSFunction _onMessageJS;
   event.Event onPlay = event.Event();
-  event.Event onPause = event.Event();
   event.Event<event.Value<int>> onSeek = event.Event();
 
   WebDemoUI() {
@@ -38,8 +37,6 @@ class WebDemoUI {
 
     if (type == "play") {
       onPlay.broadcast();
-    } else if (type == "pause") {
-      onPause.broadcast();
     } else if (type == "seek") {
       var value = message["index"].dartify() as int?;
       onSeek.broadcast(event.Value(value));

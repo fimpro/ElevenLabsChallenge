@@ -2,15 +2,9 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:sightseeing_app/models/location.dart';
 
-const defaultLocation = LocationMarkerPosition(
-  latitude: 51.509364,
-  longitude: -0.128928,
-  accuracy: 1.0,
-);
-
-class LocationCubit extends Cubit<LocationMarkerPosition> {
+class LocationCubit extends Cubit<CustomLocation> {
   StreamSubscription<Position>? _positionSubscription;
 
   LocationCubit() : super(defaultLocation) {
@@ -21,10 +15,9 @@ class LocationCubit extends Cubit<LocationMarkerPosition> {
           distanceFilter: 50,
         ),
       ).listen((Position position) {
-        final location = LocationMarkerPosition(
+        final location = CustomLocation(
           latitude: position.latitude,
           longitude: position.longitude,
-          accuracy: position.accuracy,
         );
         emit(location);
       });
@@ -32,12 +25,14 @@ class LocationCubit extends Cubit<LocationMarkerPosition> {
   }
 
   void setLocation(double latitude, double longitude) {
-    final customPosition = LocationMarkerPosition(
-      latitude: latitude,
-      longitude: longitude,
-      accuracy: 0.0,
-    );
-    emit(customPosition);
+    if (state.latitude != latitude || state.longitude != longitude) {
+      final customPosition = CustomLocation(
+        latitude: latitude,
+        longitude: longitude,
+      );
+
+      emit(customPosition);
+    }
   }
 
   @override

@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:sightseeing_app/components/my_card.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:sightseeing_app/state/location.dart';
+import 'package:sightseeing_app/models/location.dart';
 
 import '../../models/config.dart';
 
@@ -30,7 +30,7 @@ class TopPanel extends StatelessWidget {
                         },
                         icon: const Icon(Icons.arrow_back_outlined)),
                     const SizedBox(width: 16),
-                    BlocBuilder<LocationCubit, LocationMarkerPosition>(
+                    BlocBuilder<LocationCubit, CustomLocation>(
                       builder: (context, location) => Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -43,6 +43,7 @@ class TopPanel extends StatelessWidget {
                                     var text = 'Exploring...';
 
                                     var placemark = snapshot.data?.firstOrNull;
+
                                     if (placemark != null) {
                                       text = 'Exploring ${placemark.locality}';
                                     }

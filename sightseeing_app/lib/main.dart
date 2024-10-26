@@ -8,7 +8,7 @@ import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:sightseeing_app/state/poi.dart';
 import 'package:sightseeing_app/state/location.dart';
-import 'package:sightseeing_app/pages/demo.dart';
+import 'package:sightseeing_app/state/player.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +29,8 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrangeAccent),
+            colorScheme:
+                ColorScheme.fromSeed(seedColor: Colors.deepOrangeAccent),
             useMaterial3: true,
           ),
           initialRoute: '/',
@@ -39,12 +40,14 @@ class _MyAppState extends State<MyApp> {
                   BlocProvider(create: (_) => AudioCubit()),
                   BlocProvider(create: (_) => POICubit()),
                   BlocProvider(create: (_) => LocationCubit()),
-                ], child: kIsWeb ? const Demo() : const MapScreen()),
+                  BlocProvider(create: (_) => PlayerCubit()),
+                ], child: const MapScreen()),
           }),
     );
   }
 
-  @override void initState() {
+  @override
+  void initState() {
     super.initState();
 
     if (kIsWeb) {
