@@ -35,22 +35,30 @@ class TopPanel extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          FutureBuilder(
-                            future: kIsWeb ? null : placemarkFromCoordinates(location.latitude, location.longitude),
-                            builder: (context, snapshot) {
-                              var text = 'Exploring';
+                          !kIsWeb
+                              ? FutureBuilder(
+                                  future: placemarkFromCoordinates(
+                                      location.latitude, location.longitude),
+                                  builder: (context, snapshot) {
+                                    var text = 'Exploring...';
 
-                              var placemark = snapshot.data?.firstOrNull;
-                              if (placemark != null) {
-                                text = 'Exploring ${placemark.locality}';
-                              }
+                                    var placemark = snapshot.data?.firstOrNull;
+                                    if (placemark != null) {
+                                      text = 'Exploring ${placemark.locality}';
+                                    }
 
-                              return Text(
-                                text,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              );
-                            },
-                          ),
+                                    return Text(
+                                      text,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                    );
+                                  },
+                                )
+                              : Text(
+                                  'Exploring',
+                                  style: Theme.of(context).textTheme.titleLarge,
+                                ),
                           const SizedBox(height: 4),
                           Text('${config.voice} • ${config.emotions}',
                               style: Theme.of(context).textTheme.bodySmall),
