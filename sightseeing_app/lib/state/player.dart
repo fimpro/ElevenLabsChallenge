@@ -8,7 +8,8 @@ class PlayerCubit extends Cubit<DemoPlayerState> {
   Timer? _timer;
 
   PlayerCubit() : super(DemoPlayerState(isPlaying: false, step: 0)) {
-    _timer = Timer.periodic(Duration(milliseconds: 5000), (timer) {
+    _timer =
+        Timer.periodic(Duration(milliseconds: secondsPerStep * 1000), (timer) {
       if (state.isPlaying) {
         if (state.step >= demoPath.length - 1) {
           webDemoUI?.setCurrentIndex(0);

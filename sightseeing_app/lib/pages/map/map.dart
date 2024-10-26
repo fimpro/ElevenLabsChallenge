@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:event/event.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_animations/flutter_map_animations.dart';
@@ -226,17 +227,41 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                     ),
                     MarkerLayer(
                       markers: [
-                        if (!poi.isEmpty && poi.hasLocation)
-                          Marker(
-                              point: LatLng(poi.latitude, poi.longitude),
-                              width: 100,
-                              height: 100,
-                              child: const Center(
-                                  child: Icon(Icons.location_pin,
-                                      color: Colors.red, size: 40)),
-                              rotate: true),
+                        ...([
+                          if (!poi.isEmpty && poi.hasLocation)
+                            Marker(
+                                point: LatLng(poi.latitude, poi.longitude),
+                                width: 100,
+                                height: 100,
+                                child: const Center(
+                                    child: Icon(Icons.location_pin,
+                                        color: Colors.red, size: 40)),
+                                rotate: true),
+                        ]),
+                        ...(kIsWeb
+                            ? demoPath
+                                .map((e) => Marker(
+                                    point: LatLng(e.latitude, e.longitude),
+                                    width: 100,
+                                    height: 100,
+                                    child: const Center(
+                                        child: Icon(Icons.circle,
+                                            color: Colors.blue, size: 10)),
+                                    rotate: true))
+                                .toList()
+                            : []),
                       ],
                     ),
+                    if (kIsWeb)
+                      PolylineLayer(polylines: [
+                        Polyline(
+                          points: demoPath
+                              .map((e) => LatLng(e.latitude, e.longitude))
+                              .toList(),
+                          color: Colors.blue,
+                          strokeWidth: 3,
+                        ),
+                      ]),
                     SizedBox.expand(
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 118.0, left: 5),

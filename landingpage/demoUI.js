@@ -45,7 +45,7 @@ function setPlayState(isPlaying) {
 
 function setIndex(index) {
     points.forEach((point, i) => {
-        if (i === index) {
+        if (i === Math.floor(index / 3)) {
             point.classList.add('bg-white');
         } else {
             point.classList.remove('bg-white');
