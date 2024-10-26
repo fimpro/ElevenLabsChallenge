@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
@@ -35,9 +36,9 @@ class TopPanel extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           FutureBuilder(
-                            future: placemarkFromCoordinates(location.latitude, location.longitude),
+                            future: kIsWeb ? null : placemarkFromCoordinates(location.latitude, location.longitude),
                             builder: (context, snapshot) {
-                              var text = 'Exploring...';
+                              var text = 'Exploring';
 
                               var placemark = snapshot.data?.firstOrNull;
                               if (placemark != null) {
