@@ -87306,7 +87306,7 @@ A.atl.prototype={
 $0(){return $.oh().uc(this.a.c)},
 $S:17}
 A.atA.prototype={
-$2(a,b){var s=null,r=this.a,q=A.N3("Hello",s,B.Lq,"Welcome to SightVoiceApp!"),p=t.Vv,o=t.p,n=A.N3(s,A.e7(A.b([new A.km($.aAu,new A.atp(),B.b.eO($.aAu,b.d),s,new A.atq(a),s,!0,s,p)],o),B.a_,B.R,B.a2),B.Ch,"Select your language"),m=A.N3(s,A.e7(A.b([B.TX,B.ks,new A.km($.aAH,new A.atr(),B.b.eO($.aAH,b.a),s,new A.ats(a),s,!0,s,p)],o),B.a_,B.R,B.a2),B.Cf,"Who will be your guide?"),l=A.N3(s,A.e7(A.b([B.TS,B.ks,new A.km($.aAz,new A.att(),B.b.eO($.aAz,b.b),s,new A.atu(a),s,!0,s,p)],o),B.a_,B.R,B.a2),B.Cg,"How are you feeling today?"),k=$.rD(),j=B.f.k(k.length),i=b.c,h=A.Z(i).h("ah<1,k>")
+$2(a,b){var s=null,r=this.a,q=A.N3("Hello world",s,B.Lq,"Welcome to SightVoiceApp!"),p=t.Vv,o=t.p,n=A.N3(s,A.e7(A.b([new A.km($.aAu,new A.atp(),B.b.eO($.aAu,b.d),s,new A.atq(a),s,!0,s,p)],o),B.a_,B.R,B.a2),B.Ch,"Select your language"),m=A.N3(s,A.e7(A.b([B.TX,B.ks,new A.km($.aAH,new A.atr(),B.b.eO($.aAH,b.a),s,new A.ats(a),s,!0,s,p)],o),B.a_,B.R,B.a2),B.Cf,"Who will be your guide?"),l=A.N3(s,A.e7(A.b([B.TS,B.ks,new A.km($.aAz,new A.att(),B.b.eO($.aAz,b.b),s,new A.atu(a),s,!0,s,p)],o),B.a_,B.R,B.a2),B.Cg,"How are you feeling today?"),k=$.rD(),j=B.f.k(k.length),i=b.c,h=A.Z(i).h("ah<1,k>")
 return new A.pk(A.b([q,n,m,l,A.N3(s,A.e7(A.b([B.TW,B.ks,new A.km(k,new A.atv(),s,A.a_(new A.ah(i,new A.atw(),h),!0,h.h("aB.E")),s,new A.atx(a),!1,new A.dk(j,t.kK),p),B.yH,A.aE9(A.Ll(B.Fc,s,s),s,new A.aty(r,a))],o),B.a_,B.R,B.a2),B.Ce,"What do you like the most?")],t.jk),new A.atz(r),B.TU,B.TV,B.TZ,!0,s)},
 $S:595}
 A.atz.prototype={
