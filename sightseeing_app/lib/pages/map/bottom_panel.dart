@@ -31,7 +31,7 @@ class BottomPanelBody extends StatelessWidget {
             children: [
               const ScrollableIndicator(),
               Padding(
-                padding: const EdgeInsets.all(25.0).copyWith(top: 14, right: 8),
+                padding: const EdgeInsets.all(25.0).copyWith(top: 14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -95,6 +95,12 @@ class AudioIcon extends StatelessWidget {
     return BlocBuilder<AudioCubit, AudioState>(
       builder: (context, audioState) => IconButton(
           onPressed: () {
+            if (audioPlayer.processingState == ProcessingState.completed) {
+              audioPlayer.seek(const Duration());
+              audioPlayer.play();
+              return;
+            }
+
             if (audioState.playerState.processingState != ProcessingState.ready) {
               Fluttertoast.showToast(msg: 'Audio is loading...');
               return;
@@ -106,15 +112,26 @@ class AudioIcon extends StatelessWidget {
               audioPlayer.play();
             }
           },
-          icon: audioState.playerState.processingState == ProcessingState.ready
-              ? Icon(audioState.playerState.playing ? Icons.pause : Icons.play_arrow)
-              : const SizedBox(
-                  width: 16,
-                  height: 16,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 3,
-                  ))),
+          icon: _buildIcon(audioState),
+      )
     );
+  }
+
+  Widget _buildIcon(AudioState audioState) {
+    if (audioState.playerState.processingState == ProcessingState.ready) {
+      return Icon(audioState.playerState.playing ? Icons.pause : Icons.play_arrow);
+    }
+
+    if (audioState.playerState.processingState == ProcessingState.completed) {
+      return const Icon(Icons.replay);
+    }
+
+    return const SizedBox(
+      width: 16,
+      height: 16,
+      child: CircularProgressIndicator(
+        strokeWidth: 3,
+      ));
   }
 }
 
