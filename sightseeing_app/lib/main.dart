@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sightseeing_app/pages/map/map.dart';
 import 'package:sightseeing_app/pages/start.dart';
+import 'package:sightseeing_app/services/web_demo_ui.dart';
 import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:sightseeing_app/state/poi.dart';
@@ -13,9 +14,14 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -36,5 +42,21 @@ class MyApp extends StatelessWidget {
                 ], child: kIsWeb ? const Demo() : const MapScreen()),
           }),
     );
+  }
+
+  @override void initState() {
+    super.initState();
+
+    if (kIsWeb) {
+      webDemoUI?.dispose();
+      webDemoUI = WebDemoUI();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+
+    webDemoUI?.dispose();
   }
 }

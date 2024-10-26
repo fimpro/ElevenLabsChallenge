@@ -14,6 +14,7 @@ import 'package:sightseeing_app/pages/map/bottom_panel.dart';
 import 'package:sightseeing_app/pages/map/top_panel.dart';
 import 'package:sightseeing_app/services/api.dart';
 import 'package:sightseeing_app/services/audio.dart';
+import 'package:sightseeing_app/services/web_demo_ui.dart';
 import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,6 +52,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     _alignDirectionStreamController = StreamController<double?>();
     _mapPositionStreamController = StreamController<LocationMarkerPosition>();
 
+    webDemoUI?.setControlsVisible(true);
     audioPlayer.stop();
 
     Geolocator.getCurrentPosition().then((position) {
@@ -136,6 +138,9 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
     _positionStreamSubscription.cancel();
     _playerStateStream.cancel();
     apiController.stop();
+
+    webDemoUI?.setControlsVisible(false);
+
     super.dispose();
   }
 

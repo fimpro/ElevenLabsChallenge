@@ -1,0 +1,13 @@
+FROM fischerscode/flutter-sudo:3.24.3 as builder
+
+WORKDIR /app
+RUN git config --global --add safe.directory /home/flutter/flutter-sdk
+
+COPY . .
+RUN sudo chown -R flutter:flutter /app
+RUN flutter build web
+
+
+FROM caddy:alpine
+
+COPY --from=builder /app/build/web/ /usr/share/caddy

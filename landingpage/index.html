@@ -52,7 +52,7 @@
         }
 
         .app-iframe {
-            zoom: 0.8;
+            zoom: 0.75;
             /* -ms-zoom: 0.75;
             -moz-transform: scale(0.75);
             -moz-transform-origin: 0 0;
@@ -124,33 +124,39 @@
                             <li>Seamless integration with existing systems</li>
                         </ul>
                     </div>
-                    <div class="lg:w-1/2 mt-8 md:mt-0 w-full">
+                    <div class="lg:w-1/2 mt-8 md:mt-0 w-full flex flex-row justify-center">
                         <!-- Replace with demo somewhere here-->
                                                 
-                        <div class="flex flex-col items-center w-[320px]">
-                            <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[650px] w-[320px] shadow-lg">
+                        <div class="flex flex-col items-center w-[310px] h-[750px] app-parent group">
+                            <div class="relative z-50 mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[100%] shadow-lg">
                                 <div class="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[72px] rounded-l-lg"></div>
                                 <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
                                 <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
                                 <div class="h-[64px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
                                 <div class="rounded-[2rem] overflow-hidden w-[100%] h-[100%] bg-white">
-                                    <iframe src="http://localhost:56024/" height="100%" width="100%" class="app-iframe z-10"></iframe>
+                                    <iframe src="https://11labs-hackathon-web.13372137.xyz" height="100%" width="100%" class="app-iframe z-10"></iframe>
                                     <!-- <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-1-light.png" class="dark:hidden w-[272px] h-[572px]" alt="">
                                     <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-1-dark.png" class="hidden dark:block w-[272px] h-[572px]" alt=""> -->
                                 </div>
                                 <!-- other elements and content -->
                             </div>
-                            <div class="w-[96%] h-[160px] bg-gray-600 mt-[-100px] pt-[115px] rounded-[2.5rem] shadow-lg px-8">
+                            <div class="w-[97%] h-[170px] bg-gray-600 pt-[115px] rounded-[2.5rem] shadow-lg px-8 transition-all mt-[-200px] group-[.visible-controls]:mt-[-100px]">
                                 <div class="flex flex-row justify-between items-center">
-                                    <img src="play.png" width="20px" height="20px" class="mr-10">
+                                    <div class="mr-10 cursor-pointer play-btn w-5 h-5 flex justify-stretch items-stretch">
+                                        <img src="assets/play.png" class="play-img">
+                                        <img src="assets/pause.png" class="pause-img hidden">
+                                    </div>
                                     <div class="flex flex-row justify-between flex-grow relative">
                                         <div class="absolute border border-white w-[100%] top-[6.5px] z-0 "></div>
-                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
-                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
-                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
-                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
-                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10 point"></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10 point"></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10 point"></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10 point"></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10 point"></div>
                                     </div>
+                                </div>
+                                <div class="text-white text-center mt-2 text-xs font-bold opacity-80">
+                                    DEMO ROUTE
                                 </div>
                             </div>
                         </div>
@@ -253,6 +259,8 @@
             <p>2024 SightVoiceApp ElevenLabs Hackathon Project.</p>
         </div>
     </footer>
+
+    <script src="demoUI.js"></script>
 
     <script>
         // JavaScript to handle the fade-in effect

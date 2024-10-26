@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -165,7 +166,17 @@ class ApiController {
   }
 }
 
-var apiController = ApiController("http://10.0.2.2:8000");
+String getApiUrl() {
+  print('kDebugMode: $kDebugMode, kIsWeb: $kIsWeb');
+
+  if (kDebugMode) {
+    return kIsWeb ? "http://localhost:8000" : "http://10.0.2.2:8000";
+  }
+
+  return "https://11labs-hackathon.13372137.xyz";
+}
+
+var apiController = ApiController(getApiUrl());
 
 Future<T?> tryApi<T>(Future<T> Function() apiCall,
     {bool doThrow = false}) async {
