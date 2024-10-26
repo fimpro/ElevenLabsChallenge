@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map_location_marker/flutter_map_location_marker.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:sightseeing_app/components/my_card.dart';
 import 'package:sightseeing_app/state/config.dart';
+import 'package:sightseeing_app/state/location.dart';
 
 import '../../models/config.dart';
 
@@ -26,18 +29,32 @@ class TopPanel extends StatelessWidget {
                         },
                         icon: const Icon(Icons.arrow_back_outlined)),
                     const SizedBox(width: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Exploring Wrocław',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
-                        const SizedBox(height: 4),
-                        Text('${config.voice} • ${config.emotions}',
-                            style: Theme.of(context).textTheme.bodySmall),
-                      ],
+                    BlocBuilder<LocationCubit, LocationMarkerPosition>(
+                      builder: (context, location) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FutureBuilder(
+                            future: placemarkFromCoordinates(location.latitude, location.longitude),
+                            builder: (context, snapshot) {
+                              var text = 'Exploring...';
+
+                              var placemark = snapshot.data?.firstOrNull;
+                              if (placemark != null) {
+                                text = 'Exploring ${placemark.locality}';
+                              }
+
+                              return Text(
+                                text,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 4),
+                          Text('${config.voice} • ${config.emotions}',
+                              style: Theme.of(context).textTheme.bodySmall),
+                        ],
+                      ),
                     ),
                   ],
                 )),

@@ -52,6 +52,7 @@ dependencies:
   web: ^1.1.0
   event: ^3.1.0
   introduction_screen: ^3.1.14
+  geocoding: ^3.0.0
 #  path_provider: ^2.1.4
 #  dio: ^5.7.0
 
