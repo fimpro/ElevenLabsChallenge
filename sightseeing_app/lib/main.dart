@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sightseeing_app/pages/map/map.dart';
-import 'package:sightseeing_app/pages/start.dart';
+import 'package:sightseeing_app/pages/start_new.dart';
 import 'package:sightseeing_app/services/demo_ui/demo_ui.dart';
 import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
