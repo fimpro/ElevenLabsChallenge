@@ -9,7 +9,7 @@ class Demo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(children: [
       const Expanded(child: MapScreen()),
-      GPSPlayer(),
+      // GPSPlayer(),
     ]);
   }
 }

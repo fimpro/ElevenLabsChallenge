@@ -50,6 +50,17 @@
             transform: translateY(-5px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
+
+        .app-iframe {
+            zoom: 0.8;
+            /* -ms-zoom: 0.75;
+            -moz-transform: scale(0.75);
+            -moz-transform-origin: 0 0;
+            -o-transform: scale(0.75);
+            -o-transform-origin: 0 0;
+            -webkit-transform: scale(0.75);
+            -webkit-transform-origin: 0 0; */
+        }
     </style>
 </head>
 <body class="bg-custom-offwhite text-gray-900">
@@ -115,15 +126,44 @@
                     </div>
                     <div class="lg:w-1/2 mt-8 md:mt-0 w-full">
                         <!-- Replace with demo somewhere here-->
+                                                
+                        <div class="flex flex-col items-center w-[320px]">
+                            <div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[650px] w-[320px] shadow-lg">
+                                <div class="h-[32px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[72px] rounded-l-lg"></div>
+                                <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+                                <div class="h-[46px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+                                <div class="h-[64px] w-[3px] bg-gray-800 dark:bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+                                <div class="rounded-[2rem] overflow-hidden w-[100%] h-[100%] bg-white">
+                                    <iframe src="http://localhost:56024/" height="100%" width="100%" class="app-iframe z-10"></iframe>
+                                    <!-- <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-1-light.png" class="dark:hidden w-[272px] h-[572px]" alt="">
+                                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-1-dark.png" class="hidden dark:block w-[272px] h-[572px]" alt=""> -->
+                                </div>
+                                <!-- other elements and content -->
+                            </div>
+                            <div class="w-[96%] h-[160px] bg-gray-600 mt-[-100px] pt-[115px] rounded-[2.5rem] shadow-lg px-8">
+                                <div class="flex flex-row justify-between items-center">
+                                    <img src="play.png" width="20px" height="20px" class="mr-10">
+                                    <div class="flex flex-row justify-between flex-grow relative">
+                                        <div class="absolute border border-white w-[100%] top-[6.5px] z-0 "></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
+                                        <div class="w-4 h-4 rounded-full border-2 border-white bg-gray-600 z-10"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         
-                        <div class="w-full max-w-md mx-auto aspect-[3/5] bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+                        <!-- <div class="w-full max-w-md mx-auto aspect-[3/5] bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col">
                             <div class="bg-gray-900 h-6 rounded-t-3xl flex items-center justify-center">
                                 <div class="w-16 h-1 bg-gray-700 rounded-full"></div>
                             </div>
                             <div class="flex-grow">
-                                <iframe src="http://localhost:36147/" height="100%" width="100%"></iframe>
+                                <iframe src="http://localhost:56024/" height="100%" width="100%"></iframe>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

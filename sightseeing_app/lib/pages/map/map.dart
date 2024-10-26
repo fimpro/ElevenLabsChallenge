@@ -53,6 +53,10 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
 
     audioPlayer.stop();
 
+    Geolocator.getCurrentPosition().then((position) {
+      postUpdate(LocationMarkerPosition(latitude: position.latitude, longitude: position.longitude, accuracy: 1.0));
+    });
+
     _positionStreamSubscription =
         context.read<LocationCubit>().stream.listen((position) async {
       _mapPositionStreamController.add(position);
