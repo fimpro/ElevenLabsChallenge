@@ -17,6 +17,8 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
+  final TextEditingController _addPreferenceController = TextEditingController();
+
   Future<void> _checkLocation() async {
     try {
       await checkLocationPermission();
@@ -41,7 +43,6 @@ class _StartScreenState extends State<StartScreen> {
 
     Navigator.of(context).pushNamed('/map');
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -127,20 +128,79 @@ class _StartScreenState extends State<StartScreen> {
                 const Text('Choose your interests.'),
                 const SizedBox(height: 30),
                 ButtonGroupSelect<String>(
+                    key: Key(preferences.length.toString()),
                     items: preferences,
                     radio: false,
                     builder: (item, context) => Text(item),
-                    selectedIndexes: config.preferences.map((x) => preferences.indexOf(x)).toList(),
+                    selectedIndexes: config.preferences
+                        .map((x) => preferences.indexOf(x))
+                        .toList(),
                     onSelectedMultiple: (indexes) {
-                      context.read<ConfigCubit>().setPreferences(indexes.map((x) => preferences[x]).toList());
+                      context.read<ConfigCubit>().setPreferences(
+                          indexes.map((x) => preferences[x]).toList());
+                      for(var i = preferences.length - 1; i >= 0; i--) {
+                        if(!indexes.contains(i) && !predefinedPreferences.contains(preferences[i])) {
+                          preferences.removeAt(i);
+                        }
+                      }
                     }),
+                const SizedBox(height: 20),
+                OutlinedButton(
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) => Padding(
+                            padding: const EdgeInsets.symmetric(
+                                    vertical: 30, horizontal: 30)
+                                .copyWith(
+                                    bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom + 30),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text('Add your interest',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium),
+                                const SizedBox(height: 20),
+                                TextField(
+                                  autofocus: true,
+                                  controller: _addPreferenceController,
+                                  decoration: const InputDecoration(
+                                    labelText: 'Name',
+                                    border: OutlineInputBorder(),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.end,
+                                  children: [
+                                    FilledButton(
+                                        onPressed: () {
+                                          preferences.add(_addPreferenceController.text);
+                                          context
+                                              .read<ConfigCubit>()
+                                              .addPreference(
+                                                  _addPreferenceController.text);
+                                          _addPreferenceController.text = '';
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: const Text('Add')),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ));
+                    },
+                    child: Icon(Icons.add)),
               ],
             ),
             image: const Center(
               child: Icon(Icons.attractions, size: 50.0),
             ),
           ),
-
         ],
       ),
     );

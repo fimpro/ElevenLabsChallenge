@@ -9,7 +9,8 @@ final voices = [
   "Fin"
 ];
 final moods = ["Energetic", "Bored", "Dramatic"];
-final preferences = ["Architecture", "History", "Art"];
+final predefinedPreferences = ["Architecture", "History", "Art"];
+final preferences = [...predefinedPreferences];
 final languages = ["English", "Polish"];
 
 
@@ -20,4 +21,5 @@ class ConfigCubit extends Cubit<ConfigState> {
   void setMood(String mood) => emit(state.copyWith(emotions: mood));
   void setPreferences(List<String> preferences) => emit(state.copyWith(preferences: preferences));
   void setLanguage(String language) => emit(state.copyWith(language: language));
+  void addPreference(String preference) => emit(state.copyWith(preferences: [...state.preferences, preference]));
 }
