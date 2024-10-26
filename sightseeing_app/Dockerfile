@@ -10,4 +10,5 @@ RUN flutter build web
 
 FROM caddy:alpine
 
+COPY Caddyfile /etc/caddy/Caddyfile
 COPY --from=builder /app/build/web/ /usr/share/caddy
