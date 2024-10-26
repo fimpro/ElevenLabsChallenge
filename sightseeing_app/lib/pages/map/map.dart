@@ -182,6 +182,8 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
                       tileProvider: CancellableNetworkTileProvider(),
                       urlTemplate:
                           'https://api.maptiler.com/maps/bright-v2/{z}/{x}/{y}.png?key=fl9YfQ3ia2xgpDnqSFEp',
+                      tileSize: 512,
+                      zoomOffset: -((512 / 256) - 1),
                       userAgentPackageName: 'com.sightseeingapp.app',
                     ),
                     CurrentLocationLayer(
