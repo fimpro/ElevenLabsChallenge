@@ -76,7 +76,7 @@ class _BottomPanelCollapsedState extends State<BottomPanelCollapsed> {
                             Text(
                                 ellipsis(
                                     state.description ?? 'No description',
-                                    40),
+                                    35),
                                 style:
                                 Theme.of(context).textTheme.bodySmall)
                           ]),

@@ -15,7 +15,7 @@ from elevenlabs_api import remove_old, text_to_speech_file
 from googleapi import get_nearby
 from llm import LLM
 
-SEARCH_RADIUS = int(os.getenv("SEARCH_RADIUS", 500))  # search in nearby 40 meters
+SEARCH_RADIUS = int(os.getenv("SEARCH_RADIUS", 40))  # search in nearby 40 meters
 MAX_FILETIME = int(os.getenv("MAX_FILETIME", 24 * 3600))  # max audio file duration in 'outputs' folder
 MIN_DISTANCE = int(os.getenv("MIN_DISTANCE", 30))  # min distance to create next Google API request
 MIN_TIME = int(os.getenv("MIN_TIME", 8))  # min time (seconds) between Google API requests
