@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sightseeing_app/pages/map/map.dart';
 import 'package:sightseeing_app/pages/start.dart';
-import 'package:sightseeing_app/services/web_demo_ui.dart';
+import 'package:sightseeing_app/services/demo_ui/demo_ui.dart';
 import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:sightseeing_app/state/poi.dart';
@@ -29,7 +29,7 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrangeAccent),
             useMaterial3: true,
           ),
           initialRoute: '/',

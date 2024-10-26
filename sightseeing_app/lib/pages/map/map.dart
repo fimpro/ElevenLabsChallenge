@@ -14,7 +14,7 @@ import 'package:sightseeing_app/pages/map/bottom_panel.dart';
 import 'package:sightseeing_app/pages/map/top_panel.dart';
 import 'package:sightseeing_app/services/api.dart';
 import 'package:sightseeing_app/services/audio.dart';
-import 'package:sightseeing_app/services/web_demo_ui.dart';
+import 'package:sightseeing_app/services/demo_ui/demo_ui.dart';
 import 'package:sightseeing_app/state/audio.dart';
 import 'package:sightseeing_app/state/config.dart';
 import 'package:url_launcher/url_launcher.dart';

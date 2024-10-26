@@ -57,7 +57,7 @@ class _StartScreenState extends State<StartScreen> {
           children: <Widget>[
             Align(
                 alignment: Alignment.center,
-                child: Text('SightApp',
+                child: Text('SightVoiceApp',
                     style: Theme.of(context).textTheme.headlineLarge)),
             Container(height: 70),
             BlocBuilder<ConfigCubit, ConfigState>(

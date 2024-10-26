@@ -8,8 +8,9 @@ class MyCard extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double elevation;
   final Color? shadowColor;
+  final Color? color;
 
-  const MyCard({super.key, required this.child, this.height = 100, this.width, this.margin, this.padding, this.shadowColor, this.elevation = 3});
+  const MyCard({super.key, required this.child, this.height = 100, this.width, this.margin, this.padding, this.shadowColor, this.color, this.elevation = 3});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class MyCard extends StatelessWidget {
       height: height,
       child: Card(
         margin: margin ?? EdgeInsets.zero,
-        color: Theme.of(context).colorScheme.surface,
+        color: color ?? Theme.of(context).colorScheme.surface,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
         ),
