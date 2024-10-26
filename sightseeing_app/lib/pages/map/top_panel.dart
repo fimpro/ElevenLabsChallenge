@@ -57,7 +57,7 @@ class TopPanel extends StatelessWidget {
                                   },
                                 )
                               : Text(
-                                  'Exploring',
+                                  'Exploring London',
                                   style: Theme.of(context).textTheme.titleLarge,
                                 ),
                           const SizedBox(height: 4),
