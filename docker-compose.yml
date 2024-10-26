@@ -6,6 +6,9 @@ services:
     env_file: .env
   
   web:
-    build: sightseeing_app
+    image: caddy:alpine
     ports:
       - "8091:80"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./sightseeing_app/build/web/:/usr/share/caddy
