@@ -10,5 +10,5 @@ services:
     ports:
       - "8091:80"
     volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./Caddyfile-web:/etc/caddy/Caddyfile
       - ./sightseeing_app/build/web/:/usr/share/caddy
