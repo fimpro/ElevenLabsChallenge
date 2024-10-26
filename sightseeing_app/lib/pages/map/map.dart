@@ -57,6 +57,7 @@ class _MapScreenState extends State<MapScreen> with TickerProviderStateMixin {
 
     Geolocator.getCurrentPosition().then((position) {
       postUpdate(LocationMarkerPosition(latitude: position.latitude, longitude: position.longitude, accuracy: 1.0));
+      _animatedController.animateTo(dest: LatLng(position.latitude, position.longitude), zoom: 17);
     });
 
     _positionStreamSubscription =
