@@ -58,7 +58,7 @@ class _StartScreenState extends State<StartScreen> {
         pages: [
           PageViewModel(
             title: "Welcome to SightVoiceApp!",
-            body: "Hello world",
+            body: "Let's make this visit a memorable one",
             image: const Padding(
               padding: EdgeInsets.only(top: 50),
               child: Image(image: AssetImage('assets/art.png')),
