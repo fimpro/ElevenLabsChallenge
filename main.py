@@ -12,16 +12,23 @@ from geopy.distance import geodesic
 from pydantic import BaseModel
 
 from elevenlabs_api import remove_old, text_to_speech_file
-from googleapi import get_nearby
+from googleapi import get_nearby, get_photos
 from llm import LLM
 
 SEARCH_RADIUS = int(os.getenv("SEARCH_RADIUS", 40))  # search in nearby 40 meters
-MAX_FILETIME = int(os.getenv("MAX_FILETIME", 24 * 3600))  # max audio file duration in 'outputs' folder
-MIN_DISTANCE = int(os.getenv("MIN_DISTANCE", 30))  # min distance to create next Google API request
-MIN_TIME = int(os.getenv("MIN_TIME", 8))  # min time (seconds) between Google API requests
-MAX_TIME = int(os.getenv("MAX_TIME", 30 * 60))  # max wait time (seconds) before user is removed
+MAX_FILETIME = int(
+    os.getenv("MAX_FILETIME", 24 * 3600)
+)  # max audio file duration in 'outputs' folder
+MIN_DISTANCE = int(
+    os.getenv("MIN_DISTANCE", 30)
+)  # min distance to create next Google API request
+MIN_TIME = int(
+    os.getenv("MIN_TIME", 8)
+)  # min time (seconds) between Google API requests
+MAX_TIME = int(
+    os.getenv("MAX_TIME", 30 * 60)
+)  # max wait time (seconds) before user is removed
 PRINT_OUTPUTS = os.getenv("PRINT_OUTPUTS", "1") == "1"  # outputs to console when 1
-
 
 
 class User:
@@ -41,7 +48,9 @@ class User:
         self.visited_places = []
 
         if PRINT_OUTPUTS:
-            print(f"Created a new user (emotions: {emotions}, voice: {voice}, preferences: {preferences})")
+            print(
+                f"Created a new user (emotions: {emotions}, voice: {voice}, preferences: {preferences})"
+            )
 
     def update(self, location):
         self.location_history.append((location, time.time()))
@@ -132,6 +141,7 @@ Summary: {'not provided' if place['summary'] is None else place['summary']}"""
         )
     return descriptions
 
+
 # ask the LLM what is the best place given preferences and descriptions
 def choose_place(preferences, descs):
     if len(descs) < 2:
@@ -143,32 +153,42 @@ def choose_place(preferences, descs):
 
     chat = LLM("chatgpt-4o-latest", print_log=PRINT_OUTPUTS)
     chat.message_from_file(
-        'prompts/choose_place_1.txt', 
-        preferences=preferences, 
-        locations_formatted=locations_formatted
+        "prompts/choose_place_1.txt",
+        preferences=preferences,
+        locations_formatted=locations_formatted,
     )
-    str_chosen_id = chat.message_from_file('prompts/choose_place_2.txt')
+    str_chosen_id = chat.message_from_file("prompts/choose_place_2.txt")
     if "none" in str_chosen_id.lower():
         return 0
     try:
         str_chosen_id = "".join([char for char in str_chosen_id if char.isdigit()])
         return int(str_chosen_id) - 1
     except Exception as e:
-        print("ERROR: there was an error while decoding llm's answer (forcing chosen_id=0):")
+        print(
+            "ERROR: there was an error while decoding llm's answer (forcing chosen_id=0):"
+        )
         print(e)
         return 0
+
 
 # describe a place (given preferences for better relevance)
 def describe_place(preferences, language, place_id, google_description):
     print(f"describing place (id={place_id})...")
 
-    chat = LLM(internet_model="llama-3.1-sonar-large-128k-online", print_log=PRINT_OUTPUTS)
+    chat = LLM(
+        internet_model="llama-3.1-sonar-large-128k-online", print_log=PRINT_OUTPUTS
+    )
     return chat.message_from_file(
-        'prompts/describe_pl.txt' if language == 'polish' else 'prompts/describe_en.txt', 
+        (
+            "prompts/describe_pl.txt"
+            if language == "polish"
+            else "prompts/describe_en.txt"
+        ),
         use_internet=True,
         preferences=preferences,
-        google_description=google_description
+        google_description=google_description,
     )
+
 
 # given user and places, pick one place, generate description for it and start generating audio
 def generate_content_and_audio(user, places, id):
@@ -187,8 +207,11 @@ def generate_content_and_audio(user, places, id):
     infos[id]["location"] = places[chosen_id]["location"]
     infos[id]["name"] = places[chosen_id]["name"]
 
-    description = describe_place(user.preferences, user.language, places[chosen_id]["id"], descs[chosen_id])
+    description = describe_place(
+        user.preferences, user.language, places[chosen_id]["id"], descs[chosen_id]
+    )
     infos[id]["description"] = description
+    infos[id]["imagesUrls"] = get_photos(places[chosen_id])
 
     print("Generating audio file...")
     text_to_speech_file(
@@ -205,8 +228,10 @@ class CreateTokenRequest(BaseModel):
     voice: str
     language: str
 
+
 class InfoRequest(BaseModel):
     id: str
+
 
 class UpdateRequest(BaseModel):
     prevent: bool
@@ -221,9 +246,10 @@ async def create_token(req: CreateTokenRequest):
         ", ".join(req.preferences) if len(req.preferences) > 0 else "none",
         req.emotions.lower(),
         req.voice.lower(),
-        req.language.lower()
+        req.language.lower(),
     )
     return {"token": token, "ok": True}
+
 
 @app.post("/info")
 async def check_id(req: InfoRequest):
@@ -239,6 +265,7 @@ async def check_id(req: InfoRequest):
             "info": {"location": [None, None], "name": None, "description": None},
         }
 
+
 @app.get("/audio/{id}.mp3")
 async def download_audio(id: str):
     if id in infos:
@@ -246,9 +273,11 @@ async def download_audio(id: str):
             path=f"outputs/{id}.mp3", filename=f"{id}.mp3", media_type="audio/mpeg"
         )
 
+
 @app.get("/ping")
 async def ping():
     return "pong"
+
 
 @app.post("/update")
 async def update_user(
@@ -282,7 +311,9 @@ async def update_user(
 
             id = str(uuid.uuid4())
             infos[id] = {"location": [None, None], "name": None, "description": None}
-            threading.Thread(target=generate_content_and_audio, args=(user, places, id)).start()
+            threading.Thread(
+                target=generate_content_and_audio, args=(user, places, id)
+            ).start()
             return {"ok": True, "new_file": True, "id": id}
 
         return {"ok": True, "new_file": False}
