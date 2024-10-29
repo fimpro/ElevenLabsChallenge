@@ -15,10 +15,17 @@ import 'bottom_panel_collapsed.dart';
 
 const double height = 100;
 
-class BottomPanelBody extends StatelessWidget {
+class BottomPanelBody extends StatefulWidget {
   final ScrollController? scrollController;
 
   const BottomPanelBody({super.key, this.scrollController});
+
+  @override
+  _BottomPanelBodyState createState() => _BottomPanelBodyState();
+}
+
+class _BottomPanelBodyState extends State<BottomPanelBody> {
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,7 @@ class BottomPanelBody extends StatelessWidget {
       builder: (context, state) => Container(
         color: Theme.of(context).colorScheme.surface,
         child: SingleChildScrollView(
-          controller: scrollController,
+          controller: widget.scrollController,
           child: Column(
             children: [
               const ScrollableIndicator(),
@@ -54,7 +61,70 @@ class BottomPanelBody extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     if (!state.isEmpty) ...[
-                      Text(state.description ?? 'No description')
+                      Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (state.imagesUrls.isNotEmpty)
+                              SizedBox(
+                                height: 400,
+                                child: Stack(
+                                  children: [
+                                    PageView.builder(
+                                      controller: _pageController,
+                                      itemCount: state.imagesUrls.length,
+                                      itemBuilder: (context, index) {
+                                        return ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          child: Image.network(
+                                            '${apiController.baseUrl}/${state.imagesUrls[index]!}',
+                                            fit: BoxFit.cover,
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    if (_pageController.hasClients &&
+                                        _pageController.page != 0)
+                                      Positioned(
+                                        left: 0,
+                                        top: 0,
+                                        bottom: 0,
+                                        child: IconButton(
+                                          icon: const Icon(Icons.arrow_left,
+                                              size: 32, color: Colors.blue),
+                                          onPressed: () {
+                                            _pageController.previousPage(
+                                              duration: const Duration(
+                                                  milliseconds: 300),
+                                              curve: Curves.easeInOut,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                    if (_pageController.hasClients &&
+                                        _pageController.page !=
+                                            state.imagesUrls.length - 1)
+                                      Positioned(
+                                        right: 0,
+                                        top: 0,
+                                        bottom: 0,
+                                        child: IconButton(
+                                          icon: const Icon(Icons.arrow_right,
+                                              size: 32, color: Colors.blue),
+                                          onPressed: () {
+                                            _pageController.nextPage(
+                                              duration: const Duration(
+                                                  milliseconds: 300),
+                                              curve: Curves.easeInOut,
+                                            );
+                                          },
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                              ),
+                            Text(state.description ?? 'No description'),
+                          ])
                     ] else
                       const Text('Keep walking!')
                   ],
@@ -67,7 +137,6 @@ class BottomPanelBody extends StatelessWidget {
     );
   }
 }
-
 
 class ScrollableIndicator extends StatelessWidget {
   const ScrollableIndicator({super.key});
@@ -93,33 +162,34 @@ class AudioIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AudioCubit, AudioState>(
-      builder: (context, audioState) => IconButton(
-          onPressed: () {
-            if (audioPlayer.processingState == ProcessingState.completed) {
-              audioPlayer.seek(const Duration());
-              audioPlayer.play();
-              return;
-            }
+        builder: (context, audioState) => IconButton(
+              onPressed: () {
+                if (audioPlayer.processingState == ProcessingState.completed) {
+                  audioPlayer.seek(const Duration());
+                  audioPlayer.play();
+                  return;
+                }
 
-            if (audioState.playerState.processingState != ProcessingState.ready) {
-              Fluttertoast.showToast(msg: 'Audio is loading...');
-              return;
-            }
+                if (audioState.playerState.processingState !=
+                    ProcessingState.ready) {
+                  Fluttertoast.showToast(msg: 'Audio is loading...');
+                  return;
+                }
 
-            if (audioPlayer.playing) {
-              audioPlayer.pause();
-            } else {
-              audioPlayer.play();
-            }
-          },
-          icon: _buildIcon(audioState),
-      )
-    );
+                if (audioPlayer.playing) {
+                  audioPlayer.pause();
+                } else {
+                  audioPlayer.play();
+                }
+              },
+              icon: _buildIcon(audioState),
+            ));
   }
 
   Widget _buildIcon(AudioState audioState) {
     if (audioState.playerState.processingState == ProcessingState.ready) {
-      return Icon(audioState.playerState.playing ? Icons.pause : Icons.play_arrow);
+      return Icon(
+          audioState.playerState.playing ? Icons.pause : Icons.play_arrow);
     }
 
     if (audioState.playerState.processingState == ProcessingState.completed) {
@@ -127,11 +197,11 @@ class AudioIcon extends StatelessWidget {
     }
 
     return const SizedBox(
-      width: 16,
-      height: 16,
-      child: CircularProgressIndicator(
-        strokeWidth: 3,
-      ));
+        width: 16,
+        height: 16,
+        child: CircularProgressIndicator(
+          strokeWidth: 3,
+        ));
   }
 }
 
@@ -162,6 +232,7 @@ class BottomPanelWrapper extends StatelessWidget {
     return SlidingUpPanel(
         margin: const EdgeInsets.all(10).copyWith(bottom: 16, top: 0),
         minHeight: height,
+        maxHeight: 550,
         boxShadow: const [
           BoxShadow(
             blurRadius: 10.0,
@@ -175,4 +246,3 @@ class BottomPanelWrapper extends StatelessWidget {
         body: body);
   }
 }
-

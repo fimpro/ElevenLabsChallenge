@@ -211,6 +211,7 @@ def generate_content_and_audio(user, places, id):
         user.preferences, user.language, places[chosen_id]["id"], descs[chosen_id]
     )
     infos[id]["description"] = description
+    infos[id]["imagesUrls"] = []
     infos[id]["imagesUrls"] = get_photos(places[chosen_id])
 
     print("Generating audio file...")
@@ -262,7 +263,12 @@ async def check_id(req: InfoRequest):
         # this should never happen, but it's always better to be sure...
         return {
             "audio_ready": False,
-            "info": {"location": [None, None], "name": None, "description": None},
+            "info": {
+                "location": [None, None],
+                "name": None,
+                "description": None,
+                "imagesUrls": [],
+            },
         }
 
 
@@ -271,6 +277,15 @@ async def download_audio(id: str):
     if id in infos:
         return responses.FileResponse(
             path=f"outputs/{id}.mp3", filename=f"{id}.mp3", media_type="audio/mpeg"
+        )
+
+
+@app.get("/images/{id}.jpg")
+async def download_image(id: str):
+
+    if os.path.isfile(f"outputs/{id}.jpg"):
+        return responses.FileResponse(
+            path=f"outputs/{id}.jpg", filename=f"{id}.jpg", media_type="image/jpeg"
         )
 
 
@@ -310,7 +325,12 @@ async def update_user(
                 return {"ok": True, "new_file": False}
 
             id = str(uuid.uuid4())
-            infos[id] = {"location": [None, None], "name": None, "description": None}
+            infos[id] = {
+                "location": [None, None],
+                "name": None,
+                "description": None,
+                "imagesUrls": [],
+            }
             threading.Thread(
                 target=generate_content_and_audio, args=(user, places, id)
             ).start()
