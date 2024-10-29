@@ -169,7 +169,7 @@ class _StartScreenState extends State<StartScreen> {
                                   autofocus: true,
                                   controller: _addPreferenceController,
                                   decoration: const InputDecoration(
-                                    labelText: 'Name',
+                                    labelText: 'e.g. I would love to visit local markets',
                                     border: OutlineInputBorder(),
                                   ),
                                 ),
