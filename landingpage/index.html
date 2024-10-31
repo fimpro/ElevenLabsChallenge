@@ -77,9 +77,9 @@
 
 <body class="bg-custom-offwhite text-gray-900">
     <header class="fixed w-full bg-white bg-opacity-90 shadow-md z-50">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="container mx-auto px-4 py-4 flex justify-around md:justify-between items-center ">
             <div class="text-2xl font-bold text-custom-orange">SightVoiceApp</div>
-            <nav>
+            <nav class="hidden md:block">
                 <ul class="flex space-x-6">
                     <li><a href="#demo" class="hover:text-custom-orange transition duration-300">Demo</a></li>
                     <li><a href="#problem" class="hover:text-custom-orange transition duration-300">Problem</a></li>
@@ -91,7 +91,7 @@
                 </ul>
             </nav>
             <a href="https://github.com/fimpro/ElevenLabsChallenge/"
-                class="bg-custom-orange text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition duration-300">Try
+                class="bg-custom-orange text-white px-4 py-2 rounded-lg hover:bg-opacity-90 transition duration-300 hidden md:block">Try
                 demo</a>
         </div>
     </header>
@@ -126,10 +126,10 @@
             </div>
         </section>
         <!-- The Problem Section -->
-        <section id="problem" class="py-28 bg-custom-offwhite fade-in-section">
+        <section id="problem" class="py-28 pb-14 bg-custom-offwhite fade-in-section">
             <div class="container mx-auto px-4">
                 <h2 class="text-4xl font-bold mb-12 text-center">The Problem</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-8">
                     <!-- Guided Tours Column -->
                     <div class="bg-white p-8 rounded-xl shadow-md">
                         <div class="flex items-center mb-6">
@@ -194,15 +194,21 @@
                         </ul>
                     </div>
                 </div>
-                <div class="text-center max-w-3xl mx-auto">
-                    <p class="text-xl text-gray-600">Both traditional guided tours and solo (no-guide) exploration have
-                        significant drawbacks. As student travelers we needed a solution that combines the knowledge and
-                        insights of a tour guide with the freedom and flexibility of exploring on their own terms and
-                        schedules.</p>
+                <div class="text-center max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-md">
+                    <div class="max-w-3xl mx-auto">
+                        <p class="text-md text-gray-600">Both traditional guided tours and solo (no-guide) exploration
+                            have
+                            significant drawbacks. As student travelers we needed a solution that combines the knowledge
+                            and
+                            insights of a tour guide with the freedom and flexibility of exploring on their own terms
+                            and
+                            schedules.</p>
+                    </div>
+
                 </div>
             </div>
         </section>
-        <section id="video" class="py-28 bg-custom-offwhite fade-in-section">
+        <section id="video" class="py-28 pt-14 bg-custom-offwhite fade-in-section">
             <div class="container mx-auto px-4">
                 <h2 class="text-4xl font-bold mb-12 text-center">See Our Solution in Action</h2>
                 <div class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-12">
@@ -234,7 +240,7 @@
                                 too!</li>
                         </ul>
                     </div>
-                    <div class="lg:w-1/2 pt-16 md:mt-0 w-full flex flex-row justify-end">
+                    <div class="lg:w-1/2 pt-16 md:mt-0 w-full flex flex-row justify-center md:justify-end">
                         <div class="flex flex-col items-center w-[310px] h-[670px] app-parent group">
                             <div
                                 class="relative z-50 mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[100%] shadow-lg">
