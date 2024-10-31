@@ -28,6 +28,23 @@ class _BottomPanelBodyState extends State<BottomPanelBody> {
   final PageController _pageController = PageController();
 
   @override
+  void initState() {
+    super.initState();
+    _pageController.addListener(_onPageChanged);
+  }
+
+  @override
+  void dispose() {
+    _pageController.removeListener(_onPageChanged);
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onPageChanged() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<POICubit, POI>(
       builder: (context, state) => Container(
