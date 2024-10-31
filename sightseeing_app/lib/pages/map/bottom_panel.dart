@@ -78,7 +78,7 @@ class _BottomPanelBodyState extends State<BottomPanelBody> {
                                               BorderRadius.circular(15),
                                           child: Image.network(
                                             '${apiController.baseUrl}/${state.imagesUrls[index]!}',
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.fill,
                                           ),
                                         );
                                       },
@@ -91,11 +91,11 @@ class _BottomPanelBodyState extends State<BottomPanelBody> {
                                         bottom: 0,
                                         child: IconButton(
                                           icon: const Icon(Icons.arrow_left,
-                                              size: 32, color: Colors.blue),
+                                              size: 48, color: Colors.white),
                                           onPressed: () {
                                             _pageController.previousPage(
                                               duration: const Duration(
-                                                  milliseconds: 300),
+                                                  milliseconds: 500),
                                               curve: Curves.easeInOut,
                                             );
                                           },
@@ -110,11 +110,11 @@ class _BottomPanelBodyState extends State<BottomPanelBody> {
                                         bottom: 0,
                                         child: IconButton(
                                           icon: const Icon(Icons.arrow_right,
-                                              size: 32, color: Colors.blue),
+                                              size: 48, color: Colors.white),
                                           onPressed: () {
                                             _pageController.nextPage(
                                               duration: const Duration(
-                                                  milliseconds: 300),
+                                                  milliseconds: 500),
                                               curve: Curves.easeInOut,
                                             );
                                           },
@@ -123,6 +123,7 @@ class _BottomPanelBodyState extends State<BottomPanelBody> {
                                   ],
                                 ),
                               ),
+                            const SizedBox(height: 10),
                             Text(state.description ?? 'No description'),
                           ])
                     ] else
