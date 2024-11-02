@@ -47,8 +47,8 @@ class UpdateResponse {
 
   factory UpdateResponse.fromJson(Map<String, dynamic> json) {
     return UpdateResponse(
-      ok: json['ok'] as bool,
-      newFile: json['new_file'] as bool,
+      ok: (json['ok'] as bool?) ?? true,
+      newFile: (json['new_file'] as bool?) ?? false,
       id: json['id'] as String?,
     );
   }
@@ -74,7 +74,7 @@ class ExistsResponse {
 
   factory ExistsResponse.fromJson(Map<String, dynamic> json) {
     return ExistsResponse(
-      audioReady: json['audio_ready'] ?? false,
+      audioReady: (json['audio_ready'] as bool?) ?? false,
       info: json.containsKey('info') ? POI.fromJson(json['info']) : null,
     );
   }
