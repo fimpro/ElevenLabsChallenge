@@ -9,7 +9,7 @@ final voices = [
   "Fin"
 ];
 final moods = ["Energetic", "Bored", "Dramatic"];
-final predefinedPreferences = ["Architecture", "History", "Art"];
+final predefinedPreferences = ["Architecture", "History", "Art", "Nature", "Food & Drink", "Local Culture", "Hidden Gems"];
 final preferences = [...predefinedPreferences];
 final languages = ["English", "Polish"];
 
