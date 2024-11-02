@@ -81,9 +81,10 @@ class _BottomPanelBodyState extends State<BottomPanelBody> {
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (state.imagesUrls.isNotEmpty)
+                            if (state.imagesUrls.isNotEmpty) ...[
+                              const SizedBox(height: 10),
                               SizedBox(
-                                height: 400,
+                                height: 250,
                                 child: Stack(
                                   children: [
                                     PageView.builder(
@@ -95,7 +96,8 @@ class _BottomPanelBodyState extends State<BottomPanelBody> {
                                               BorderRadius.circular(15),
                                           child: Image.network(
                                             '${apiController.baseUrl}/${state.imagesUrls[index]!}',
-                                            fit: BoxFit.fill,
+                                            fit: BoxFit.cover,
+                                            alignment: Alignment.center,
                                           ),
                                         );
                                       },
@@ -140,7 +142,8 @@ class _BottomPanelBodyState extends State<BottomPanelBody> {
                                   ],
                                 ),
                               ),
-                            const SizedBox(height: 10),
+                              const SizedBox(height: 15),
+                            ],
                             Text(state.description ?? 'No description'),
                           ])
                     ] else
