@@ -136,6 +136,8 @@ class _CustomVoicePageState extends State<CustomVoicePage> {
                     print("Voice ID: $voiceId");
                     config.setVoiceId(voiceId);
 
+                    audioPlayer.stop();
+
                     await _checkLocation();
                     if (!mounted) return;
 
@@ -363,7 +365,7 @@ class _CustomVoicePageState extends State<CustomVoicePage> {
                           });
                           return false;
                         }
-                        await Future.delayed(Duration(milliseconds: 500));
+                        await Future.delayed(Duration(milliseconds: 800));
                         return true;
                       });
                     });
