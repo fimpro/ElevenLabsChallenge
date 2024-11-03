@@ -18,9 +18,9 @@ class CustomVoicePage extends StatefulWidget {
 }
 
 class _CustomVoicePageState extends State<CustomVoicePage> {
-  final List<String> ages = ["Child", "Teen", "Adult", "Senior"];
+  final List<String> ages = ["Teenage", "Adult", "Middle-Aged", "Old"];
   final List<String> genders = ["Male", "Female", "Gender Neutral"];
-  final List<String> tones = ["Cheerful", "Serious", "Friendly", "Formal"];
+  final List<String> tones = ["Gruff", "Soft", "Warm", "Raspy"];
   final List<String> pitches = ["High", "Normal", "Low", "Squeaky"];
   final List<String> moods = ["Happy", "Sad", "Excited", "Calm"];
   final List<String> speeds = ["Slow", "Normal", "Fast"];
