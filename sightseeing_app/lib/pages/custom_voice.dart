@@ -250,8 +250,8 @@ class _CustomVoicePageState extends State<CustomVoicePage> {
                 fit: BoxFit.scaleDown,
                 child: voiceConfig.selectedVoiceIndex == index
                   ? Text("selected",
-                    style: TextStyle(color: Colors.green, fontSize: 12))
-                  : Text("select", style: TextStyle(fontSize: 12)),
+                    style: TextStyle(color: Colors.green, fontSize: 12), softWrap: false)
+                  : Text("select", style: TextStyle(fontSize: 12), softWrap: false),
               ),
               ),
             ),
