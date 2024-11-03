@@ -16,7 +16,7 @@ String getVoiceName(String voiceId) {
 final moods = ["Energetic", "Bored", "Dramatic"];
 final predefinedPreferences = ["Architecture", "History", "Art", "Nature", "Food & Drink", "Local Culture", "Hidden Gems"];
 final preferences = [...predefinedPreferences];
-final languages = ["English", "Polish"];
+final languages = ["English", "Polish", "German", "Czech"];
 
 
 class ConfigCubit extends Cubit<ConfigState> {
