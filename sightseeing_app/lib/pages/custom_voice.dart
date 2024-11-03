@@ -241,8 +241,8 @@ class _CustomVoicePageState extends State<CustomVoicePage> {
                 },
                 child: voiceConfig.selectedVoiceIndex == index
                     ? Text("selected",
-                        style: TextStyle(color: Colors.green, fontSize: 13))
-                    : Text("select", style: TextStyle(fontSize: 13)),
+                        style: TextStyle(color: Colors.green, fontSize: 12))
+                    : Text("select", style: TextStyle(fontSize: 12)),
               ),
             ),
           ],
