@@ -43,6 +43,13 @@ class _CustomVoicePageState extends State<CustomVoicePage> {
     selectRandomVoiceConfig();
   }
 
+  @override
+  void dispose() {
+    audioPlayer.stop();
+    audioPlayer.dispose();
+    super.dispose();
+  }
+
   void selectRandomVoiceConfig() {
     final random = Random();
     voiceConfig = VoiceConfig(
@@ -240,7 +247,7 @@ class _CustomVoicePageState extends State<CustomVoicePage> {
                   });
                 },
                 child: voiceConfig.selectedVoiceIndex == index
-                    ? Text("selected",
+                    ? Text("choosen",
                         style: TextStyle(color: Colors.green, fontSize: 12))
                     : Text("select", style: TextStyle(fontSize: 12)),
               ),
