@@ -88,11 +88,11 @@ class _StartScreenState extends State<StartScreen> {
                         style: Theme.of(context).textTheme.titleMedium),
                     const SizedBox(height: 5),
                     ButtonGroupSelect<String>(
-                      items: voices,
+                      items: voiceNames,
                       builder: (item, context) => Text(item),
-                      selectedIndex: voices.indexOf(config.voice),
+                      selectedIndex: voiceIds.indexOf(config.voiceId),
                       onSelected: (index, item) {
-                        context.read<ConfigCubit>().setVoice(item);
+                        context.read<ConfigCubit>().setVoiceId(voiceIds[index]);
                       },
                     ),
                     const SizedBox(height: 25),

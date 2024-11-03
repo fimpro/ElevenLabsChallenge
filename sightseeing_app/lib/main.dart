@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sightseeing_app/pages/custom_voice.dart';
 import 'package:sightseeing_app/pages/map/map.dart';
 import 'package:sightseeing_app/pages/start_new.dart';
 import 'package:sightseeing_app/services/demo_ui/demo_ui.dart';
@@ -36,6 +37,7 @@ class _MyAppState extends State<MyApp> {
           initialRoute: '/',
           routes: {
             '/': (context) => const StartScreen(),
+            '/custom-voice': (context) => CustomVoicePage(),
             '/map': (context) => MultiBlocProvider(providers: [
                   BlocProvider(create: (_) => AudioCubit()),
                   BlocProvider(create: (_) => POICubit()),

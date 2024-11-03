@@ -11,7 +11,12 @@ from fastapi.middleware.cors import CORSMiddleware
 from geopy.distance import geodesic
 from pydantic import BaseModel
 
-from elevenlabs_api import remove_old, text_to_speech_file
+from elevenlabs_api import (
+    create_voice,
+    generate_custom_voice_previews,
+    remove_old,
+    text_to_speech_file,
+)
 from googleapi import get_nearby, get_photos
 from llm import LLM
 
@@ -32,7 +37,7 @@ PRINT_OUTPUTS = os.getenv("PRINT_OUTPUTS", "1") == "1"  # outputs to console whe
 
 
 class User:
-    def __init__(self, preferences, emotions, voice, language):
+    def __init__(self, preferences, emotions, voice_id, language):
         self.initiated = False
         self.prev_update = time.time()
         self.prev_request_location = None  # the location of previous API request
@@ -40,7 +45,7 @@ class User:
         self.curr_location = None
 
         self.emotions = emotions
-        self.voice = voice
+        self.voice_id = voice_id
         self.language = language
         self.preferences = preferences
 
@@ -49,7 +54,7 @@ class User:
 
         if PRINT_OUTPUTS:
             print(
-                f"Created a new user (emotions: {emotions}, voice: {voice}, preferences: {preferences})"
+                f"Created a new user (emotions: {emotions}, voice_id: {voice_id}, preferences: {preferences})"
             )
 
     def update(self, location):
@@ -92,6 +97,8 @@ class User:
 
 users = {}
 infos = {}
+previews_audio = []
+custom_voices = {}
 app = FastAPI()
 
 origins = ["*"]
@@ -215,18 +222,19 @@ def generate_content_and_audio(user, places, id):
     infos[id]["imagesUrls"] = get_photos(places[chosen_id])
 
     print("Generating audio file...")
+    print(f"voice_id: {user.voice_id}, emotions: {user.emotions}")
     text_to_speech_file(
         text=description,
         path=f"outputs/{id}.mp3",
         emotions=user.emotions,
-        voice=user.voice,
+        voice_id=user.voice_id,
     )
 
 
 class CreateTokenRequest(BaseModel):
     preferences: List[str]
     emotions: str
-    voice: str
+    voice_id: str
     language: str
 
 
@@ -240,13 +248,26 @@ class UpdateRequest(BaseModel):
     lon: float
 
 
+class CreateCustomVoiceRequest(BaseModel):
+    age: str
+    gender: str
+    tone: str
+    pitch: str
+    mood: str
+    speed: str
+
+
+class CreateVoiceRequest(BaseModel):
+    voice_id: str
+
+
 @app.post("/create_token")
 async def create_token(req: CreateTokenRequest):
     token = secrets.token_hex(32)
     users[token] = User(
         ", ".join(req.preferences) if len(req.preferences) > 0 else "none",
         req.emotions.lower(),
-        req.voice.lower(),
+        req.voice_id,
         req.language.lower(),
     )
     return {"token": token, "ok": True}
@@ -272,9 +293,43 @@ async def check_id(req: InfoRequest):
         }
 
 
+def generate_voice_previews(data: CreateCustomVoiceRequest, voice_api_id):
+    prompt = f"""
+    The voice has a {data.pitch} pitch, is sounds like {data.age}. The mood is {data.mood}, The tone is {data.tone}, The pace is {data.speed}, The speaker is {data.gender}, and his speech carries the casual confidence of tour guide.
+    """
+    text = (
+        "Welcome to our city tour! This is a sample of the custom voice you can use to guide you through the city's most fascinating landmarks and hidden gems. "
+        "With this voice, you'll experience a personalized and engaging narration that brings the history, culture, and stories of each location to life."
+    )
+
+    previews = generate_custom_voice_previews(prompt, text)
+
+    custom_voices[voice_api_id]["previews"] = previews
+    previews_audio.extend([preview["id"] for preview in previews])
+    custom_voices[voice_api_id]["done"] = True
+
+
+@app.post("/custom_voice")
+async def custom_voice(req: CreateCustomVoiceRequest):
+    voice_api_id = str(uuid.uuid4())
+    custom_voices[voice_api_id] = {"done": False, "previews": []}
+    threading.Thread(target=generate_voice_previews, args=(req, voice_api_id)).start()
+    return {"voice_api_id": voice_api_id}
+
+
+@app.post("/custom_voice/create")
+async def custom_voice_create(req: CreateVoiceRequest):
+    return {"voice_id": create_voice(req.voice_id)}
+
+
+@app.get("/custom_voice/{voice_api_id}")
+async def custom_voice(voice_api_id: str):
+    return custom_voices[voice_api_id]
+
+
 @app.get("/audio/{id}.mp3")
 async def download_audio(id: str):
-    if id in infos:
+    if id in infos or id in previews_audio:
         return responses.FileResponse(
             path=f"outputs/{id}.mp3", filename=f"{id}.mp3", media_type="audio/mpeg"
         )

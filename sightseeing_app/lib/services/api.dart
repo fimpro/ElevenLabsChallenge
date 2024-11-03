@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:sightseeing_app/state/voice_config.dart';
 import 'dart:convert';
 
 import '../models/config.dart';
@@ -18,6 +19,55 @@ class CreateTokenResponse {
     return CreateTokenResponse(
       token: json['token'] as String,
       ok: json['ok'] as bool,
+    );
+  }
+}
+
+class CreatePreviewsResponse {
+  final String voice_api_id;
+
+  CreatePreviewsResponse({required this.voice_api_id});
+
+  factory CreatePreviewsResponse.fromJson(Map<String, dynamic> json) {
+    return CreatePreviewsResponse(
+      voice_api_id: json['voice_api_id'] as String,
+    );
+  }
+}
+
+class CreateVoiceResponse {
+  final String voice_id;
+
+  CreateVoiceResponse({required this.voice_id});
+
+  factory CreateVoiceResponse.fromJson(Map<String, dynamic> json) {
+    return CreateVoiceResponse(
+      voice_id: json['voice_id'] as String,
+    );
+  }
+}
+
+class PreviewModel {
+  final String id;
+  final String voice_id;
+
+  PreviewModel({required this.id, required this.voice_id});
+}
+
+class VoicePreviewsResponse {
+  final bool done;
+  final List<PreviewModel> previews;
+
+  VoicePreviewsResponse({required this.done, required this.previews});
+
+  factory VoicePreviewsResponse.fromJson(Map<String, dynamic> json) {
+    var previews = (json['previews'] as List)
+        .map((e) => PreviewModel(id: e['id'], voice_id: e['voice_id']))
+        .toList();
+
+    return VoicePreviewsResponse(
+      done: json['done'] as bool,
+      previews: previews,
     );
   }
 }
@@ -86,6 +136,7 @@ class ApiController {
   String? token;
   Timer? _interval;
   String? lastAudioId;
+  String? voiceApiId;
   bool hasNewAudio = false;
 
   ApiController(this.baseUrl);
@@ -100,6 +151,24 @@ class ApiController {
     token = data.token;
     lastAudioId = null;
     hasNewAudio = false;
+  }
+
+  Future<void> createPreviews(VoiceConfig config) async {
+    var data = await post("/custom_voice", config.toJson(), CreatePreviewsResponse.fromJson);
+
+    voiceApiId = data.voice_api_id;
+  }
+
+  Future<String> createVoice(String voiceId) async {
+    var data = await post("/custom_voice/create", {"voice_id": voiceId}, CreateVoiceResponse.fromJson);
+
+    return data.voice_id;
+  }
+
+  Future<VoicePreviewsResponse> getCustomVoicePreviews() async {
+    var data = await get("/custom_voice/${voiceApiId}",VoicePreviewsResponse.fromJson);
+
+    return data;
   }
 
   Future<UpdateResponse> updateLocation(UpdateRequest request) async {
@@ -121,6 +190,20 @@ class ApiController {
   Future<ExistsResponse> fetchInfo() async {
     var request = ExistsRequest(lastAudioId);
     var data = await post("/info", request.toJson(), ExistsResponse.fromJson);
+
+    return data;
+  }
+
+  Future<T> get<T>(String path, T Function(Map<String, dynamic>) fromJson) async {
+    var response = await http.get(Uri.parse("$baseUrl$path"),
+        headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json"
+        },
+    );
+    print('$path response: ${response.body}');
+    var json = jsonDecode(utf8.decode(response.bodyBytes));
+    var data = fromJson(json);
 
     return data;
   }

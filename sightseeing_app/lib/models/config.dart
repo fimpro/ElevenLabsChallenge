@@ -1,14 +1,26 @@
 class ConfigState {
-  final String voice;
+  final String voiceId;
+  final bool isCustomVoice;
   final String emotions;
   final List<String> preferences;
   final String language;
 
-  ConfigState({required this.voice, required this.emotions, required this.language, this.preferences = const []});
+  ConfigState(
+      {required this.voiceId,
+      required this.isCustomVoice,
+      required this.emotions,
+      required this.language,
+      this.preferences = const []});
 
-  ConfigState copyWith({String? voice, String? emotions, List<String>? preferences, String? language}) {
+  ConfigState copyWith(
+      {String? voiceId,
+      bool? isCustomVoice,
+      String? emotions,
+      List<String>? preferences,
+      String? language}) {
     return ConfigState(
-      voice: voice ?? this.voice,
+      voiceId: voiceId ?? this.voiceId,
+      isCustomVoice: isCustomVoice ?? this.isCustomVoice,
       emotions: emotions ?? this.emotions,
       preferences: preferences ?? this.preferences,
       language: language ?? this.language,
@@ -17,7 +29,7 @@ class ConfigState {
 
   Map<String, dynamic> toJson() {
     return {
-      'voice': voice,
+      'voice_id': voiceId,
       'emotions': emotions,
       'preferences': preferences,
       'language': language,

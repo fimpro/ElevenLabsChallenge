@@ -17,7 +17,8 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  final TextEditingController _addPreferenceController = TextEditingController();
+  final TextEditingController _addPreferenceController =
+      TextEditingController();
 
   Future<void> _checkLocation() async {
     try {
@@ -32,10 +33,15 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   Future<void> _startApp() async {
-    await _checkLocation();
+    var config = context.read<ConfigCubit>();
     if (!mounted) return;
 
-    var config = context.read<ConfigCubit>();
+    if (config.state.isCustomVoice){
+      Navigator.of(context).pushNamed('/custom-voice');
+      return;
+    }
+
+    await _checkLocation();
     if (!mounted) return;
 
     await tryApi(() => apiController.createToken(config.state), doThrow: true);
@@ -83,26 +89,6 @@ class _StartScreenState extends State<StartScreen> {
             ),
           ),
           PageViewModel(
-            title: "Who will be your guide?",
-            bodyWidget: Column(
-              children: [
-                const Text("Choose your guide's voice."),
-                const SizedBox(height: 30),
-                ButtonGroupSelect<String>(
-                  items: voices,
-                  builder: (item, context) => Text(item),
-                  selectedIndex: voices.indexOf(config.voice),
-                  onSelected: (index, item) {
-                    context.read<ConfigCubit>().setVoice(item);
-                  },
-                ),
-              ],
-            ),
-            image: const Center(
-              child: Icon(Icons.record_voice_over, size: 50.0),
-            ),
-          ),
-          PageViewModel(
             title: "How are you feeling today?",
             bodyWidget: Column(
               children: [
@@ -138,8 +124,9 @@ class _StartScreenState extends State<StartScreen> {
                     onSelectedMultiple: (indexes) {
                       context.read<ConfigCubit>().setPreferences(
                           indexes.map((x) => preferences[x]).toList());
-                      for(var i = preferences.length - 1; i >= 0; i--) {
-                        if(!indexes.contains(i) && !predefinedPreferences.contains(preferences[i])) {
+                      for (var i = preferences.length - 1; i >= 0; i--) {
+                        if (!indexes.contains(i) &&
+                            !predefinedPreferences.contains(preferences[i])) {
                           preferences.removeAt(i);
                         }
                       }
@@ -151,54 +138,120 @@ class _StartScreenState extends State<StartScreen> {
                           context: context,
                           isScrollControlled: true,
                           builder: (context) => Padding(
-                            padding: const EdgeInsets.symmetric(
-                                    vertical: 30, horizontal: 30)
-                                .copyWith(
-                                    bottom: MediaQuery.of(context)
-                                            .viewInsets
-                                            .bottom + 30),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('Add your interest',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium),
-                                const SizedBox(height: 20),
-                                TextField(
-                                  autofocus: true,
-                                  controller: _addPreferenceController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'e.g. I would love to visit local markets',
-                                    border: OutlineInputBorder(),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.end,
+                                padding: const EdgeInsets.symmetric(
+                                        vertical: 30, horizontal: 30)
+                                    .copyWith(
+                                        bottom: MediaQuery.of(context)
+                                                .viewInsets
+                                                .bottom +
+                                            30),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    FilledButton(
-                                        onPressed: () {
-                                          preferences.add(_addPreferenceController.text);
-                                          context
-                                              .read<ConfigCubit>()
-                                              .addPreference(
-                                                  _addPreferenceController.text);
-                                          _addPreferenceController.text = '';
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: const Text('Add')),
+                                    Text('Add your interest',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium),
+                                    const SizedBox(height: 20),
+                                    TextField(
+                                      autofocus: true,
+                                      controller: _addPreferenceController,
+                                      decoration: const InputDecoration(
+                                        labelText:
+                                            'e.g. I would love to visit local markets',
+                                        border: OutlineInputBorder(),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        FilledButton(
+                                            onPressed: () {
+                                              preferences.add(
+                                                  _addPreferenceController
+                                                      .text);
+                                              context
+                                                  .read<ConfigCubit>()
+                                                  .addPreference(
+                                                      _addPreferenceController
+                                                          .text);
+                                              _addPreferenceController.text =
+                                                  '';
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: const Text('Add')),
+                                      ],
+                                    )
                                   ],
-                                )
-                              ],
-                            ),
-                          ));
+                                ),
+                              ));
                     },
                     child: Icon(Icons.add)),
               ],
             ),
             image: const Center(
               child: Icon(Icons.attractions, size: 50.0),
+            ),
+          ),
+          PageViewModel(
+            title: "Who will be your guide?",
+            bodyWidget: Column(
+              children: [
+                context.watch<ConfigCubit>().state.isCustomVoice
+                    ? FilledButton(
+                        onPressed: () {},
+                        child: Text("Design your custom guide's voice"),
+                      )
+                    : OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            context.read<ConfigCubit>().setIsCustomVoice(true);
+                          });
+                        },
+                        child: Text("Design your custom guide's voice"),
+                      ),
+                const SizedBox(height: 10),
+                !context.watch<ConfigCubit>().state.isCustomVoice
+                    ? FilledButton(
+                        onPressed: () {},
+                        child: Text("Choose from predefined voices"),
+                      )
+                    : OutlinedButton(
+                        onPressed: () {
+                          setState(() {
+                            context.read<ConfigCubit>().setIsCustomVoice(false);
+                          });
+                        },
+                        child: Text("Choose from predefined voices"),
+                      ),
+                const SizedBox(height: 10),
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  transitionBuilder: (child, animation) {
+                    return ScaleTransition(scale: animation, child: child);
+                  },
+                  child: config.isCustomVoice
+                      ? null
+                      : Column(
+                          key: const ValueKey('readyVoice'),
+                          children: [
+                            const Text("Choose your guide's voice."),
+                            const SizedBox(height: 10),
+                            ButtonGroupSelect<String>(
+                              items: voiceNames,
+                              builder: (item, context) => Text(item),
+                              selectedIndex: voiceIds.indexOf(config.voiceId),
+                              onSelected: (index, item) {
+                                context.read<ConfigCubit>().setVoiceId(voiceIds[index]);
+                              },
+                            ),
+                          ],
+                        ),
+                ),
+              ],
+            ),
+            image: const Center(
+              child: Icon(Icons.record_voice_over, size: 50.0),
             ),
           ),
         ],
