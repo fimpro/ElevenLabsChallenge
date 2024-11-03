@@ -221,7 +221,7 @@ class _CustomVoicePageState extends State<CustomVoicePage> {
           ],
         ),
         child: Column(
-          children: [
+            children: [
             Icon(
               Icons.volume_up,
               size: 80,
@@ -232,24 +232,27 @@ class _CustomVoicePageState extends State<CustomVoicePage> {
             SizedBox(
               width: 100,
               child: OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shadowColor: Colors.black,
-                  elevation: 2.0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  side: BorderSide.none,
+              style: OutlinedButton.styleFrom(
+                backgroundColor: Colors.white,
+                shadowColor: Colors.black,
+                elevation: 2.0,
+                shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
                 ),
-                onPressed: () {
-                  setState(() {
-                    voiceConfig.selectedVoiceIndex = index;
-                  });
-                },
+                side: BorderSide.none,
+              ),
+              onPressed: () {
+                setState(() {
+                voiceConfig.selectedVoiceIndex = index;
+                });
+              },
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
                 child: voiceConfig.selectedVoiceIndex == index
-                    ? Text("choosen",
-                        style: TextStyle(color: Colors.green, fontSize: 12))
-                    : Text("select", style: TextStyle(fontSize: 12)),
+                  ? Text("selected",
+                    style: TextStyle(color: Colors.green, fontSize: 12))
+                  : Text("select", style: TextStyle(fontSize: 12)),
+              ),
               ),
             ),
           ],
