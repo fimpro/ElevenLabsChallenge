@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../models/config.dart';
 
 final voiceNames = ["Alice", "Charlotte", "Eric", "Fin"];
-final voiceIds = ["Xb7hH8MSUJpSbSDYk0k2", "pFZP5JQG7iQjIQuC4Bku", "ZJ6YRAIdR3FwMeEx6NIc", "zZ78uuLgyOfL4C3MyVaj"];
+final voiceIds = ["Xb7hH8MSUJpSbSDYk0k2", "pFZP5JQG7iQjIQuC4Bku", "j9jfwdrw7BRfcR43Qohk", "zZ78uuLgyOfL4C3MyVaj"];
 
 String getVoiceName(String voiceId) {
   if (voiceIds.contains(voiceId)) {
@@ -16,7 +16,7 @@ String getVoiceName(String voiceId) {
 final moods = ["Energetic", "Bored", "Dramatic"];
 final predefinedPreferences = ["Architecture", "History", "Art", "Nature", "Food & Drink", "Local Culture", "Hidden Gems"];
 final preferences = [...predefinedPreferences];
-final languages = ["English", "Polish", "German", "Czech"];
+final languages = ["English", "Polish", "German", "Czech", "Spanish", "Ukrainian"];
 
 
 class ConfigCubit extends Cubit<ConfigState> {

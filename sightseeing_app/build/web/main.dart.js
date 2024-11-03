@@ -97483,10 +97483,10 @@ $.aLS=null
 $.aAf=null
 $.l_=null
 $.aNz=A.b(["Alice","Charlotte","Eric","Fin"],t.s)
-$.a1v=A.b(["Xb7hH8MSUJpSbSDYk0k2","pFZP5JQG7iQjIQuC4Bku","ZJ6YRAIdR3FwMeEx6NIc","zZ78uuLgyOfL4C3MyVaj"],t.s)
+$.a1v=A.b(["Xb7hH8MSUJpSbSDYk0k2","pFZP5JQG7iQjIQuC4Bku","j9jfwdrw7BRfcR43Qohk","zZ78uuLgyOfL4C3MyVaj"],t.s)
 $.aFz=A.b(["Energetic","Bored","Dramatic"],t.s)
 $.aNi=A.b(["Architecture","History","Art","Nature","Food & Drink","Local Culture","Hidden Gems"],t.s)
-$.aFu=A.b(["English","Polish"],t.s)
+$.aFu=A.b(["English","Polish","German","Czech","Spanish","Ukrainian"],t.s)
 $.aUt=A.B(t.S,A.ar("b3T"))})();(function lazyInitializers(){var s=hunkHelpers.lazyFinal,r=hunkHelpers.lazy
 s($,"b6D","a1G",()=>A.J(A.J(A.am(),"ClipOp"),"Intersect"))
 s($,"b7x","aQa",()=>{var q="FontSlant"
