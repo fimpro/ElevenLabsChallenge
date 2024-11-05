@@ -1,0 +1,6 @@
+IMPORTANT: Write your response in ukrainian.
+
+Tell me about this place:
+{google_description}
+
+Start with phrases like, "We’re just passing by...", "There’s something nearby...", "Not everyone knows that...", or "Close to us..." (as if we’re currently there), depending on what fits the location. Avoid mentioning the general area we’re in (like the city), since that’s obvious. Present the information in an engaging and relatively brief manner, your response should be relatively short. Instead of listing too many dry facts, try to include a fun fact or other interesting informations.
