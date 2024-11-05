@@ -181,16 +181,23 @@ def choose_place(preferences, descs):
 # describe a place (given preferences for better relevance)
 def describe_place(preferences, language, place_id, google_description):
     print(f"describing place (id={place_id})...")
+    prompts = {
+        "polish": "prompts/describe_pl.txt",
+        "english": "prompts/describe_en.txt",
+    }
 
     chat = LLM(
         internet_model="llama-3.1-sonar-large-128k-online", print_log=PRINT_OUTPUTS
     )
+
+    if language in prompts:
+        prompt = prompts[language]
+    else:
+        prompt = prompts["english"]
+        print(f"WARNING: language {language} is not supported, using english instead")
+
     return chat.message_from_file(
-        (
-            "prompts/describe_pl.txt"
-            if language == "polish"
-            else "prompts/describe_en.txt"
-        ),
+        (prompt,),
         use_internet=True,
         preferences=preferences,
         google_description=google_description,
