@@ -181,9 +181,14 @@ def choose_place(preferences, descs):
 # describe a place (given preferences for better relevance)
 def describe_place(preferences, language, place_id, google_description):
     print(f"describing place (id={place_id})...")
+    # "English", "Polish", "German", "Czech", "Spanish", "Ukrainian"
     prompts = {
         "polish": "prompts/describe_pl.txt",
         "english": "prompts/describe_en.txt",
+        "german": "prompts/describe_de.txt",
+        "czech": "prompts/describe_cz.txt",
+        "spanish": "prompts/describe_es.txt",
+        "ukrainian": "prompts/describe_ukr.txt",
     }
 
     chat = LLM(
