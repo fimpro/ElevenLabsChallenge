@@ -32,7 +32,7 @@ def remove_old(path, max_time):  # romoves old files
                 # print(f'Removed: {file_path}')
 
 
-def generate_audio(text, path, emotions, voice_id):
+def generate_audio(text, path, emotions, voice_id, language_code):
     ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
     client = ElevenLabs(
         api_key=ELEVENLABS_API_KEY,
@@ -64,7 +64,7 @@ def generate_audio(text, path, emotions, voice_id):
         voice_id=voice_id,  # imported
         output_format="mp3_22050_32",
         text=text,
-        language_code="en",
+        language_code=language_code,
         model_id="eleven_turbo_v2_5",  # use the turbo model for low latency
         voice_settings=VoiceSettings(
             stability=stability,
@@ -100,9 +100,10 @@ def text_to_speech_file(
     path: str,
     voice_id,
     emotions="energetic",
+    language_code="en"
 ):  # creates audiofile with text as speech
     threading.Thread(
-        target=generate_audio, args=(text, path, emotions, voice_id)
+        target=generate_audio, args=(text, path, emotions, voice_id, language_code)
     ).start()
 
 

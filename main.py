@@ -177,6 +177,14 @@ def choose_place(preferences, descs):
         print(e)
         return 0
 
+language_codes = {
+    "polish": "pl",
+    "english": "en",
+    "german": "de",
+    "czech": "cs",
+    "spanish": "es",
+    "ukrainian": "uk",
+}
 
 # describe a place (given preferences for better relevance)
 def describe_place(preferences, language, place_id, google_description):
@@ -235,11 +243,17 @@ def generate_content_and_audio(user, places, id):
 
     print("Generating audio file...")
     print(f"voice_id: {user.voice_id}, emotions: {user.emotions}")
+    if user.language in language_codes:
+        lang_code = language_codes[user.language]
+    else:
+        lang_code = "en"
+        print(f"WARNING: language {user.language} is not supported, using english instead")
     text_to_speech_file(
         text=description,
         path=f"outputs/{id}.mp3",
         emotions=user.emotions,
         voice_id=user.voice_id,
+        language_code=lang_code
     )
 
 
