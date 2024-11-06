@@ -1,6 +1,4 @@
-IMPORTANT: Write your response in czech.
-
-Tell me about this place:
+Pověz mi něco o tomto místě:
 {google_description}
 
-Start with phrases like, "We’re just passing by...", "There’s something nearby...", "Not everyone knows that...", or "Close to us..." (as if we’re currently there), depending on what fits the location. Avoid mentioning the general area we’re in (like the city), since that’s obvious. Present the information in an engaging and relatively brief manner, your response should be relatively short. Instead of listing too many dry facts, try to include a fun fact or other interesting informations.
+Začni frázemi jako "Právě procházíme kolem...", "Blízko nás je něco zajímavého...", "Ne každý ví...", nebo "Poblíž nás..." (jako bychom byli právě na místě), podle toho, co se hodí pro danou lokalitu (tyto fráze nemusíš použít přesně). Vyhni se zmiňování obecné oblasti (např. města), protože je to zřejmé. Informace sděl poutavě a stručně; odpověď by měla být relativně krátká. Místo suchých faktů zkus zahrnout nějakou zajímavost nebo zábavný fakt.

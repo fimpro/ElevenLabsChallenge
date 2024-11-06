@@ -1,6 +1,4 @@
-IMPORTANT: Write your response in spanish.
-
-Tell me about this place:
+Háblame de este lugar:
 {google_description}
 
-Start with phrases like, "We’re just passing by...", "There’s something nearby...", "Not everyone knows that...", or "Close to us..." (as if we’re currently there), depending on what fits the location. Avoid mentioning the general area we’re in (like the city), since that’s obvious. Present the information in an engaging and relatively brief manner, your response should be relatively short. Instead of listing too many dry facts, try to include a fun fact or other interesting informations.
+Empieza con frases como "Estamos de paso por aquí...", "Hay algo cerca...", "No todo el mundo sabe que...", o "Muy cerca de nosotros..." (como si estuviéramos allí), según lo que encaje con el lugar (no es necesario usar estas frases en particular). Evita mencionar el área general en la que estamos (como la ciudad), ya que eso es obvio. Presenta la información de forma atractiva y breve; tu respuesta debe ser relativamente corta. En lugar de enumerar demasiados datos secos, intenta incluir algún dato curioso o información interesante.

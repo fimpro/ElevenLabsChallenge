@@ -1,6 +1,4 @@
-IMPORTANT: Write your response in german - language.
-
-Tell me about this place:
+Erzähl mir etwas über diesen Ort:
 {google_description}
 
-Start with phrases like, "We’re just passing by...", "There’s something nearby...", "Not everyone knows that...", or "Close to us..." (as if we’re currently there), depending on what fits the location. Avoid mentioning the general area we’re in (like the city), since that’s obvious. Present the information in an engaging and relatively brief manner, your response should be relatively short. Instead of listing too many dry facts, try to include a fun fact or other interesting informations.
+Beginne mit Sätzen wie „Wir kommen gerade hier vorbei...“, „In der Nähe gibt es etwas...“, „Nicht jeder weiß...“, oder „Ganz in unserer Nähe...“ (so, als wären wir gerade dort), je nachdem, was zum Ort passt (du musst diese Phrasen nicht zwingend verwenden). Vermeide es, das allgemeine Gebiet (wie die Stadt) zu erwähnen, da das offensichtlich ist. Präsentiere die Information auf eine ansprechende und kurze Weise; deine Antwort sollte relativ knapp sein. Statt viele trockene Fakten aufzulisten, versuche, eine interessante oder lustige Information einzubauen.
