@@ -202,7 +202,7 @@ def describe_place(preferences, language, place_id, google_description):
         print(f"WARNING: language {language} is not supported, using english instead")
 
     return chat.message_from_file(
-        (prompt,),
+        prompt,
         use_internet=True,
         preferences=preferences,
         google_description=google_description,
