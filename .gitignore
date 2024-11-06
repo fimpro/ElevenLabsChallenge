@@ -4,3 +4,4 @@ __pycache__
 outputs/**
 logs/**
 response_google.json
+Caddyfile
