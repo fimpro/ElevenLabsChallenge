@@ -1,11 +1,13 @@
 services:
   api:
+    restart: always
     build: .
     ports:
       - "8090:8000"
     env_file: .env
   
   web:
+    restart: always
     image: caddy:alpine
     ports:
       - "8091:80"
