@@ -20,7 +20,7 @@ from elevenlabs_api import (
 from googleapi import get_nearby, get_photos
 from llm import LLM
 
-SEARCH_RADIUS = int(os.getenv("SEARCH_RADIUS", 40))  # search in nearby 40 meters
+SEARCH_RADIUS = int(os.getenv("SEARCH_RADIUS", 50))  # search in nearby 50 meters
 MAX_FILETIME = int(
     os.getenv("MAX_FILETIME", 24 * 3600)
 )  # max audio file duration in 'outputs' folder
