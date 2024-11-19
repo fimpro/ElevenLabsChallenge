@@ -72,6 +72,44 @@
             -webkit-transform: scale(0.75);
             -webkit-transform-origin: 0 0; */
         }
+
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced input animations */
+        input {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(251, 101, 30, 0.1);
+        }
+
+        /* Button hover animation */
+        button[type="submit"] {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        button[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(251, 101, 30, 0.2);
+        }
     </style>
 </head>
 
@@ -125,6 +163,39 @@
                 <img src="assets/art.png" alt="Art" class="w-[100%]">
             </div>
         </section>
+
+        <section class="py-16 bg-gradient-to-b from-white/50 to-white/80 backdrop-blur-sm relative">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <div class="transform -translate-y-8 fade-in-section">
+                        <div class="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+                            <div class="text-center mb-8">
+                                <h2 class="text-3xl font-bold mb-3">Get Early Access</h2>
+                                <p class="text-gray-600">Be among the first to experience our AI-powered travel companion and help our team refine it so it best suits your needs.</p>
+                            </div>
+                            <form action="https://formspree.io/f/mldelnly" method="POST" class="space-y-5">
+                                <div class="flex flex-col md:flex-row gap-4">
+                                    <div class="flex-1">
+                                        <input type="text" name="name" placeholder="Your name" required
+                                            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-custom-orange focus:ring-1 focus:ring-custom-orange transition-all duration-300">
+                                    </div>
+                                    <div class="flex-1">
+                                        <input type="email" name="email" placeholder="Your email" required
+                                            class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:outline-none focus:border-custom-orange focus:ring-1 focus:ring-custom-orange transition-all duration-300">
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                    class="w-full bg-custom-orange text-white px-6 py-3 rounded-lg hover:bg-opacity-90 transition-all duration-300 font-semibold hover:-translate-y-0.5 hover:shadow-lg">
+                                    Join Waitlist →
+                                </button>
+                                <p class="text-xs text-center text-gray-500">We respect your privacy. No spam ever.</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- The Problem Section -->
         <section id="journey" class="py-28 pb-14 bg-custom-offwhite fade-in-section">
             <div class="container mx-auto px-4">
@@ -361,9 +432,40 @@
         </section>
     </main>
 
+    <section class="py-20 bg-gradient-to-b from-white to-gray-100 fade-in-section">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl font-bold mb-4">Interested? See yourself using it?</h2>
+                <p class="text-xl text-gray-600 mb-8">Help us make it bette and refine by signing up for early access.</p>
+                
+                <div class="bg-white p-8 rounded-2xl shadow-xl">
+                    <form action="https://formspree.io/f/mldelnly" method="POST" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 text-left mb-2">Name</label>
+                                <input type="text" name="name" id="name" required
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-custom-orange focus:ring-1 focus:ring-custom-orange">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 text-left mb-2">Email</label>
+                                <input type="email" name="email" id="email" required
+                                    class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:border-custom-orange focus:ring-1 focus:ring-custom-orange">
+                            </div>
+                        </div>
+                        <button type="submit"
+                            class="w-full bg-custom-orange text-white px-8 py-4 rounded-lg text-lg hover:bg-opacity-90 transition duration-300 font-semibold">
+                            Sign Up for Early Access
+                        </button>
+                        <p class="text-sm text-gray-500">No spam ever.</p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer class="bg-gray-900 text-white py-8">
         <div class="container mx-auto px-4 text-center">
-            <p>2024 SightVoiceApp ElevenLabs Hackathon Project.</p>
+            <p>2024 SightVoiceApp All rights reserved.</p>
         </div>
     </footer>
 
@@ -408,6 +510,49 @@
             }
         }
 
+    </script>
+
+    <script>
+        // Handle all forms with Formspree
+        const forms = document.querySelectorAll('form');
+        
+        forms.forEach(form => {
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const submitButton = form.querySelector('button[type="submit"]');
+                const originalText = submitButton.innerHTML;
+                submitButton.innerHTML = 'Sending...';
+                submitButton.disabled = true;
+
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        form.reset();
+                        submitButton.innerHTML = 'Success! Thanks! ✓';
+                        setTimeout(() => {
+                            submitButton.innerHTML = originalText;
+                            submitButton.disabled = false;
+                        }, 70000);
+                    } else {
+                        throw new Error('Network response was not ok');
+                    }
+                } catch (error) {
+                    submitButton.innerHTML = 'Error! Try again';
+                    setTimeout(() => {
+                        submitButton.innerHTML = originalText;
+                        submitButton.disabled = false;
+                    }, 70000);
+                }
+            });
+        });
     </script>
 </body>
 
